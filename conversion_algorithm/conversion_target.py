@@ -2,7 +2,7 @@
 # @Author: Justus Multhaup
 # @Date:   2023-01-16 09:52:02
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-01-16 12:48:27
+# @Last Modified time: 2023-01-19 10:14:11
 
 
 ##Simple routine to optimize boundary densities by polytype conversion
@@ -58,6 +58,7 @@ flip_candidates_cells=[]
 flip_candidates_num=[]
 
 
+
 k=0
 for line in lines:
     int_list = [int(i) for i in line.split()]
@@ -71,6 +72,7 @@ for line in lines:
         k=0
         flip_candidates_num.append(int_list)
 
+flip_candidates_type = [item for sublist in flip_candidates_type for item in sublist]
 
 def cost(phi,delta_phi,phi_target):
     """cost function to be minimized
@@ -82,6 +84,14 @@ def cost(phi,delta_phi,phi_target):
     Returns:
         float: squared deviation from target density summed over cells and types
     """
+    
+    """     total_cost=0
+    for i in range(n_poly_type):
+        for x in range(nx):
+            for y in range(ny):
+                for z in range(nz):
+                    if phi_target[i,x,y,z]>0:
+                        total_cost+=(phi_target[i,x,y,z] - phi[i,x,y,z]-delta_phi[i,x,y,z])**2 """
     total_cost= sum(np.square(phi_target[phi_target > 0] - phi[phi_target > 0]-delta_phi[phi_target > 0] ))
     return total_cost
 
@@ -142,7 +152,7 @@ def convert_target1(phi,phi_target,flip_candidates_type,flip_candidates_cells,fl
     return total_cost, delta_phi
 
 
-def convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,iter=100):
+def convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,iter=10000,Tmin=0.0001,Tmax=1,alpha=0.85):
     delta_phi=np.zeros_like(phi)
     delta_phi_old=delta_phi
     delta_phi_best=delta_phi
@@ -153,7 +163,9 @@ def convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
     poly_types_old=poly_types
     poly_types_best=poly_types
     flip_prob=1/len(flip_candidates_type)
+    print(flip_prob)
     for i in range(iter):
+        """
         rejected_flips = 0
         while(rejected_flips < 100):
             for poly in range(len(flip_candidates_type)):
@@ -178,9 +190,10 @@ def convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
                 total_cost=total_cost_old
                 rejected_flips += 1
         """
-        ## do some simulated annealing
-        T=10
-        while(T > 0.01):
+        ## do some simulated annealing by swapping poly types
+        #print(flip_prob)
+        T=Tmax
+        while(T > Tmin):
             for poly in range(len(flip_candidates_type)):
                 random_number=random.random()
                 if random_number < flip_prob:
@@ -215,18 +228,186 @@ def convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
                 delta_phi_best=delta_phi
                 total_cost_best=total_cost
 
-            T *= 0.85
+            T *= alpha
         poly_types=poly_types_best
         delta_phi=delta_phi_best
         total_cost=total_cost_best
-        """
-    return total_cost , delta_phi
+        print(total_cost_best)
+
+    return total_cost_best , delta_phi
+
+
+def convert_target3(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,iter=10,Tmin=0.0001,Tmax=1,alpha=0.85):
+    """Choose random polymer in each annealing step and flip it. 
+
+    Args:
+        phi (_type_): _description_
+        flip_candidates_type (_type_): _description_
+        flip_candidates_cells (_type_): _description_
+        flip_candidates_num (_type_): _description_
+        iter (int, optional): _description_. Defaults to 10.
+        Tmin (float, optional): _description_. Defaults to 0.0001.
+        Tmax (int, optional): _description_. Defaults to 1.
+        alpha (float, optional): _description_. Defaults to 0.85.
+
+    Returns:
+        _type_: _description_
+    """
+    delta_phi=np.zeros_like(phi)
+    delta_phi=np.zeros_like(phi)
+    delta_phi_old=delta_phi
+    delta_phi_best=delta_phi
+    total_cost=cost(phi, delta_phi, phi_target)  
+    total_cost_old=total_cost  
+    total_cost_best=total_cost
+    poly_types=flip_candidates_type
+    poly_types_old=poly_types
+    poly_types_best=poly_types
+    ##loop over polymers
+    for k in range(iter):
+        T=Tmax
+        while(T>Tmin):
+            poly=np.random.randint(len(flip_candidates_type))
+            initial_type=poly_types[poly]
+            final_type=flip(initial_type)
+            diff=0
+            diff_flip=0
+            ##calculate deviations from target density in cells that polymer has monomers in and check if a flip is a good idea
+            for j in range(len(flip_candidates_cells[poly])):
+                x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
+                for type in range(n_poly_type):
+                    diff+=(phi_target[type,x,y,z]-phi[type,x,y,z]-delta_phi[type,x,y,z] )**2
+                diff_flip+=(phi_target[initial_type,x,y,z]-phi[initial_type,x,y,z]-delta_phi[initial_type,x,y,z] +flip_candidates_num[poly][j] * scale)**2
+                diff_flip+=(phi_target[final_type,x,y,z]-phi[final_type,x,y,z] - delta_phi[final_type,x,y,z] -flip_candidates_num[poly][j] * scale)**2
+            if diff_flip < diff:
+                ##flip polymer and update density fields
+                poly_types[poly]=final_type
+                delta_phi_old=delta_phi
+                total_cost_old=total_cost
+                for j in range(len(flip_candidates_cells[poly])):
+                    x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
+                    delta_phi[initial_type,x,y,z]-=flip_candidates_num[poly][j] * scale
+                    delta_phi[final_type,x,y,z]+=flip_candidates_num[poly][j] * scale
+                    
+            else:
+                acc_prob = np.exp(-(diff_flip-diff)/T)
+                random_number=random.random()
+                if random_number < acc_prob:
+                    poly_types[poly]=final_type
+                    delta_phi_old=delta_phi
+                    total_cost_old=total_cost
+                else:
+                    delta_phi=delta_phi_old
+                    total_cost=total_cost_old
+                    poly_types[poly]=poly_types_old[poly]
+            total_cost=cost(phi,delta_phi,phi_target)
+            ##update best solution
+            if total_cost < total_cost_best:
+                poly_types_best=poly_types
+                delta_phi_best=delta_phi
+                total_cost_best=total_cost
+            T *= alpha
+        poly_types=poly_types_best
+        delta_phi=delta_phi_best
+        total_cost=total_cost_best
+    return total_cost, delta_phi
+
+
+def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.0001,Tmax=1,alpha=0.85,acc_rate_target=0.5):
+    """Convert polymer types in conversion zone to reach target density. 
+       Minimizes cost function by choosing a random polymer in each annealing step and flipping it according to the metropolis hastings criterion.
+       Repeat annealing until convergence criterion is reached
+
+    Args:
+        phi (_type_): _description_
+        flip_candidates_type (_type_): _description_
+        flip_candidates_cells (_type_): _description_
+        flip_candidates_num (_type_): _description_
+        Tmin (float, optional): _description_. Defaults to 0.0001.
+        Tmax (int, optional): _description_. Defaults to 1.
+        alpha (float, optional): _description_. Defaults to 0.85.
+
+    Returns:
+        _type_: _description_
+    """
+    delta_phi=np.zeros_like(phi)
+    delta_phi=np.zeros_like(phi)
+    delta_phi_old=delta_phi
+    delta_phi_best=delta_phi
+    total_cost=cost(phi, delta_phi, phi_target)  
+    print(total_cost)
+    total_cost_old=total_cost  
+    total_cost_best=total_cost
+    poly_types=flip_candidates_type
+    poly_types_old=poly_types
+    poly_types_best=poly_types
+    acc_rate=1
+    sa_runs=0
+    ##loop over polymers
+    while(acc_rate > acc_rate_target):
+        sa_runs+=1
+        num_acc=0
+        num_iter=0
+        T=Tmax
+        while(T>Tmin):
+            poly=np.random.randint(len(flip_candidates_type))
+            initial_type=poly_types[poly]
+            final_type=flip(initial_type)
+            ##calculate deviations from target density in cells that polymer has monomers in and check if a flip is a good idea
+            for j in range(len(flip_candidates_cells[poly])):
+                x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
+                for type in range(n_poly_type):
+                    total_cost-=(phi_target[type,x,y,z]-phi[type,x,y,z]-delta_phi[type,x,y,z] )**2
+                total_cost+=(phi_target[initial_type,x,y,z]-phi[initial_type,x,y,z]-delta_phi[initial_type,x,y,z] +flip_candidates_num[poly][j] * scale)**2
+                total_cost+=(phi_target[final_type,x,y,z]-phi[final_type,x,y,z] - delta_phi[final_type,x,y,z] -flip_candidates_num[poly][j] * scale)**2
+            if total_cost < total_cost_old:
+                ##flip polymer and update density fields
+                num_acc+=1
+                poly_types[poly]=final_type
+                delta_phi_old=delta_phi
+                total_cost_old=total_cost
+                for j in range(len(flip_candidates_cells[poly])):
+                    x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
+                    delta_phi[initial_type,x,y,z]-=flip_candidates_num[poly][j] * scale
+                    delta_phi[final_type,x,y,z]+=flip_candidates_num[poly][j] * scale
+                    
+            else:
+                acc_prob = np.exp(-(total_cost-total_cost_old)/T)
+                random_number=random.random()
+                if random_number < acc_prob:
+                    ##accept
+                    num_acc+=1
+                    poly_types[poly]=final_type
+                    delta_phi_old=delta_phi
+                    total_cost_old=total_cost
+                else:
+                    ##reject
+                    delta_phi=delta_phi_old
+                    total_cost=total_cost_old
+                    poly_types[poly]=poly_types_old[poly]
+            total_cost=cost(phi,delta_phi,phi_target)
+            ##update best solution
+            if total_cost < total_cost_best:
+                poly_types_best=poly_types
+                delta_phi_best=delta_phi
+                total_cost_best=total_cost
+            T *= alpha
+            num_iter+=1
+        poly_types=poly_types_best
+        delta_phi=delta_phi_best
+        total_cost=total_cost_best
+        acc_rate=num_acc/num_iter
+        print(total_cost_best)
+    print(sa_runs)
+    return total_cost, delta_phi
+
 
 #cost_opt, delta_phi = convert_target1(phi,phi_target,flip_candidates_type,flip_candidates_cells,flip_candidates_num)
-cost_opt, delta_phi = convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num)
+#cost_opt, delta_phi = convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,iter=10000,Tmin=0.0001,Tmax=1,alpha=0.85)
+cost_opt, delta_phi = convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.001,Tmax=1,alpha=0.85)
 phi_opt=phi+delta_phi
 print(cost_opt)
-print(np.mean(phi_opt, axis=(2,3)))
+#print(phi_opt[0])
 
 
 
