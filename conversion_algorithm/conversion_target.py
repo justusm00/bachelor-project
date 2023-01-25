@@ -2,7 +2,7 @@
 # @Author: Justus Multhaup
 # @Date:   2023-01-16 09:52:02
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-01-19 10:14:11
+# @Last Modified time: 2023-01-19 16:49:48
 
 
 ##Simple routine to optimize boundary densities by polytype conversion
@@ -130,7 +130,7 @@ def convert_target1(phi,phi_target,flip_candidates_type,flip_candidates_cells,fl
     ##loop over polymers
     for k in range(iter):
         for poly in range(len(flip_candidates_type)):
-            initial_type=flip_candidates_type[poly][0]
+            initial_type=flip_candidates_type[poly]
             final_type=flip(initial_type)
             diff=0
             diff_flip=0
@@ -143,7 +143,7 @@ def convert_target1(phi,phi_target,flip_candidates_type,flip_candidates_cells,fl
                 diff_flip+=(phi_target[final_type,x,y,z]-phi[final_type,x,y,z] - delta_phi[final_type,x,y,z] -flip_candidates_num[poly][j] * scale)**2
             if diff_flip < diff:
                 ##flip polymer and update density fields
-                flip_candidates_type[poly][0]=final_type
+                flip_candidates_type[poly]=final_type
                 for j in range(len(flip_candidates_cells[poly])):
                     x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
                     delta_phi[initial_type,x,y,z]-=flip_candidates_num[poly][j] * scale
@@ -331,40 +331,41 @@ def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
         _type_: _description_
     """
     delta_phi=np.zeros_like(phi)
-    delta_phi=np.zeros_like(phi)
-    delta_phi_old=delta_phi
     delta_phi_best=delta_phi
     total_cost=cost(phi, delta_phi, phi_target)  
     print(total_cost)
-    total_cost_old=total_cost  
+    total_cost_old=total_cost
     total_cost_best=total_cost
     poly_types=flip_candidates_type
-    poly_types_old=poly_types
     poly_types_best=poly_types
     acc_rate=1
+    num_acc=0
+    num_iter=0
     sa_runs=0
     ##loop over polymers
     while(acc_rate > acc_rate_target):
         sa_runs+=1
-        num_acc=0
-        num_iter=0
         T=Tmax
         while(T>Tmin):
+            num_iter+=1
             poly=np.random.randint(len(flip_candidates_type))
             initial_type=poly_types[poly]
             final_type=flip(initial_type)
-            ##calculate deviations from target density in cells that polymer has monomers in and check if a flip is a good idea
+            total_cost=total_cost_old
+            ##calculate cost function (only need to update it for the cells in which the polymer has monomers)
             for j in range(len(flip_candidates_cells[poly])):
                 x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
                 for type in range(n_poly_type):
+                    ##subtract squared density differences for each type and cell
                     total_cost-=(phi_target[type,x,y,z]-phi[type,x,y,z]-delta_phi[type,x,y,z] )**2
+                ##add new values 
                 total_cost+=(phi_target[initial_type,x,y,z]-phi[initial_type,x,y,z]-delta_phi[initial_type,x,y,z] +flip_candidates_num[poly][j] * scale)**2
                 total_cost+=(phi_target[final_type,x,y,z]-phi[final_type,x,y,z] - delta_phi[final_type,x,y,z] -flip_candidates_num[poly][j] * scale)**2
+            
             if total_cost < total_cost_old:
-                ##flip polymer and update density fields
+                ##flip polymer and update delta_phi
                 num_acc+=1
                 poly_types[poly]=final_type
-                delta_phi_old=delta_phi
                 total_cost_old=total_cost
                 for j in range(len(flip_candidates_cells[poly])):
                     x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
@@ -378,33 +379,35 @@ def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
                     ##accept
                     num_acc+=1
                     poly_types[poly]=final_type
-                    delta_phi_old=delta_phi
                     total_cost_old=total_cost
+                    for j in range(len(flip_candidates_cells[poly])):
+                        x,y,z=np.unravel_index(flip_candidates_cells[poly][j], (nx,ny,nz))
+                        delta_phi[initial_type,x,y,z]-=flip_candidates_num[poly][j] * scale
+                        delta_phi[final_type,x,y,z]+=flip_candidates_num[poly][j] * scale
                 else:
                     ##reject
-                    delta_phi=delta_phi_old
                     total_cost=total_cost_old
-                    poly_types[poly]=poly_types_old[poly]
-            total_cost=cost(phi,delta_phi,phi_target)
+
             ##update best solution
             if total_cost < total_cost_best:
                 poly_types_best=poly_types
                 delta_phi_best=delta_phi
                 total_cost_best=total_cost
             T *= alpha
-            num_iter+=1
+        acc_rate=num_acc/num_iter
         poly_types=poly_types_best
         delta_phi=delta_phi_best
         total_cost=total_cost_best
-        acc_rate=num_acc/num_iter
-        print(total_cost_best)
-    print(sa_runs)
+        print(acc_rate)
+        #print(total_cost)
+        #print(total_cost_best)
     return total_cost, delta_phi
 
 
 #cost_opt, delta_phi = convert_target1(phi,phi_target,flip_candidates_type,flip_candidates_cells,flip_candidates_num)
 #cost_opt, delta_phi = convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,iter=10000,Tmin=0.0001,Tmax=1,alpha=0.85)
-cost_opt, delta_phi = convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.001,Tmax=1,alpha=0.85)
+#cost_opt, delta_phi = convert_target3(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.001,Tmax=1,alpha=0.85)
+cost_opt, delta_phi = convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.0001,Tmax=0.001,alpha=0.85,acc_rate_target=0.02)
 phi_opt=phi+delta_phi
 print(cost_opt)
 #print(phi_opt[0])
