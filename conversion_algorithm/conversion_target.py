@@ -2,7 +2,7 @@
 # @Author: Justus Multhaup
 # @Date:   2023-01-16 09:52:02
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-01-19 16:49:48
+# @Last Modified time: 2023-01-26 10:19:59
 
 
 ##Simple routine to optimize boundary densities by polytype conversion
@@ -313,7 +313,7 @@ def convert_target3(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
     return total_cost, delta_phi
 
 
-def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.0001,Tmax=1,alpha=0.85,acc_rate_target=0.5):
+def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.0001,Tmax=1,alpha=0.85,sa_acc_rate_target=0.99,max_sa_runs=1000):
     """Convert polymer types in conversion zone to reach target density. 
        Minimizes cost function by choosing a random polymer in each annealing step and flipping it according to the metropolis hastings criterion.
        Repeat annealing until convergence criterion is reached
@@ -333,21 +333,21 @@ def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
     delta_phi=np.zeros_like(phi)
     delta_phi_best=delta_phi
     total_cost=cost(phi, delta_phi, phi_target)  
-    print(total_cost)
     total_cost_old=total_cost
-    total_cost_best=total_cost
+    total_cost_best=total_cost ##best value after sa run
+    total_cost_best_old=total_cost ##best value before sa run
     poly_types=flip_candidates_type
     poly_types_best=poly_types
-    acc_rate=1
-    num_acc=0
-    num_iter=0
-    sa_runs=0
+    sa_runs=0 ##count simulated annealing runs
+    sa_runs_accepted=0 ##count how many sa runs were accepted
+    sa_acc_rate=1 ##sa runs acceptance rate
+    cost_arr=np.array([]) ##cost function
     ##loop over polymers
-    while(acc_rate > acc_rate_target):
+    while(sa_acc_rate > sa_acc_rate_target and sa_runs < max_sa_runs):
         sa_runs+=1
         T=Tmax
+        total_cost_best_old=total_cost_best
         while(T>Tmin):
-            num_iter+=1
             poly=np.random.randint(len(flip_candidates_type))
             initial_type=poly_types[poly]
             final_type=flip(initial_type)
@@ -364,7 +364,6 @@ def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
             
             if total_cost < total_cost_old:
                 ##flip polymer and update delta_phi
-                num_acc+=1
                 poly_types[poly]=final_type
                 total_cost_old=total_cost
                 for j in range(len(flip_candidates_cells[poly])):
@@ -377,7 +376,6 @@ def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
                 random_number=random.random()
                 if random_number < acc_prob:
                     ##accept
-                    num_acc+=1
                     poly_types[poly]=final_type
                     total_cost_old=total_cost
                     for j in range(len(flip_candidates_cells[poly])):
@@ -387,29 +385,35 @@ def convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidat
                 else:
                     ##reject
                     total_cost=total_cost_old
-
+            cost_arr=np.append(cost_arr,total_cost)
             ##update best solution
             if total_cost < total_cost_best:
                 poly_types_best=poly_types
                 delta_phi_best=delta_phi
                 total_cost_best=total_cost
             T *= alpha
-        acc_rate=num_acc/num_iter
-        poly_types=poly_types_best
-        delta_phi=delta_phi_best
-        total_cost=total_cost_best
-        print(acc_rate)
+
+        if total_cost_best<total_cost_best_old:
+            poly_types=poly_types_best
+            delta_phi=delta_phi_best
+            total_cost=total_cost_best
+            sa_runs_accepted+=1
+        sa_acc_rate=sa_runs_accepted/sa_runs
+        print(sa_acc_rate)
         #print(total_cost)
         #print(total_cost_best)
-    return total_cost, delta_phi
+    return total_cost, delta_phi, cost_arr
 
 
 #cost_opt, delta_phi = convert_target1(phi,phi_target,flip_candidates_type,flip_candidates_cells,flip_candidates_num)
 #cost_opt, delta_phi = convert_target2(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,iter=10000,Tmin=0.0001,Tmax=1,alpha=0.85)
 #cost_opt, delta_phi = convert_target3(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.001,Tmax=1,alpha=0.85)
-cost_opt, delta_phi = convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.0001,Tmax=0.001,alpha=0.85,acc_rate_target=0.02)
+cost_opt, delta_phi ,cost_arr = convert_target4(phi,flip_candidates_type,flip_candidates_cells,flip_candidates_num,Tmin=0.0001,Tmax=0.001,alpha=0.85,sa_acc_rate_target=0.6)
 phi_opt=phi+delta_phi
 print(cost_opt)
+t=np.array(range(len(cost_arr)))
+plt.plot(t,cost_arr)
+plt.show()
 #print(phi_opt[0])
 
 

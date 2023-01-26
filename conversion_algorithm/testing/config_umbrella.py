@@ -2,17 +2,21 @@
 # @Author: Your name
 # @Date:   2023-01-25 16:59:12
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-01-25 18:00:17
+# @Last Modified time: 2023-01-26 13:17:59
 import h5py
 import numpy as np
 
+coordfile='coord_sample_t50000.h5' ##file to be modified
+umbfile = 'coord_umb.h5' ##file that contains polyconversion info
+
+
 ##file that contains area51 and bead positions
-f= h5py.File('coord_sample_t50000.h5', 'r+') 
+f= h5py.File(coordfile, 'r+') 
 ##file that contains polyconverison info
-g=h5py.File('coord_umb.h5', 'r+')
+g=h5py.File(umbfile, 'r+')
 nxyz=np.array(f['parameter/nxyz'])
 offset=3 ##to account for density drop close to area 51
-lamella_width = 9 ##width of umbrella field lamella in cells
+lamella_width = 1 ##width of umbrella field lamella in cells
 umb_field=np.zeros((2,nxyz[0],nxyz[1],nxyz[2]))
 ##fill with negative values
 umb_field.fill(-1)
