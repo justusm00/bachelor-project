@@ -1,0 +1,213 @@
+% @Author: Your name
+% @Date:   2017-08-17 15:16:16
+% @Last Modified by:   Your name
+% @Last Modified time: 2023-03-18 21:48:41
+%%    2009/03/12 v1.0 GAUBM Vorlage f�r Aschlussarbeiten Physik
+%% Template fuer Bachelor- und Masterarbeiten
+%% an der Fakultaet fuer Physik (c) Thomas Pruschke der GA Universit�t
+%% Verbesserungsvorschlaege bitte an studiendekanat@physik.uni-goettingen.de
+%%
+%% Benoetigte Pakete: datenumber
+%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% Bitte vor dem Veraendern diese Datei umbenennen! %%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% scrbook - Ersatz f�r LaTeX book Klasse aus dem KOMA Script
+%% Moegliche Optionen: diejenigen der Klasse scrbook ausser titlepage
+
+%% deutsche Arbeit:
+\documentclass[bachelor,       %% Typ der Arbeit: bachelor oder master
+               twoside,        %% zweiseitiges Layout
+               BCOR10mm,       %% Bindekorrektur 10 mm
+%               liststotoc,nomtotoc,bibtotoc, %% Aufnahme der div. Verzeichnisse
+                                              %% ins Inhaltsverzeichnis
+%               english,ngerman, %% Alternativspr. Englisch, Dokumentspr. Deutsch
+                ngerman,english  %% Alternativspr. Deutsch, Dokumentspr. Englisch
+%               final,          %% Endversion; draft fuer schnelles Kompilieren
+               ]{GAUBM}
+
+\usepackage{setspace}  %% Zur Setzung des Zeilenabstandes
+\usepackage{babel}     %% Sprachen-Unterstuetzung
+\usepackage{calc}      %% ermoeglicht Rechnen mit Laengen und Zaehlern
+\usepackage[T1]{fontenc}       %% Unterstutzung von Umlauten etc.
+\usepackage[latin1]{inputenc}  %% 
+%% in aktuellem Linux & MacOS X wird standardmaessig UTF8 kodiert!
+%\usepackage[utf8]{inputenc}    %% Wenn latin1 nicht geht ...
+
+\usepackage{amsmath,amssymb} %% zusaetzliche Mathe-Symbole
+
+\usepackage{lmodern} %% type1-taugliche CM-Schrift als Variante zur
+                     %% "normalen" EC-Schrift
+%% Paket fuer bibtex-Datenbanken
+\usepackage[comma,numbers,sort&compress]{natbib}
+\bibliographystyle{plainnat}
+
+\newcommand{\tabheadfont}[1]{\textbf{#1}} %% Tabellenkopf in Fett
+\usepackage{booktabs}                      %% Befehle fuer besseres Tabellenlayout
+\usepackage{longtable}                     %% umbrechbare Tabellen
+\usepackage{array}                         %% zusaetzliche Spaltenoptionen
+
+%% umfangreiche Pakete fuer Symbole wie \micro, \ohm, \degree, \celsius etc.
+\usepackage{textcomp,gensymb}
+
+%\usepackage{SIunits} %% Korrektes Setzen von Einheiten
+\usepackage{units}   %% Variante fuer Einheiten
+
+%% Hyperlinks im Dokument; muss als eines der letzten Pakete geladen werden
+\usepackage[pdfstartview=FitH,      % Oeffnen mit fit width
+            breaklinks=true,        % Umbrueche in Links, nur bei pdflatex default
+            bookmarksopen=true,     % aufgeklappte Bookmarks
+            bookmarksnumbered=true  % Kapitelnummerierung in bookmarks
+            ]{hyperref}
+
+%% Weiter benoetigte Pakete: datenumber
+%% Falls dieses Paket nicht in der Installation vorhanden ist,
+%% kann es von der Seite mit diesem Template heruntergeladen werden
+%% und in einem LaTeX bekanntem Verzeichnis installiert werden (notfalls
+%% dem Verzeichnis mit der Arbeit).
+\begin{document}
+%%
+%%                   Ab hier muessen die Anpassungen geschehen
+%%
+%% Hier den eigenen Namen einsetzen
+\ThesisAuthor{Justus}{Multhaup}
+%% Hier den Geburtsort einsetzen
+\PlaceOfBirth{Boffzen}
+%% Titel Arbeit. Das erste Argument ist der deutsche, das zweite der
+%% englische Titel.
+\ThesisTitle{Teilchensimulationen von Polymermischungen in begrenzten Geometrien mit zeitabh\"angigen Randbedingungen}{Particle simulations of polymer mixtures in confined geometries with time dependent boundary conditions}
+%% Erst- und Zweitgutacher/in
+%% Ist der/die Betreuer/in nicht identisch mit dem/r Erstgutachter/in,
+%% muss diese/r als optionales Argument angegeben werden.
+\FirstReferee{Prof. Dr. Marcus M\"uller}
+\Institute{Institut f\"ur Theoretische Physik}
+\SecondReferee{Prof. Dr. Stefan Klumpp}
+%% Beginn und Ende des Anfertigungszeitraumes
+\ThesisBegin{1}{4}{2009}
+\ThesisEnd{15}{7}{2009}
+%% DO NOT TOUCH THESE LINES!!!!
+\frontmatter
+\maketitle
+\cleardoublepage
+
+
+%% Ende des Vorspanns
+\cleardoublepage
+%% Ab hier 1 1/2 facher Zeilenabstand (durch setspace-Paket)
+\onehalfspacing
+%% Erzeugt Inhaltsverzeichnis
+\tableofcontents
+
+%% Hier kann man seine Bezeichnungsweisen erklaeren. Falls nicht
+%% benoetigt, bis einschliesslich \end{nomenclature} auskommentieren
+\begin{nomenclature}
+%% Fuer die Berechnung der Spaltenbreiten muss \usepackage{calc}
+%% geladen sein!
+\section*{Lateinische Buchstaben}
+\noindent
+\begin{longtable}[l]{p{0.2\textwidth}p{0.7\textwidth-6\tabcolsep}p{0.1\textwidth}}
+  \tabheadfont{Variable}&\tabheadfont{Bedeutung}&\tabheadfont{Einheit}\\\midrule\endhead
+  $A$ & Querschnittsfl"ache & $\unit{m^2}$\\
+  $c$ & Geschwindigkeit & $\unitfrac{m}{s}$
+\end{longtable}
+\section*{Griechische Buchstaben}
+\begin{longtable}[l]{p{0.2\textwidth}p{0.7\textwidth-6\tabcolsep}p{0.1\textwidth}}
+  \tabheadfont{Variable}&\tabheadfont{Bedeutung}&\tabheadfont{Einheit}\\\midrule\endhead
+  $\alpha$  & Winkel & $\unit{\degree}$; --\\
+  $\varrho$ & Dichte & $\unitfrac{kg}{m^3}$
+\end{longtable}
+\section*{Indizes}
+\begin{longtable}[l]{p{0.2\textwidth}p{0.8\textwidth-4\tabcolsep}}
+  \tabheadfont{Index}&\tabheadfont{Bedeutung}\\\midrule\endhead
+  m & Meridian\\
+  $r$ & Radial
+\end{longtable}
+\section*{Abk"urzungen}
+\begin{longtable}[l]{p{0.2\textwidth}p{0.8\textwidth-4\tabcolsep}}
+  \tabheadfont{Abk"urzung}&\tabheadfont{Bedeutung}\\\midrule\endhead
+  2D & zweidimensional\\
+  3D & dreidimensional\\
+  max & maximal
+\end{longtable}
+\end{nomenclature}
+%% \listoftables und \listoffigures sollten nur bei genuegender Anzahl Tabellen
+%% verwendet werden
+%\listoffigures
+%\listoftables
+
+\mainmatter   %% Anfang Hauptteil
+
+\chapter{Introduction}
+
+
+\chapter{Theory}
+
+\section{Polymeric mixtures}
+
+Polymer mixtures consist of two or more chemically different polymer types. The mechanical and thermodynamic properties can vary greatly with several factors such as composition, molecular weight and interactions between the polymers. This makes them desirable for manufacturing materials with tailored properties.\\
+If the composition is uniform everywhere, then the mixture is called homogeneous. In this case the properties do not change throughout the mixture. In a heterogeneous mixture, in contrast, the composition is non-uniform, leading to visible boundaries which may have very different properties. This phenomenon is also called macro-phaseseparation. From an entropic viewpoint, mixing is always favored. However, energetic interactions between polymers can either favor or suppress mixing. Whether a mixture is homogeneous or heterogeneous therefore depends on the balance between entropy and energy \cite[S. 137]{Rubin03}.           
+
+\subsection{Flory Huggins Theory}
+
+Whether mixing or phase-separation will be favored can be predicted by determining the free energy change associated with mixing the components. This free energy change can be computed within the lattice model developed by Flory and Huggins \cite{Flory42}. Within the Flory-Huggins framework, no volume change is assumed upon mixing. With this assumption, it is convenient to represent the system on a lattice. The lattice site volume $v_0$ corresponds to the smallest molecular unit and every macromolecule takes up one or multiple lattice sites. Consider a binary mixture with $n_A$ polymers of species A and chain length $N_A$ and $n_B$ polymers of species B and chain length $N_B$. The free energy of mixing per lattice site $\Delta F_{mix}$ is then given by the Flory-Huggins equation of polymer solutions \cite[S. 143]{Rubin03}:
+
+\begin{align}
+  \frac{\Delta F_{mix}}{k_BT}=\frac{\phi}{N_A}\ln\phi+\frac{1-\phi}{N_B}\ln(1-\phi)+\chi\phi(1-\phi)\,.
+\end{align}
+
+Here, $\phi=\frac{n_AN_A}{n_AN_A+n_BN_B}$ is the monomer fraction of species A, $k_B$ is the Boltzmann constant, $T$ is the system temperature and $\chi$ is the Flory interaction parameter which characterizes the interaction between different polymer species and can be obtained from experiments. A positive value of $\chi$ opposes mixing while a negative value promotes it, knowing the value of $\chi$ therefore allows a qualitative prediction of the phase separation behaviour. Let $\rho_0$ be monomer density in the system. The total free energy of mixing is then:
+
+\begin{align}
+  \frac{F[\phi]}{k_BT}=\rho_0\int \mathrm{d}^3\mathbf{r}\Delta F_{mix}\,.
+\end{align}
+
+\section{Collective diffusion of homopolymers}
+
+Consider a binary mixture of homopolymers with $N_A=N_B=N$ and $\chi=0\,.$ Since the number of monomers in the system is constant, the continuity equation holds:
+
+\begin{align}
+  \frac{\partial\phi}{\partial t}+\nabla\mathbf{J}=0\,.
+\end{align}
+
+Here, $\mathbf{J}$ is the local current of species A. Near equilibrium, one postulates a linear relation between $\mathbf J$ and the local chemical potential difference $\mu$ \cite{deGennes80}:
+
+
+\begin{align}
+    \mathbf J(\mathbf{r})=-\int_V\frac{\Lambda(\mathbf{r}, \mathbf{r'})}{k_BT}\nabla '\mu(\mathbf{r'})\text d \mathbf{r'}\,.
+\end{align}
+
+The Onsager coefficient $\Lambda(\mathbf{r}, \mathbf{r'})$ relates the force acting on a monomer at position $\mathbf{r'}$ due to the gradient of chemical potential to the density at position $\mathbf{r}\,$. It therefore determines the dynamics of the system. For a symmetric mixture with $N_A=N_B=N\,,$ in the simplest case, the current is coupled only locally to the local chemical potential gradient. The Onsager coefficient then takes the simple form \cite{deGennes80, Binder83}
+
+\begin{align}
+  \Lambda=DN\phi(\mathbf{r'})(1-\phi(\mathbf{r'}))\delta(\mathbf{r}-\mathbf{r'})\,.
+\end{align}
+
+Here, $D$ is the single chain diffusion coefficient.
+
+\chapter{Simulation technique}
+Text\dots
+\chapter{Results}
+Text\dots
+\chapter{Discussion}
+Text\dots
+\chapter{Summary}
+Text\dots
+
+\appendix
+\chapter{erster Anhang}
+
+
+\cleardoublepage
+%% Bibliographie. Das Argument muss der Name der BIBTeX-Datenbank stehen.
+%% Ein Beispiel fuer eine solche Datenbank finden Sie in bthesis_datenbank.bib
+\bibliography{bthesis_datenbank} 
+
+\chapter*{Danksagung}
+Dank\dots
+
+%% Dieser Befehl MUSS am Ende stehen und erzeugt die Erklaerung ueber die
+%% benutzten Mittel
+\Declaration
+\end{document}

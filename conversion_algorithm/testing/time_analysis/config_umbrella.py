@@ -2,14 +2,14 @@
 # @Author: Your name
 # @Date:   2023-01-25 16:59:12
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-02-12 19:15:58
+# @Last Modified time: 2023-03-08 16:17:43
 import h5py
 import numpy as np
 
 coordfile='coord.h5' ##file to be modified
 
 
-lamella_width = 1 ##width of umbrella field lamella in cells
+lamella_width = 4##width of umbrella field lamella in cells
 ##file that contains area51 and bead positions
 f= h5py.File(coordfile, 'r+') 
 ##file that contains polyconverison info
