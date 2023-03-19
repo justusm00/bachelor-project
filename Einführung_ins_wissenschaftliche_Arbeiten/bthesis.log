@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex 2023.3.17)  18 MAR 2023 21:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=latex 2023.3.17)  19 MAR 2023 17:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**bthesis
+**bthesis.tex
 (./bthesis.tex
 LaTeX2e <2021-11-15> patch level 1
 L3 programming layer <2022-02-24> (./GAUBM.cls
@@ -760,10 +760,7 @@ chapter 2.
 Underfull \vbox (badness 1107) has occurred while \output is active []
 
  [3]
-Underfull \vbox (badness 2698) has occurred while \output is active []
-
- [4]
-[5] [6
+[4] [5] [6
 
 
 ]
@@ -773,12 +770,12 @@ chapter 3.
 
 ]
 chapter 4.
-[9] [10
-
-
-]
+[9] [10]
 chapter 5.
-[11] [12
+[11
+
+
+] [12
 
 
 ]
@@ -804,12 +801,12 @@ File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 
 ] [19]
-Underfull \hbox (badness 5036) in paragraph at lines 212--212
+Underfull \hbox (badness 5036) in paragraph at lines 247--247
 []|\T1/lmr/m/n/12 Ich ver-sichere hi-er-mit, dass ich die vor-liegende Ar-beit
  []
 
 
-Underfull \hbox (badness 1565) in paragraph at lines 212--212
+Underfull \hbox (badness 1565) in paragraph at lines 247--247
 \T1/lmr/m/n/12 mir angegebe-nen Quellen und Hil-f-s-mit-tel ver-wen-det habe.
  []
 
@@ -823,12 +820,12 @@ Package rerunfilecheck Info: File `bthesis.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 14866 strings out of 478269
- 261396 string characters out of 5846373
- 700119 words of memory out of 5000000
- 32816 multiletter control sequences out of 15000+600000
+ 14878 strings out of 478269
+ 261545 string characters out of 5846373
+ 701119 words of memory out of 5000000
+ 32828 multiletter control sequences out of 15000+600000
  537538 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 122i,10n,120p,10669b,547s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 122i,10n,120p,10673b,547s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on bthesis.dvi (26 pages, 35032 bytes).
+Output written on bthesis.dvi (26 pages, 43344 bytes).
