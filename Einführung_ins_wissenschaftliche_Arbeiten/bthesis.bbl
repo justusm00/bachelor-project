@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -40,6 +40,17 @@ Paul~J. Flory.
   51--61, 1942.
 \newblock \doi{10.1063/1.1723621}.
 \newblock URL \url{https://doi.org/10.1063/1.1723621}.
+
+\bibitem[Fraaije et~al.(1997)Fraaije, van Vlimmeren, Maurits, Postma, Evers,
+  Hoffmann, Altevogt, and Goldbeck-Wood]{Fraaje97}
+J.~G. E.~M. Fraaije, B.~A.~C. van Vlimmeren, N.~M. Maurits, M.~Postma, O.~A.
+  Evers, C.~Hoffmann, P.~Altevogt, and G.~Goldbeck-Wood.
+\newblock The dynamic mean-field density functional method and its application
+  to the mesoscopic dynamics of quenched block copolymer melts.
+\newblock \emph{The Journal of Chemical Physics}, 106\penalty0 (10):\penalty0
+  4260--4269, 1997.
+\newblock \doi{10.1063/1.473129}.
+\newblock URL \url{https://doi.org/10.1063/1.473129}.
 
 \bibitem[M.~Rubinstein(2003)]{Rubin03}
 R.H.~Colby M.~Rubinstein.

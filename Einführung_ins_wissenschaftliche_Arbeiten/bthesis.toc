@@ -8,7 +8,7 @@
 \contentsline {chapter}{\numberline {4}Collective diffusion of symmetric homopolymers}{9}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Reference system}{9}{section.4.1}%
 \contentsline {section}{\numberline {4.2}Collective diffusion coefficient}{9}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Discussion}{11}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Summary}{13}{chapter.6}%
-\contentsline {chapter}{\numberline {A}erster Anhang}{15}{appendix.A}%
+\contentsline {chapter}{\numberline {5}Discussion}{13}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Summary}{15}{chapter.6}%
+\contentsline {chapter}{\numberline {A}erster Anhang}{17}{appendix.A}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -174,7 +174,7 @@
 }{\l@g@error}
 \titlehead{\LLogo}
 \def\s@bject{%
-  \if@bachelor\if@englishpreamble{Einf\"uhrung ins wissenschatliche Arbeiten}\else{Einf\"uhrung ins wissenschatliche Arbeiten}\fi%
+  \if@bachelor\if@englishpreamble{Modul B.Phy.407.Mp: Einf\"uhrung ins wissenschaftliche Arbeiten}\else{Modul B.Phy.407.Mp: Einf\"uhrung ins wissenschaftliche Arbeiten}\fi%
   \else
   \if@englishpreamble{Master's Thesis}\else{Masterarbeit}\fi%
   \fi}
