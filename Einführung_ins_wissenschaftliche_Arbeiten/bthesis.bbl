@@ -1,9 +1,28 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Baschnagel et~al.(2003)Baschnagel, Meyer, Varnik, Metzger, Aichele,
+  M{\"u}ller, and Binder]{Baschnagel03}
+J.~Baschnagel, H.~Meyer, F.~Varnik, S.~Metzger, M.~Aichele, M.~M{\"u}ller, and
+  K.~Binder.
+\newblock Computer simulations of polymers close to solid interfaces: Some
+  selected topics.
+\newblock \emph{Interface Science}, 11\penalty0 (2):\penalty0 159--173, 2003.
+\newblock \doi{10.1023/A:1022118610890}.
+\newblock URL \url{https://doi.org/10.1023/A:1022118610890}.
+
+\bibitem[Bates et~al.(1997)Bates, Maurer, Lipic, Hillmyer, Almdal, Mortensen,
+  Fredrickson, and Lodge]{Bates97}
+Frank~S. Bates, Wayne~W. Maurer, Paul~M. Lipic, Marc~A. Hillmyer, Kristoffer
+  Almdal, Kell Mortensen, Glenn~H. Fredrickson, and Timothy~P. Lodge.
+\newblock Polymeric bicontinuous microemulsions.
+\newblock \emph{Phys. Rev. Lett.}, 79:\penalty0 849--852, Aug 1997.
+\newblock \doi{10.1103/PhysRevLett.79.849}.
+\newblock URL \url{https://link.aps.org/doi/10.1103/PhysRevLett.79.849}.
 
 \bibitem[Binder(1983)]{Binder83}
 K.~Binder.
@@ -13,6 +32,15 @@ K.~Binder.
   6387--6409, 1983.
 \newblock \doi{10.1063/1.445747}.
 \newblock URL \url{https://doi.org/10.1063/1.445747}.
+
+\bibitem[Daoulas and M{\"u}ller(2006)]{Daoulas06}
+Kostas~Ch. Daoulas and Marcus M{\"u}ller.
+\newblock Single chain in mean field simulations: Quasi-instantaneous field
+  approximation and quantitative comparison with monte carlo simulations.
+\newblock \emph{The Journal of Chemical Physics}, 125\penalty0 (18):\penalty0
+  184904, 2006.
+\newblock \doi{10.1063/1.2364506}.
+\newblock URL \url{https://doi.org/10.1063/1.2364506}.
 
 \bibitem[de~Gennes(1980)]{deGennes80}
 P.~G. de~Gennes.
@@ -32,6 +60,15 @@ Oliver Dreyer, Gregor Ibbeken, Ludwig Schneider, Niklas Blagojevic, Maryam
 \newblock \emph{Macromolecules}, 55\penalty0 (17):\penalty0 7564--7582, 2022.
 \newblock \doi{10.1021/acs.macromol.2c00612}.
 \newblock URL \url{https://doi.org/10.1021/acs.macromol.2c00612}.
+
+\bibitem[D{\"u}chs et~al.(2003)D{\"u}chs, Ganesan, Fredrickson, and
+  Schmid]{Schmid03}
+Dominik D{\"u}chs, Venkat Ganesan, Glenn~H. Fredrickson, and Friederike Schmid.
+\newblock Fluctuation effects in ternary ab + a + b polymeric emulsions.
+\newblock \emph{Macromolecules}, 36\penalty0 (24):\penalty0 9237--9248, 12
+  2003.
+\newblock \doi{10.1021/ma030201y}.
+\newblock URL \url{https://doi.org/10.1021/ma030201y}.
 
 \bibitem[Flory(1942)]{Flory42}
 Paul~J. Flory.
@@ -57,10 +94,26 @@ R.H.~Colby M.~Rubinstein.
 \newblock \emph{Polymer Physics}.
 \newblock Oxford University Press, 2003.
 
+\bibitem[M\"uller and Gompper(2002)]{Mueller02}
+M.~M\"uller and G.~Gompper.
+\newblock Elastic properties of polymer interfaces: Aggregation of pure
+  diblock, mixed diblock, and triblock copolymers.
+\newblock \emph{Phys. Rev. E}, 66:\penalty0 041805, Oct 2002.
+\newblock \doi{10.1103/PhysRevE.66.041805}.
+\newblock URL \url{https://link.aps.org/doi/10.1103/PhysRevE.66.041805}.
+
 \bibitem[Reister(2002)]{Reister02}
 Ellen Reister.
 \newblock \emph{Zusammenhang zwischen der Einzelkettendynamik und der Dynamik
   von Konzentrationsfluktuationen in mehrkomponentigen Polymersystemen}.
 \newblock PhD thesis, Mainz, 2002.
+
+\bibitem[{Schneider} and {M{\"u}ller}(2017)]{Schneider_soma}
+Ludwig {Schneider} and Marcus {M{\"u}ller}.
+\newblock {Multi-Architecture Monte-Carlo (MC) Simulation of Soft
+  Coarse-Grained Polymeric Materials: SOft coarse grained Monte-carlo
+  Acceleration (SOMA)}.
+\newblock \emph{arXiv e-prints}, art. arXiv:1711.03828, November 2017.
+\newblock \doi{10.48550/arXiv.1711.03828}.
 
 \end{thebibliography}
