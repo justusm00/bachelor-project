@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -89,6 +89,11 @@ J.~G. E.~M. Fraaije, B.~A.~C. van Vlimmeren, N.~M. Maurits, M.~Postma, O.~A.
 \newblock \doi{10.1063/1.473129}.
 \newblock URL \url{https://doi.org/10.1063/1.473129}.
 
+\bibitem[Leibler(1980)]{leibler1980theory}
+Ludwik Leibler.
+\newblock Theory of microphase separation in block copolymers.
+\newblock \emph{Macromolecules}, 13\penalty0 (6):\penalty0 1602--1617, 1980.
+
 \bibitem[M.~Rubinstein(2003)]{Rubin03}
 R.H.~Colby M.~Rubinstein.
 \newblock \emph{Polymer Physics}.
@@ -102,11 +107,42 @@ M.~M\"uller and G.~Gompper.
 \newblock \doi{10.1103/PhysRevE.66.041805}.
 \newblock URL \url{https://link.aps.org/doi/10.1103/PhysRevE.66.041805}.
 
+\bibitem[M\"uller(2011)]{Mueller11soft}
+Marcus M\"uller.
+\newblock Studying amphiphilic self-assembly with soft coarse-grained models.
+\newblock \emph{Journal of Statistical Physics}, 145:\penalty0 967--1016, 11
+  2011.
+\newblock \doi{10.1007/s10955-011-0302-z}.
+
+\bibitem[Pangali et~al.(1978)Pangali, Rao, and Berne]{Pangali78}
+C.~Pangali, M.~Rao, and B.J. Berne.
+\newblock On a novel monte carlo scheme for simulating water and aqueous
+  solutions.
+\newblock \emph{Chemical Physics Letters}, 55\penalty0 (3):\penalty0 413--417,
+  1978.
+\newblock ISSN 0009-2614.
+\newblock \doi{https://doi.org/10.1016/0009-2614(78)84003-2}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/0009261478840032}.
+
+\bibitem[Qi and Schmid(2017)]{Shuanhu2017}
+Shuanhu Qi and Friederike Schmid.
+\newblock Hybrid particle-continuum simulations coupling brownian dynamics and
+  local dynamic density functional theory.
+\newblock \emph{Soft Matter}, 13:\penalty0 7938--7947, 2017.
+\newblock \doi{10.1039/C7SM01749A}.
+\newblock URL \url{http://dx.doi.org/10.1039/C7SM01749A}.
+
 \bibitem[Reister(2002)]{Reister02}
 Ellen Reister.
 \newblock \emph{Zusammenhang zwischen der Einzelkettendynamik und der Dynamik
   von Konzentrationsfluktuationen in mehrkomponentigen Polymersystemen}.
 \newblock PhD thesis, Mainz, 2002.
+
+\bibitem[Rossky et~al.(1978)Rossky, Doll, and Friedman]{Rossky78}
+Peter~J. Rossky, Jimmie~D. Doll, and Harold~L. Friedman.
+\newblock Brownian dynamics as smart monte carlo simulation.
+\newblock \emph{Journal of Chemical Physics}, 69:\penalty0 4628--4633, 1978.
 
 \bibitem[{Schneider} and {M{\"u}ller}(2017)]{Schneider_soma}
 Ludwig {Schneider} and Marcus {M{\"u}ller}.
@@ -115,5 +151,16 @@ Ludwig {Schneider} and Marcus {M{\"u}ller}.
   Acceleration (SOMA)}.
 \newblock \emph{arXiv e-prints}, art. arXiv:1711.03828, November 2017.
 \newblock \doi{10.48550/arXiv.1711.03828}.
+
+\bibitem[Torrie and Valleau(1974)]{glenn74}
+Glenn~M. Torrie and John~P. Valleau.
+\newblock Monte carlo free energy estimates using non-boltzmann sampling:
+  Application to the sub-critical lennard-jones fluid.
+\newblock \emph{Chemical Physics Letters}, 28\penalty0 (4):\penalty0 578--581,
+  1974.
+\newblock ISSN 0009-2614.
+\newblock \doi{https://doi.org/10.1016/0009-2614(74)80109-0}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/0009261474801090}.
 
 \end{thebibliography}

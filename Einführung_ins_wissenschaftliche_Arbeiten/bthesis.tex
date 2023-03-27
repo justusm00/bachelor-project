@@ -1,7 +1,7 @@
 % @Author: Your name
 % @Date:   2017-08-17 15:16:16
 % @Last Modified by:   Your name
-% @Last Modified time: 2023-03-27 15:14:29
+% @Last Modified time: 2023-03-27 18:40:11
 %%    2009/03/12 v1.0 GAUBM Vorlage f�r Aschlussarbeiten Physik
 %% Template fuer Bachelor- und Masterarbeiten
 %% an der Fakultaet fuer Physik (c) Thomas Pruschke der GA Universit�t
@@ -150,18 +150,11 @@
 
 \chapter{Introduction}
 
-Polymers are highly versatile macromolecules composed of repeating units called monomers. Their importance for life on earth cannot be overstated, they are involved in countless chemical reactions in the human body and form the backbone of proteins and DNA. They are applied almost everywhere in modern society, ranging from simple packaging materials to highly sophisticated materials used in aerospace engineering. This is owed to their vast range of unique physical properties, such as high elasticity, flexibility and durability. Understanding how polymers form and interact with each other is of crucial importance in developing new materials with very specific properties.\\
-One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. These monomer units may arrange in blocks, so that the resulting polymer can be viewed as a concatenation of homopolymers of different types, this is called a block-copolymer. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases. 
+Polymers are highly versatile macromolecules composed of repeating units called monomers. Their importance for life on earth cannot be overstated, they are involved in countless chemical reactions in the human body and form the backbone of proteins and DNA. They are applied almost everywhere in modern society, ranging from simple packaging materials to highly sophisticated materials used in aerospace engineering. This is owed to their vast range of unique physical properties, such as high elasticity, flexibility and durability. When creating novel materials with very precise features, understanding how polymers form and interact with one another is essential.\\
+One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. These monomer units may arrange into blocks, so that the resulting polymer can be viewed as a concatenation of homopolymers of different types, this is then called a block-copolymer. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases \cite{leibler1980theory}. One of the most important tools in understanding the mechanisms behind this microphase-separation, and many other interesting properties, is the use of computer simulations. These include particle-based molecular dynamics (MD), Monte-Carlo (MC) methods as well as continuum-model-based and hybrid methods \cite{Shuanhu2017}. Particle-based simulations accurately model small-scale phenomena. However, despite rapid advancements in computer technology and high parallelizability, they are too computationally expensive to simulate large systems and therefore capture macroscale phenomena. Continuum models, on the other hand, are less computationally expensive, but at the cost of a lower accuracy on the microscale. On the mesoscale, e.g. the orientation of cylindrical mesophases upon solvent evaporation \cite{Dreyer22}, good agreement between the two types of models was observed. To evaluate the performance of continuum models on small-length scales, it is necessary to compare them to established particle-based models. One way to do this is to consider a simulation box in a particle-based simulation as a small section from a large continuum-model-based simulation. The dynamics are then driven by extracting the time evolution of the density fields at the boundaries from the continuum-simulation and applying them in the particle-based simulation, e.g. employing non-periodic boundary conditions. However, dictating the boundary densities in particle-based simulations is not a trivial task. One option is the use of external fields or the umbrella sampling method \cite{glenn74}, although this has the large drawback that the number of particles in the simulation box remains constant, while in the continuum simulation particles can enter and leave the section at any time. An alternative is to employ conversion zones at the boundaries, in which molecules are converted to different types, mimicking particle exchange with the surrounding. If the densities are defined on a discretized grid, this leads to an optimization problem in which the ideal configuration of molecule types needs to be found, such that the mean squared deviation from the target density is minimized. \\
+In this study, as a first step towards boundary-driven particle simulations, the dynamics of noninteracting homopolymers are investigated. Specifically, a system is pushed away from equilibrium by introducing conversion zones at the boundary regions of the simulation box. This results in a diffusion-driven current and allows the calculation of the collective diffusion coefficient of the system. To this end, the SOft coarse-grained Monte-Carlo Acceleration (SOMA) \cite{Schneider_soma} software package based on the single chain in mean field algorithm (SCMF) \cite{Daoulas06} is employed.
 
 
-\begin{itemize}
-  \item Talk a bit about computer simulations, advantages and disadvantages of particle based and continuum simulations
-  \item Calculate and verify dynamic coefficients
-  \item Study dynamics, not in equilibrium
-  \item cut section from larger continuum simulation and simulate with particle based simulation, boundary-driven simulation
- 
-
-\end{itemize}
 
 \chapter{Theory}
 
@@ -185,7 +178,7 @@ Here, $\phi=\frac{n_AN_A}{n_AN_A+n_BN_B}$ is the monomer fraction of species A, 
   \label{eq:flory_fctl}
 \end{align}
 
-Here, $R_e^2=(N-1)b^2$ is the mean squared end-to-end distance of the polymer in the absence of non-bonded interactions, where $b$ is the statistical segment length, and $\bar N=\left(nR_e^3/V\right)^2$ is the invariant degree of polymerization of the system with volume $V$. The latter is a measure of the number of neighboring chains a chain interacts with. The term proportional to $[\nabla\phi]^2$ is added to the free energy density to ensure that unphysical, sharp changes in the local densities are penalized. The precise form of $k(\phi)$ depends on the strength of the parameter $\chi\,$. For small $\chi N\lesssim 10.5\,,$ one considers the \textit{weak segregation limit} (WSL). For very large $\chi N\gtrsim300\,,$ the \textit{strong segregation limit} (SSL) holds. In these two limits, the prefactor $k$ takes the form \cite{Reister02}
+Here, $R_e^2=(N-1)b^2$ is the mean squared end-to-end distance of the polymer in the absence of non-bonded interactions, where $b$ is the statistical segment length, and $\bar N=\left(nR_e^3/V\right)^2$ is the invariant degree of polymerization of the system with volume $V$. The latter is a measure of the number of neighboring chains a chain interacts with. The term proportional to $[\nabla\phi]^2$ is added to the free energy density to ensure that unphysical, sharp changes in the local densities are penalized. The precise form of $k(\phi)$ depends on the strength of the parameter $\chi\,$. For small $\chi N\lesssim 10.5\,,$ one considers the \textit{weak segregation limit} (WSL). For very large $\chi N\gtrsim300\,,$ the \textit{strong segregation limit} (SSL) holds. In these two limits, the prefactor $k$ takes the form \cite{Reister02}:
 
 \begin{align}
   k_\mathrm{WSL}=\frac{R_e^2}{36\phi(1-\phi)}\,;\qquad k_\mathrm{SSL}=\frac{R_e^2}{18\phi(1-\phi)}\,.
@@ -264,25 +257,25 @@ The Onsager coefficient $\Lambda(\mathbf{r}, \mathbf{r'})$ relates the force act
 %% Alternative derivation in de Gennes paper
 
 
-Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of non-interacting chains with densities $\phi_A$ and $\phi_B\,.$ The currents are simply given by Fick's law of Diffusion
+Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of non-interacting chains with densities $\phi_A$ and $\phi_B\,.$ The currents are simply given by Fick's law of Diffusion:
 
 \begin{align}
   \mathbf{J_A}=-D_\mathrm A\nabla\phi_\mathrm A\,; \qquad \mathbf{J_B}=-D_\mathrm B\nabla\phi_\mathrm B\,.
 \end{align}
 
-The chemical potential per monomer for an ideal gas of A chains with concentration $\phi_A/N$ is
+The chemical potential per monomer for an ideal gas of A chains with concentration $\phi_A/N$ is:
 
 \begin{align}
   \frac{\mu_\mathrm A}{k_BT}=\frac{\partial}{\partial\phi_\mathrm A}\left(\frac{\phi_A}{N}\ln\frac{\phi_A}{N}+\mathrm{const}\right)=N^{-1}\ln\phi_\mathrm A +\mathrm{const}\,,
 \end{align}
 
-and similarly for $\mu_\mathrm B\,.$ The currents may then be related to the chemical potential by writing
+and similarly for $\mu_\mathrm B\,.$ The currents may then be related to the chemical potential by writing:
 \begin{align}
   \mathbf{J}_i=-\Lambda_i\nabla\mu_i\,; \qquad \Lambda_i=D_iN\phi_i^{-1}\,.
   \label{eq:current_ideal}
 \end{align}
 
-Incompressibility, e.g. $\phi_\mathrm A+\phi_\mathrm B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so \eqref{eq:current_ideal} is modified to
+Incompressibility, e.g. $\phi_\mathrm A+\phi_\mathrm B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so \eqref{eq:current_ideal} is modified to:
 
 \begin{subequations}
   \begin{align}
@@ -298,13 +291,13 @@ Due to the incompressibility, the currents must have zero divergence, which impo
   U=(\Lambda_\mathrm A\mu_\mathrm A+\Lambda_\mathrm B\mu_\mathrm B)/(\Lambda_\mathrm A+\Lambda_\mathrm B)\,.
 \end{align}
 
-Since once of the currents is redundant, write $\mathbf{J}=\mathbf{J_A}\,.$ From \eqref{eq:current_onsager}, we get
+Since one of the currents is redundant, write $\mathbf{J}=\mathbf{J_A}\,.$ From \eqref{eq:current_onsager}, we get:
 
 \begin{align}
   \mathbf J=-\Lambda\nabla(\mu_\mathrm A - \mu_\mathrm B)\equiv -\Lambda\nabla\mu\,,
 \end{align}
 
-where $\Lambda=\Lambda_\mathrm A\Lambda_\mathrm B/(\Lambda_\mathrm A+\Lambda_\mathrm B)$ and $\mu$ is the exchange chemical potential. For $D_\mathrm A=D_\mathrm B\equiv D\,,$ this yields
+where $\Lambda=\Lambda_\mathrm A\Lambda_\mathrm B/(\Lambda_\mathrm A+\Lambda_\mathrm B)$ and $\mu$ is the exchange chemical potential. For $D_\mathrm A=D_\mathrm B\equiv D\,,$ this yields:
 
 \begin{align}
   \Lambda=DN\phi(\mathbf{r})(1-\phi(\mathbf{r}))\,.
@@ -317,8 +310,8 @@ It should be noted that, in the general case, the single-chain dynamics will aff
 \chapter{Simulation technique}
 
 To simulate the collective dynamics, a coarse-grained model of the polymers is employed. Within this model, several monomeric repeat units are grouped into an effective interaction center, called \textit{bead}, which allows for an efficient numerical implementation. Nevertheless, in this thesis, the terms \enquote{bead} and \enquote{monomer} will be used interchangeably. A great variety of universal properties of polymeric materials on mesoscopic length scales is accurately captured by coarse-grained models \cite{Baschnagel03}.\\
-The software package that is used for the numerical calculations, SOft coarse-grained Monte-Carlo Acceleration (SOMA) \cite{Schneider_soma}, uses of a combination of a coarse-grained model and the single chain in mean field algorithm (SCMF) \cite{Daoulas06}, which is an extension of the self-consistent field (SCF) method. Unlike conventional SCF theory, the SCMF method includes fluctuation effects which are required to accurately describe certain systems and effects, e.g. dilute polymer solutions, the vicinity of phase transitions, or polymeric microemulsions \cite{Bates97, Mueller02, Schmid03}. Instead of calculating the interaction of a chain with all its neighbors explicitly, the chains are subjected to fluctuating external fields which are frequently recalculated from the density distribution. The time evolution of the system is then performed by MC simulation, during which the external fields remain constant, this is called \textit{quasi-instantaneous field approximation}. The enormous benefit of this is that the chains are decoupled, making it possible to implement it effectively on parallel machines and leverage accelerators like Nivida GPUs. \cite{Schneider_soma}.\\
-While a full description of the SCMF equations can be found in \cite{Daoulas06}, it is important to note that, for AB diblock-copolymers, the interactions are fully described by three coarse-grained parameters: the average mean squared end-to-end distance $R_{e}^2$ of a chain in the absence of non-bonded interactions, the inverse thermal compressibility $\kappa_o N$ and the incompatibility between different bead types $\chi_o N$. 
+The software package that is used for the numerical calculations, SOft coarse-grained Monte-Carlo Acceleration (SOMA) \cite{Schneider_soma}, uses a combination of a coarse-grained model and the single chain in mean field algorithm (SCMF) \cite{Daoulas06}, which is an extension of the self-consistent field (SCF) method. Unlike conventional SCF theory, the SCMF method includes fluctuation effects which are required to accurately describe certain systems and effects, e.g. dilute polymer solutions, the vicinity of phase transitions, or polymeric microemulsions \cite{Bates97, Mueller02, Schmid03}. Instead of calculating the interaction of a chain with all it's surrounding explicitly, the chains are subjected to fluctuating external fields which are frequently recalculated from the density distribution. The densities are defined on a cubic grid. The time evolution of the system is then performed by MC simulation, during which the external fields remain constant, this is called \textit{quasi-instantaneous field approximation}. The enormous benefit of this is that the chains are decoupled, making it possible to implement it effectively on parallel machines and leverage accelerators like Nivida GPUs. \cite{Schneider_soma}. Additionally, a Smart Monte-Carlo (SMC) scheme is employed that uses the strong bonded forces to propose a trial displacement resembling Brownian motion and produces Rouse-like dynamics \cite{Pangali78,Rossky78}.\\
+While a full description of the SCMF equations can be found in \cite{Daoulas06}, and will be omitted here, it is important to note that, for AB diblock-copolymers, the interactions are fully described by three coarse-grained parameters: the average mean squared end-to-end distance $R_{e}^2$ of a chain in the absence of non-bonded interactions, the inverse thermal compressibility $\kappa_o N$ and the incompatibility between different bead types $\chi_o N$. The term \enquote{soft} in SOMA relates to the soft nature of the non-bonded interactions, which arises from the systematic coarse-graining and allows for an overlap of molecules \cite{Mueller11soft}.
 
 \chapter{Collective diffusion of symmetric homopolymers}
 
@@ -326,6 +319,15 @@ While a full description of the SCMF equations can be found in \cite{Daoulas06},
 
 In this section, the collective diffusion properties of noninteracting homopolymers with $N_A=N_B=N$ and $\chi=0$ are investigated. As a reference system, a simulation box with 10000 polymers and dimensions $L_x\times L_y\times L_z=9.75\times3\times3\,R_e^3$ is considered with a spatial discretization of $\Delta L=0.125\,R_e\,$, so the invariant degree of polymerization is $\sqrt{\bar{N}}\approx 120\,$. Periodic boundary conditions are applied in the lateral $y$ and $z$ directions, whereas impenetrable walls are applied in the $x$ direction. Initially, the polymers are distributed homogeneously in the system. To stimulate diffusion, conversion zones are introduced close to the walls at $x<0.25\,R_e$ and $x>9\,R_e\,$. In each time step, if the center-of-mass coordinate $\mathbf r_{cm}$ of a polymer of type A lies in the conversion zone at $x<0.25\,R_e\,$, it is converted to type B with probability $p(A\rightarrow B)=r\phi(\mathbf r_{cm})$ \cite{Dreyer22}. Analogously, conversion from B to A takes place in the conversion zone at $x>9\,R_e$ at the same rate $r\,$. The total currents $\mathbf{J_A}$ and $\mathbf{J_B}$ are measured by tracking the number of polymer conversions. \\
 The computation of the transport properties is complicated by boundary effects, such as a steep density drop close to the hard walls, which is of entropic origin. Furthermore, chains whose center of mass lies in the conversion zone may extend far beyond that zone. The range of these effects is approximated as $R_e$ and measurements are only taken in the region that is unaffected. 
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/simulation_box.png}
+  \caption{}
+  \label{fig:simulation_box}
+\end{figure}
+
 
 \section{Collective diffusion coefficient}
 
@@ -364,7 +366,7 @@ Here, $\phi'=\frac{\partial\phi}{\partial x}\,.$ The resulting chemical potentia
 
 In Figure \ref{fig:chemical_potential}, it can be seen that the terms arising from the square gradient term in the free energy do not contribute to the chemical potential, other than adding noise due to the numerical derivatives. Therefore, these terms prohibit an accurate numerical computation of the chemical potential gradient and thus the Onsager coefficient. In the subsequent discussion, these terms will be neglected. This approximation leads to a linear density profile, as derived below, which is also consistent with the simulation results shown in figure \ref{fig:density_profile}.
 
-From \eqref{eq:current}, \eqref{eq:onsager} and \eqref{eq:mu_flory}, the current becomes
+From \eqref{eq:current}, \eqref{eq:onsager} and \eqref{eq:mu_flory}, the current becomes:
 
 
 \begin{align}
@@ -374,20 +376,20 @@ From \eqref{eq:current}, \eqref{eq:onsager} and \eqref{eq:mu_flory}, the current
 
 
 
-Here, $\rho_0=nN/V$ is the average bead density in the system. Together with \eqref{eq:conti}, this gives the well-known diffusion equation
+Here, $\rho_0=nN/V$ is the average bead density in the system. Together with \eqref{eq:conti}, this gives the well-known diffusion equation:
 \begin{align}
   \frac{\partial\phi(\mathbf r, t)}{\partial t}-D\rho_0  \phi''=0\,.
   \label{eq:diffusion}
 \end{align}
 
-In the steady state, this simply yields $\phi''=0\,,$ so a linear density profile is obtained. From \eqref{eq:current_a} and the condition that $\phi(L_x/2)=0.5\,,$ which follows from the equal conversion rates, the density profile becomes
+In the steady state, this simply yields $\phi''=0\,,$ so a linear density profile is obtained. From \eqref{eq:current_a} and the condition that $\phi(L_x/2)=0.5\,,$ which follows from the equal conversion rates, the density profile becomes:
 
 \begin{align}
   \phi(x)=-\frac{J}{D\rho_0}x + \frac{1}{2} (1-L_x)\,.
   \label{eq:density_profile_ana}
 \end{align}
 
-To verify \eqref{eq:onsager}, the Onsager coefficient may also be obtained directly from the simulation results using \eqref{eq:current}. Again assuming local coupling and making use of \eqref{eq:mu_flory}, while neglecting the terms arising from the square gradient, one obtains
+To verify \eqref{eq:onsager}, the Onsager coefficient may also be obtained directly from the simulation results using \eqref{eq:current}. Again assuming local coupling and making use of \eqref{eq:mu_flory}, while neglecting the terms arising from the square gradient, one obtains:
 
 \begin{align}
   \Lambda=-\frac{JR_e^3}{\sqrt{\bar N}\phi'}\phi(1-\phi).
@@ -407,24 +409,26 @@ Figure \ref{fig:onsager_coeff} shows that the Onsager coefficients obtained from
 
 
 \chapter{Discussion}
-Text\dots
+
+The collective diffusion coefficient for a mixture of non-interacting polymers has been calculated.
+
 \chapter{Summary}
 Text\dots
 
-\appendix
+% \appendix
 
-\chapter{erster Anhang}
+% \chapter{erster Anhang}
 
 
-\cleardoublepage
+% \cleardoublepage
 %% Bibliographie. Das Argument muss der Name der BIBTeX-Datenbank stehen.
 %% Ein Beispiel fuer eine solche Datenbank finden Sie in bthesis_datenbank.bib
 \bibliography{bthesis_datenbank} 
 
-\chapter*{Danksagung}
-Dank\dots
+% \chapter*{Danksagung}
+% Dank\dots
 
-%% Dieser Befehl MUSS am Ende stehen und erzeugt die Erklaerung ueber die
-%% benutzten Mittel
-\Declaration
+% %% Dieser Befehl MUSS am Ende stehen und erzeugt die Erklaerung ueber die
+% %% benutzten Mittel
+% \Declaration
 \end{document}

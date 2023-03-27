@@ -4,45 +4,45 @@ The top-level auxiliary file: bthesis.aux
 The style file: plainnat.bst
 Database file #1: bthesis_datenbank.bib
 Warning--empty school in Reister02
-You've used 13 entries,
+You've used 19 entries,
             2773 wiz_defined-function locations,
-            716 strings with 8125 characters,
-and the built_in function-call counts, 6821 in all, are:
-= -- 617
-> -- 434
-< -- 9
-+ -- 148
-- -- 135
-* -- 620
-:= -- 1098
-add.period$ -- 60
-call.type$ -- 13
-change.case$ -- 82
-chr.to.int$ -- 13
-cite$ -- 27
-duplicate$ -- 262
-empty$ -- 496
-format.name$ -- 154
-if$ -- 1394
+            766 strings with 9403 characters,
+and the built_in function-call counts, 9651 in all, are:
+= -- 892
+> -- 556
+< -- 13
++ -- 190
+- -- 171
+* -- 859
+:= -- 1535
+add.period$ -- 87
+call.type$ -- 19
+change.case$ -- 112
+chr.to.int$ -- 19
+cite$ -- 39
+duplicate$ -- 384
+empty$ -- 742
+format.name$ -- 200
+if$ -- 1996
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 13
-newline$ -- 94
-num.names$ -- 52
-pop$ -- 132
+missing$ -- 19
+newline$ -- 133
+num.names$ -- 76
+pop$ -- 173
 preamble$ -- 1
-purify$ -- 71
+purify$ -- 95
 quote$ -- 0
-skip$ -- 201
+skip$ -- 288
 stack$ -- 0
-substring$ -- 266
-swap$ -- 18
+substring$ -- 429
+swap$ -- 25
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 138
+type$ -- 204
 warning$ -- 1
-while$ -- 52
+while$ -- 77
 width$ -- 0
-write$ -- 217
+write$ -- 313
 (There was 1 warning)

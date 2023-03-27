@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.17)  27 MAR 2023 15:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.3.17)  27 MAR 2023 18:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -711,53 +711,68 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 ]
 chapter 1.
-[1
+
+Underfull \vbox (badness 1478) has occurred while \output is active []
+
+ [1
 
 
-] [2
+] [2]
+chapter 2.
+[3
 
 
 ]
-chapter 2.
-[3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [4]
-Overfull \hbox (6.35861pt too wide) in paragraph at lines 267--268
+Overfull \hbox (6.35861pt too wide) in paragraph at lines 260--261
 []\T1/lmr/m/n/12 Following the dis-cus-sion in the ap-pendix of [[]], con-sider a mix-ture of non-interacting
  []
 
 [5] [6]
 chapter 3.
-[7
+
+Underfull \vbox (badness 1478) has occurred while \output is active []
+
+ [7
 
 
-] [8
+] [8]
+chapter 4.
+<figures/simulation_box.png, id=164, 386.44376pt x 217.31187pt>
+File: figures/simulation_box.png Graphic file (type png)
+<use figures/simulation_box.png>
+Package pdftex.def Info: figures/simulation_box.png  used on input line 326.
+(pdftex.def)             Requested size: 298.75267pt x 168.00046pt.
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[9
 
 
 ]
-chapter 4.
-[9]
-<figures/density_coll_diff.pdf, id=159, 433.62pt x 289.08pt>
+<figures/density_coll_diff.pdf, id=173, 433.62pt x 289.08pt>
 File: figures/density_coll_diff.pdf Graphic file (type pdf)
 <use figures/density_coll_diff.pdf>
-Package pdftex.def Info: figures/density_coll_diff.pdf  used on input line 349.
+Package pdftex.def Info: figures/density_coll_diff.pdf  used on input line 351.
 (pdftex.def)             Requested size: 192.05482pt x 128.03809pt.
-<figures/mu_coll_diff.pdf, id=160, 433.62pt x 289.08pt>
+<figures/mu_coll_diff.pdf, id=174, 433.62pt x 289.08pt>
 File: figures/mu_coll_diff.pdf Graphic file (type pdf)
 <use figures/mu_coll_diff.pdf>
-Package pdftex.def Info: figures/mu_coll_diff.pdf  used on input line 356.
+Package pdftex.def Info: figures/mu_coll_diff.pdf  used on input line 358.
 (pdftex.def)             Requested size: 192.05482pt x 128.03809pt.
-
-Underfull \vbox (badness 2735) has occurred while \output is active []
-
- [10 </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/density_coll_diff.pdf> </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/mu_coll_diff.pdf>]
-<figures/onsager_coll_diff.pdf, id=246, 433.62pt x 289.08pt>
+ [10 </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/simulation_box.png> </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/density_coll_diff.pdf> </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/mu_coll_diff.pdf>]
+<figures/onsager_coll_diff.pdf, id=261, 433.62pt x 289.08pt>
 File: figures/onsager_coll_diff.pdf Graphic file (type pdf)
 <use figures/onsager_coll_diff.pdf>
-Package pdftex.def Info: figures/onsager_coll_diff.pdf  used on input line 399.
+Package pdftex.def Info: figures/onsager_coll_diff.pdf  used on input line 401.
 (pdftex.def)             Requested size: 298.75267pt x 199.1787pt.
- [11 </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/onsager_coll_diff.pdf>] [12]
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[11] [12 </Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/onsager_coll_diff.pdf>]
 chapter 5.
 [13
 
@@ -767,53 +782,35 @@ chapter 5.
 
 ]
 chapter 6.
-[15] [16
+(/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl [15] [16
 
 
 ]
-chapter A.
-[17] [18
-
-
-] (/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 16.
  (/usr/local/texlive/2022/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [19
-
-
-]) [20] [21
-
-
-]
-Underfull \hbox (badness 5036) in paragraph at lines 429--429
-[]|\T1/lmr/m/n/12 Ich ver-sichere hi-er-mit, dass ich die vor-liegende Ar-beit
+) [17]
+Underfull \hbox (badness 1043) in paragraph at lines 118--127
+\T1/lmr/m/n/12 84003-[]2$.  URL []$\T1/lmtt/m/n/12 https : / / www . sciencedirect . com / science / article / pii /
  []
 
-
-Underfull \hbox (badness 1565) in paragraph at lines 429--429
-\T1/lmr/m/n/12 mir angegebe-nen Quellen und Hil-f-s-mit-tel ver-wen-det habe.
- []
-
-[22
-
-] (/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux)
+[18]) [19] (/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux)
 Package rerunfilecheck Info: File `bthesis.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 18393 strings out of 478268
- 323844 string characters out of 5846347
+ 18419 strings out of 478268
+ 324449 string characters out of 5846347
  765614 words of memory out of 5000000
- 36209 multiletter control sequences out of 15000+600000
+ 36231 multiletter control sequences out of 15000+600000
  540528 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 122i,11n,120p,10762b,591s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on /Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.pdf (26 pages, 359660 bytes).
+ 122i,11n,120p,10762b,609s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmro12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmssbx10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/lm/lmtt12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb>
+Output written on /Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.pdf (23 pages, 374629 bytes).
 PDF statistics:
- 504 PDF objects out of 1000 (max. 8388607)
- 352 compressed objects within 4 object streams
- 76 named destinations out of 1000 (max. 500000)
- 117 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 506 PDF objects out of 1000 (max. 8388607)
+ 356 compressed objects within 4 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 114 words of extra memory for PDF output out of 10000 (max. 10000000)
 
