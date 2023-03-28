@@ -219,7 +219,7 @@
     \vfill\null
     \noindent
     \begin{tabular}[t]{p{0.24\linewidth}p{0.76\textwidth-4\tabcolsep}}
-      \bfseries Thesis period:&
+      \bfseries Editing period:&
       \begin{minipage}[t]{0.76\textwidth-4\tabcolsep}%
         \dateselectlanguage{english}\setdatebynumber{\the@countbegin}\datedate\ 
         until \setdatebynumber{\the@countend}\datedate\end{minipage}\\&\\

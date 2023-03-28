@@ -1,7 +1,7 @@
 % @Author: Your name
 % @Date:   2017-08-17 15:16:16
 % @Last Modified by:   Your name
-% @Last Modified time: 2023-03-27 18:40:11
+% @Last Modified time: 2023-03-28 19:29:41
 %%    2009/03/12 v1.0 GAUBM Vorlage f�r Aschlussarbeiten Physik
 %% Template fuer Bachelor- und Masterarbeiten
 %% an der Fakultaet fuer Physik (c) Thomas Pruschke der GA Universit�t
@@ -89,8 +89,8 @@
 \Institute{Institut f\"ur Theoretische Physik}
 \SecondReferee{Prof. Dr. Stefan Klumpp}
 %% Beginn und Ende des Anfertigungszeitraumes
-\ThesisBegin{1}{4}{2009}
-\ThesisEnd{15}{7}{2009}
+\ThesisBegin{1}{3}{2023}
+\ThesisEnd{31}{3}{2023}
 %% DO NOT TOUCH THESE LINES!!!!
 \frontmatter
 \maketitle
@@ -151,12 +151,19 @@
 \chapter{Introduction}
 
 Polymers are highly versatile macromolecules composed of repeating units called monomers. Their importance for life on earth cannot be overstated, they are involved in countless chemical reactions in the human body and form the backbone of proteins and DNA. They are applied almost everywhere in modern society, ranging from simple packaging materials to highly sophisticated materials used in aerospace engineering. This is owed to their vast range of unique physical properties, such as high elasticity, flexibility and durability. When creating novel materials with very precise features, understanding how polymers form and interact with one another is essential.\\
-One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. These monomer units may arrange into blocks, so that the resulting polymer can be viewed as a concatenation of homopolymers of different types, this is then called a block-copolymer. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases \cite{leibler1980theory}. One of the most important tools in understanding the mechanisms behind this microphase-separation, and many other interesting properties, is the use of computer simulations. These include particle-based molecular dynamics (MD), Monte-Carlo (MC) methods as well as continuum-model-based and hybrid methods \cite{Shuanhu2017}. Particle-based simulations accurately model small-scale phenomena. However, despite rapid advancements in computer technology and high parallelizability, they are too computationally expensive to simulate large systems and therefore capture macroscale phenomena. Continuum models, on the other hand, are less computationally expensive, but at the cost of a lower accuracy on the microscale. On the mesoscale, e.g. the orientation of cylindrical mesophases upon solvent evaporation \cite{Dreyer22}, good agreement between the two types of models was observed. To evaluate the performance of continuum models on small-length scales, it is necessary to compare them to established particle-based models. One way to do this is to consider a simulation box in a particle-based simulation as a small section from a large continuum-model-based simulation. The dynamics are then driven by extracting the time evolution of the density fields at the boundaries from the continuum-simulation and applying them in the particle-based simulation, e.g. employing non-periodic boundary conditions. However, dictating the boundary densities in particle-based simulations is not a trivial task. One option is the use of external fields or the umbrella sampling method \cite{glenn74}, although this has the large drawback that the number of particles in the simulation box remains constant, while in the continuum simulation particles can enter and leave the section at any time. An alternative is to employ conversion zones at the boundaries, in which molecules are converted to different types, mimicking particle exchange with the surrounding. If the densities are defined on a discretized grid, this leads to an optimization problem in which the ideal configuration of molecule types needs to be found, such that the mean squared deviation from the target density is minimized. \\
+One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. These monomer units may arrange into blocks so that the resulting polymer can be viewed as a concatenation of homopolymers of different types and lengths, this is then called a block-copolymer. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases \cite{leibler1980theory}. One of the most important tools in understanding the mechanisms behind this microphase separation, and many other interesting properties, is the use of computer simulations. These include particle-based molecular dynamics (MD), Monte-Carlo (MC) methods as well as continuum-model-based and hybrid methods \cite{Shuanhu2017}. Particle-based simulations accurately model small-scale phenomena. However, despite rapid advancements in computer technology and high parallelizability, they are too computationally expensive to simulate large systems and therefore to capture macroscale phenomena. Continuum models, on the other hand, are less computationally expensive, but at the cost of a lower accuracy on the microscale. On the mesoscale, good agreement between the two types of models was observed, e.g. in the orientation of cylindrical mesophases upon solvent evaporation \cite{Dreyer22}. To evaluate the accuracy of continuum models on small-length scales, it is necessary to compare them to established particle-based models. One approach to this is to consider a simulation box in a particle-based simulation as a small section from a large continuum-model-based simulation. The dynamics are then driven by extracting the time evolution of the density fields at the boundaries from the continuum simulation and applying them in the particle-based simulation, e.g. employing non-periodic boundary conditions. However, dictating the boundary densities in particle-based simulations is not a trivial task. One option is the use of external fields or the umbrella sampling method \cite{glenn74}, although this has the large drawback that the number of particles in the simulation box remains constant, while in the continuum simulation particles can enter and leave the section at any time. An alternative is to employ conversion zones at the boundaries, in which molecules are converted to different types, mimicking particle exchange with the surrounding. If the densities are defined on a discretized grid, this leads to an optimization problem in which the ideal configuration of molecule types needs to be found, such that the mean squared deviation from the target density is minimized. \\
 In this study, as a first step towards boundary-driven particle simulations, the dynamics of noninteracting homopolymers are investigated. Specifically, a system is pushed away from equilibrium by introducing conversion zones at the boundary regions of the simulation box. This results in a diffusion-driven current and allows the calculation of the collective diffusion coefficient of the system. To this end, the SOft coarse-grained Monte-Carlo Acceleration (SOMA) \cite{Schneider_soma} software package based on the single chain in mean field algorithm (SCMF) \cite{Daoulas06} is employed.
 
 
 
 \chapter{Theory}
+
+\section{Single chain properties}
+
+\begin{itemize}
+  \item Gaussian chains
+  \item Rouse model
+\end{itemize}
 
 \section{Polymeric mixtures}
 Polymer mixtures consist of two or more chemically different polymer types. The mechanical and thermodynamic properties can vary greatly with several factors such as composition, molecular weight and interactions between the polymers. This makes them desirable for manufacturing materials with tailored properties.\\
@@ -164,13 +171,13 @@ If the composition is uniform everywhere, then the mixture is called homogeneous
 
 \subsection{Flory Huggins Theory}
 
-Whether mixing or phase separation will be favored can be predicted by determining the free energy change associated with mixing the components. This free energy change can be computed within the lattice model developed by Flory and Huggins \cite{Flory42}. Within the Flory-Huggins framework, no volume change is assumed upon mixing. With this assumption, it is convenient to represent the system on a lattice. The lattice site volume $v_0$ corresponds to the smallest molecular unit and every macromolecule takes up one or multiple lattice sites. Consider a binary mixture with $n_A$ polymers of species A and chain length $N_A$ and $n_B$ polymers of species B and chain length $N_B$. Let the total number of polymers be $n=n_A+n_B\,.$ The free energy of mixing per lattice site $\Delta F_{mix}$ is then given by the Flory-Huggins equation of polymer solutions \cite[S. 143]{Rubin03}:
+Whether mixing or phase separation will be favored can be predicted by determining the free energy change associated with mixing the components. This free energy change can be computed within the lattice model developed by Flory and Huggins \cite{Flory42}. Within the Flory-Huggins framework, no volume change is assumed upon mixing. With this assumption, it is convenient to represent the system on a lattice. The lattice site volume $v_0$ corresponds to the smallest molecular unit and every macromolecule takes up one or multiple lattice sites. Consider a binary mixture with $n_\mathrm A$ polymers of species A and chain length $N_\mathrm A$ and $n_\mathrm B$ polymers of species B and chain length $N_\mathrm B$. Let the total number of polymers be $n=n_\mathrm A+n_\mathrm B\,.$ The free energy of mixing per lattice site $\Delta F_{mix}$ is then given by the Flory-Huggins equation of polymer solutions \cite[S. 143]{Rubin03}:
 
 \begin{align}
-  \frac{\Delta F_{mix}}{k_BT}=\frac{\phi}{N_A}\ln\phi+\frac{1-\phi}{N_B}\ln(1-\phi)+\chi\phi(1-\phi)\,.
+  \frac{\Delta F_{mix}}{k_BT}=\frac{\phi}{N_\mathrm A}\ln\phi+\frac{1-\phi}{N_\mathrm B}\ln(1-\phi)+\chi\phi(1-\phi)\,.
 \end{align}
 
-Here, $\phi=\frac{n_AN_A}{n_AN_A+n_BN_B}$ is the monomer fraction of species A, $k_B$ is the Boltzmann constant, $T$ is the system temperature and $\chi$ is the Flory interaction parameter which characterizes the interaction between different polymer species and can be obtained from experiments. A positive value of $\chi$ opposes mixing while a negative value promotes it, knowing the value of $\chi$, therefore, allows a qualitative prediction of the phase separation behavior. Note that so far, no space dependency of $\phi$ has been assumed. In the following discussion, a symmetric mixture with $N_A=N_B=N$ is assumed. To fully capture the complexity of the system, the Flory-Huggins model has to be extended to include spatial variations of $\phi$, which gives rise to the de Gennes-Flory-Huggins free energy functional  \cite{deGennes80, Reister02}:
+Here, $\phi=\frac{n_\mathrm AN_\mathrm A}{n_\mathrm AN_\mathrm A+n_\mathrm BN_\mathrm B}$ is the monomer fraction of species A, $k_B$ is the Boltzmann constant, $T$ is the system temperature and $\chi$ is the Flory interaction parameter which characterizes the interaction between different polymer species and can be obtained from experiments. A positive value of $\chi$ opposes mixing while a negative value promotes it, knowing the value of $\chi$, therefore, allows a qualitative prediction of the phase separation behavior. Note that so far, no space dependency of $\phi$ has been assumed. In the following discussion, a symmetric mixture with $N_\mathrm A=N_\mathrm B=N$ is assumed. To fully capture the complexity of the system, the Flory-Huggins model has to be extended to include spatial variations of $\phi$, which gives rise to the de Gennes-Flory-Huggins free energy functional  \cite{deGennes80, Reister02}:
 
 
 \begin{align}
@@ -187,7 +194,7 @@ Here, $R_e^2=(N-1)b^2$ is the mean squared end-to-end distance of the polymer in
 
 \section{Collective diffusion}
 
-Consider a binary mixture of polymers with $N_A=N_B=N\,$. Since the number of monomers in the system is constant, the continuity equation holds:
+Consider again a binary mixture of polymers with $N_\mathrm A=N_\mathrm B=N\,$. Since the number of monomers in the system is constant, the continuity equation holds:
 
 \begin{align}
   \frac{\partial\phi}{\partial t}+\nabla\cdot\mathbf{J}=0\,.
@@ -209,14 +216,14 @@ The Onsager coefficient $\Lambda(\mathbf{r}, \mathbf{r'})$ relates the force act
 % Following the discussion in the appendix of \cite{Binder83}, a continuity equation can be written down for each type individually:
 
 % \begin{align}
-%   \frac{\partial\phi_A}{\partial t}+\nabla\cdot\mathbf{J_A}=0\,; \qquad \frac{\partial\phi_B}{\partial t}+\nabla\cdot\mathbf{J_B}=0\,.
+%   \frac{\partial\phi_\mathrm A}{\partial t}+\nabla\cdot\mathbf{J_A}=0\,; \qquad \frac{\partial\phi_\mathrm B}{\partial t}+\nabla\cdot\mathbf{J_B}=0\,.
 %   \label{eq:conti_ab}
 % \end{align}
 
-% With the additional assumption of incompressibility, e.g. $\rho(\mathbf{r},t)\equiv\phi_A(\mathbf{r},t)+\phi_B(\mathbf{r},t)=1$ everywhere for all times, the continuity equation for the total density $\rho$ separates into two distinct equations:
+% With the additional assumption of incompressibility, e.g. $\rho(\mathbf{r},t)\equiv\phi_\mathrm A(\mathbf{r},t)+\phi_\mathrm B(\mathbf{r},t)=1$ everywhere for all times, the continuity equation for the total density $\rho$ separates into two distinct equations:
 
 % \begin{align}
-%   \frac{\partial}{\partial t}(\phi_A+\phi_B)=0\,; \qquad \nabla\cdot (\mathbf{J_A}+\mathbf{J_B})=0  \,.
+%   \frac{\partial}{\partial t}(\phi_\mathrm A+\phi_\mathrm B)=0\,; \qquad \nabla\cdot (\mathbf{J_A}+\mathbf{J_B})=0  \,.
 % \end{align}
 
 % This implies that $\mathbf{J_A}=-\mathbf{J_B}\,,$ which simply reflects the condition of incompressibility: for a bead of type A to move, a bead of type B has to take its place and vice-versa. The Onsager relations are then
@@ -242,7 +249,7 @@ The Onsager coefficient $\Lambda(\mathbf{r}, \mathbf{r'})$ relates the force act
 %   \mathbf J=-\frac{1}{k_BT}\left (\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\right )^{-1}\nabla(\mu_\mathrm A-\mu_\mathrm B)\,.
 % \end{align}
 
-% The Onsager coefficient that relates $\mathbf{J}$ to the local chemical potential difference is identified as $\Lambda^{-1}=\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\,.$ By relating the currents in \eqref{eq:current_onsager} to the single chain diffusion coefficients $D_A$ and $D_B\,,$ the Onsager coefficients may be identified as $\Lambda_\mathrm{AA}=N_AD_A\phi$ and $\Lambda_\mathrm{BB}=N_BD_B(1-\phi)\,.$ For a symmetric mixture with $N_A=N_B\equiv N $ and $D_A=D_B\equiv D\,,$ the Onsager coefficient corresponding to $\Delta\mu$ becomes
+% The Onsager coefficient that relates $\mathbf{J}$ to the local chemical potential difference is identified as $\Lambda^{-1}=\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\,.$ By relating the currents in \eqref{eq:current_onsager} to the single chain diffusion coefficients $D_A$ and $D_B\,,$ the Onsager coefficients may be identified as $\Lambda_\mathrm{AA}=N_\mathrm AD_A\phi$ and $\Lambda_\mathrm{BB}=N_\mathrm BD_B(1-\phi)\,.$ For a symmetric mixture with $N_\mathrm A=N_\mathrm B\equiv N $ and $D_A=D_B\equiv D\,,$ the Onsager coefficient corresponding to $\Delta\mu$ becomes
 
 
 % \begin{align}
@@ -257,16 +264,16 @@ The Onsager coefficient $\Lambda(\mathbf{r}, \mathbf{r'})$ relates the force act
 %% Alternative derivation in de Gennes paper
 
 
-Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of non-interacting chains with densities $\phi_A$ and $\phi_B\,.$ The currents are simply given by Fick's law of Diffusion:
+Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of non-interacting chains with densities $\phi_\mathrm A$ and $\phi_\mathrm B\,.$ The currents are simply given by Fick's law of Diffusion:
 
 \begin{align}
   \mathbf{J_A}=-D_\mathrm A\nabla\phi_\mathrm A\,; \qquad \mathbf{J_B}=-D_\mathrm B\nabla\phi_\mathrm B\,.
 \end{align}
 
-The chemical potential per monomer for an ideal gas of A chains with concentration $\phi_A/N$ is:
+The chemical potential per monomer for an ideal gas of A chains with concentration $\phi_\mathrm A/N$ is:
 
 \begin{align}
-  \frac{\mu_\mathrm A}{k_BT}=\frac{\partial}{\partial\phi_\mathrm A}\left(\frac{\phi_A}{N}\ln\frac{\phi_A}{N}+\mathrm{const}\right)=N^{-1}\ln\phi_\mathrm A +\mathrm{const}\,,
+  \frac{\mu_\mathrm A}{k_BT}=\frac{\partial}{\partial\phi_\mathrm A}\left(\frac{\phi_\mathrm A}{N}\ln\frac{\phi_\mathrm A}{N}+\mathrm{const}\right)=N^{-1}\ln\phi_\mathrm A +\mathrm{const}\,,
 \end{align}
 
 and similarly for $\mu_\mathrm B\,.$ The currents may then be related to the chemical potential by writing:
@@ -275,7 +282,7 @@ and similarly for $\mu_\mathrm B\,.$ The currents may then be related to the che
   \label{eq:current_ideal}
 \end{align}
 
-Incompressibility, e.g. $\phi_\mathrm A+\phi_\mathrm B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so \eqref{eq:current_ideal} is modified to:
+Here, $i=\mathrm A\,,\mathrm B\,.$ Incompressibility, e.g. $\phi_\mathrm A+\phi_\mathrm B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so \eqref{eq:current_ideal} is modified to:
 
 \begin{subequations}
   \begin{align}
@@ -313,23 +320,29 @@ To simulate the collective dynamics, a coarse-grained model of the polymers is e
 The software package that is used for the numerical calculations, SOft coarse-grained Monte-Carlo Acceleration (SOMA) \cite{Schneider_soma}, uses a combination of a coarse-grained model and the single chain in mean field algorithm (SCMF) \cite{Daoulas06}, which is an extension of the self-consistent field (SCF) method. Unlike conventional SCF theory, the SCMF method includes fluctuation effects which are required to accurately describe certain systems and effects, e.g. dilute polymer solutions, the vicinity of phase transitions, or polymeric microemulsions \cite{Bates97, Mueller02, Schmid03}. Instead of calculating the interaction of a chain with all it's surrounding explicitly, the chains are subjected to fluctuating external fields which are frequently recalculated from the density distribution. The densities are defined on a cubic grid. The time evolution of the system is then performed by MC simulation, during which the external fields remain constant, this is called \textit{quasi-instantaneous field approximation}. The enormous benefit of this is that the chains are decoupled, making it possible to implement it effectively on parallel machines and leverage accelerators like Nivida GPUs. \cite{Schneider_soma}. Additionally, a Smart Monte-Carlo (SMC) scheme is employed that uses the strong bonded forces to propose a trial displacement resembling Brownian motion and produces Rouse-like dynamics \cite{Pangali78,Rossky78}.\\
 While a full description of the SCMF equations can be found in \cite{Daoulas06}, and will be omitted here, it is important to note that, for AB diblock-copolymers, the interactions are fully described by three coarse-grained parameters: the average mean squared end-to-end distance $R_{e}^2$ of a chain in the absence of non-bonded interactions, the inverse thermal compressibility $\kappa_o N$ and the incompatibility between different bead types $\chi_o N$. The term \enquote{soft} in SOMA relates to the soft nature of the non-bonded interactions, which arises from the systematic coarse-graining and allows for an overlap of molecules \cite{Mueller11soft}.
 
+\begin{itemize}
+  \item Further description of SCMF?
+  \item describe workflow?
+\end{itemize}
+
 \chapter{Collective diffusion of symmetric homopolymers}
 
 \section{Reference system}
 
-In this section, the collective diffusion properties of noninteracting homopolymers with $N_A=N_B=N$ and $\chi=0$ are investigated. As a reference system, a simulation box with 10000 polymers and dimensions $L_x\times L_y\times L_z=9.75\times3\times3\,R_e^3$ is considered with a spatial discretization of $\Delta L=0.125\,R_e\,$, so the invariant degree of polymerization is $\sqrt{\bar{N}}\approx 120\,$. Periodic boundary conditions are applied in the lateral $y$ and $z$ directions, whereas impenetrable walls are applied in the $x$ direction. Initially, the polymers are distributed homogeneously in the system. To stimulate diffusion, conversion zones are introduced close to the walls at $x<0.25\,R_e$ and $x>9\,R_e\,$. In each time step, if the center-of-mass coordinate $\mathbf r_{cm}$ of a polymer of type A lies in the conversion zone at $x<0.25\,R_e\,$, it is converted to type B with probability $p(A\rightarrow B)=r\phi(\mathbf r_{cm})$ \cite{Dreyer22}. Analogously, conversion from B to A takes place in the conversion zone at $x>9\,R_e$ at the same rate $r\,$. The total currents $\mathbf{J_A}$ and $\mathbf{J_B}$ are measured by tracking the number of polymer conversions. \\
+In this section, the collective diffusion properties of noninteracting homopolymers with $N_\mathrm A=N_\mathrm B=N$ and $\chi=0$ are investigated. As a reference system, a simulation box with 10000 polymers and dimensions $L_x\times L_y\times L_z=9.75\times3\times3\,R_e^3$ is used, so the invariant degree of polymerization is $\sqrt{\bar{N}}\approx 114\,$. The spatial discretization is $\Delta L=0.125\,R_e\,$.  Periodic boundary conditions are applied in the lateral $y$ and $z$ directions, whereas impenetrable walls are applied in the $x$ direction. Initially, the polymers are distributed homogeneously in the system. To stimulate diffusion, conversion zones are introduced close to the walls at $x<0.25\,R_e$ and $x>9\,R_e\,$. In each time step, if the center-of-mass coordinate $\mathbf r_{cm}$ of a polymer of type A lies in the conversion zone at $x<0.25\,R_e\,$, it is converted to type B with probability $p(A\rightarrow B)=r\phi(\mathbf r_{cm})$ \cite{Dreyer22}. Analogously, conversion from B to A takes place in the conversion zone at $x>9\,R_e$ at the same rate $r\,$. The total currents $\mathbf{J_A}$ and $\mathbf{J_B}$ are measured by tracking the number of polymer conversions. The simulation setup is depicted in Figure \ref{fig:simulation_box}. \\
 The computation of the transport properties is complicated by boundary effects, such as a steep density drop close to the hard walls, which is of entropic origin. Furthermore, chains whose center of mass lies in the conversion zone may extend far beyond that zone. The range of these effects is approximated as $R_e$ and measurements are only taken in the region that is unaffected. 
 
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{figures/simulation_box.png}
-  \caption{}
+  \caption{Simulation setup.}
   \label{fig:simulation_box}
 \end{figure}
 
 
 \section{Collective diffusion coefficient}
+\label{sec:colldiff}
 
 It should be pointed out that the system can be described effectively in one dimension due to the periodic boundary conditions in the lateral directions. The chemical potential is obtained by taking the functional derivative $\frac{\delta F}{\delta\phi}$ of \eqref{eq:flory_fctl}. Since $\chi=0\,$, no phase separation occurs and the local density differences are entirely due to the dynamics. Assuming the WSL, the chemical potential becomes:
 
@@ -359,24 +372,24 @@ Here, $\phi'=\frac{\partial\phi}{\partial x}\,.$ The resulting chemical potentia
       \caption{}
       \label{fig:chemical_potential}
   \end{subfigure}
-     \caption{Density profile obtained from simulation (a) and chemical potential profile obtained from \eqref{eq:mu_flory} (b)  averaged over time, $y$ and $z$ for $r=1.0\,$. }
+     \caption{Density profile obtained from simulation (a) and chemical potential profile obtained from \eqref{eq:mu_flory} (b)  averaged over time, $y$ and $z$ for $r=1.0\,$. The analytical curve in (a) corresponds to \eqref{eq:density_profile_ana}.}
      \label{fig:mu_phi}
 \end{figure}
 
 
-In Figure \ref{fig:chemical_potential}, it can be seen that the terms arising from the square gradient term in the free energy do not contribute to the chemical potential, other than adding noise due to the numerical derivatives. Therefore, these terms prohibit an accurate numerical computation of the chemical potential gradient and thus the Onsager coefficient. In the subsequent discussion, these terms will be neglected. This approximation leads to a linear density profile, as derived below, which is also consistent with the simulation results shown in figure \ref{fig:density_profile}.
+The terms arising from the square gradient term in the free energy are problematic as the numerical derivatives cannot be accurately determined. This leads to noise, as can be seen in Figure \ref{fig:chemical_potential}. Therefore, these terms prohibit an accurate numerical computation of the chemical potential gradient and thus the Onsager coefficient. In the subsequent discussion, these terms will be neglected. This approximation is discussed further in section \ref{chap:discussion} and leads to a linear density profile, as derived below, which is also consistent with the simulation results shown in figure \ref{fig:density_profile}.
 
 From \eqref{eq:current}, \eqref{eq:onsager} and \eqref{eq:mu_flory}, the current becomes:
 
 
 \begin{align}
-  J=-D\rho_0\phi'\,.
+  J=-D\rho_0\phi'\,,
   \label{eq:current_a}
 \end{align}
 
 
 
-Here, $\rho_0=nN/V$ is the average bead density in the system. Together with \eqref{eq:conti}, this gives the well-known diffusion equation:
+where $\rho_0=nN/V$ is the average bead density in the system. Together with \eqref{eq:conti}, this gives the well-known diffusion equation:
 \begin{align}
   \frac{\partial\phi(\mathbf r, t)}{\partial t}-D\rho_0  \phi''=0\,.
   \label{eq:diffusion}
@@ -385,7 +398,7 @@ Here, $\rho_0=nN/V$ is the average bead density in the system. Together with \eq
 In the steady state, this simply yields $\phi''=0\,,$ so a linear density profile is obtained. From \eqref{eq:current_a} and the condition that $\phi(L_x/2)=0.5\,,$ which follows from the equal conversion rates, the density profile becomes:
 
 \begin{align}
-  \phi(x)=-\frac{J}{D\rho_0}x + \frac{1}{2} (1-L_x)\,.
+  \phi(x)=\frac{J}{D\rho_0}\left(\frac{1}{2}-x\right) + \frac{1}{2}\,.
   \label{eq:density_profile_ana}
 \end{align}
 
@@ -396,24 +409,40 @@ To verify \eqref{eq:onsager}, the Onsager coefficient may also be obtained direc
   \label{eq:onsager_num}
 \end{align}
 
+The resulting Onsager coefficient is plotted in Figure \ref{fig:onsager_coeff}.
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{figures/onsager_coll_diff.pdf}
-  \caption{Onsager coefficient for $r=1.0\,$ averaged over time, $y$ and $z\,$. The analytical curve is obtained from \eqref{eq:onsager} and \eqref{eq:density_profile_ana}}, the numerical curve from \eqref{eq:onsager_num} and the density profile in \ref{fig:density_profile}. The diffusion constant $D$ and the current $J$ are both obtained from the simulation.
+  \caption{Onsager coefficient $\Lambda$ as a function of $x$ for $r=1.0\,$ averaged over time, $y$ and $z\,$. The analytical curve is obtained from \eqref{eq:onsager} and \eqref{eq:density_profile_ana}}, the numerical curve from \eqref{eq:onsager_num} and the density profile in \ref{fig:density_profile}. The diffusion constant $D$ and the current $J$ are both obtained from the simulation.
   \label{fig:onsager_coeff}
 \end{figure}
 
-Figure \ref{fig:onsager_coeff} shows that the Onsager coefficients obtained from \eqref{eq:onsager} and \eqref{eq:onsager_num} are in excellent agreement, so the theoretical derivations are consistent with the simulation results.
 
 
 
 
 \chapter{Discussion}
+\label{chap:discussion}
 
-The collective diffusion coefficient for a mixture of non-interacting polymers has been calculated.
+Figure \ref{fig:onsager_coeff} shows that the Onsager coefficients obtained from \eqref{eq:onsager} and \eqref{eq:onsager_num} are in excellent agreement, which implies that the theoretical derivations are consistent with the simulation results. Specifically, the assumptions of incompressibility and local coupling of the current to the chemical potential are justified and the linear density profile observed in \ref{fig:density_profile} is explained. While the neglection of the derivative terms in \eqref{eq:mu_flory} is not physically motivated, it still represents a good approximation. If one accepts the linearity of the density profile, the term containing the second derivative is of course zero, while the term proportional to $\phi'^2$ still contributes to the chemical potential. The relative contribution of this term to the total chemical potential is shown in  Figure \ref{fig:squaregradient_contribution}. 
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/squaregradient_contribution.pdf}
+  \caption{Relative contribution of the term $g(\phi)\phi'^2\equiv\frac{R_e^2(1-2\phi)}{36\phi^2(1-\phi)^2}\phi'^2$ to the chemical potential $\mu$ for the case discussed in section \ref{sec:colldiff}, e.g., $\phi'\approx 0.1$. }
+  \label{fig:squaregradient_contribution}
+\end{figure}
+
+The term accounts for less than two percent of the total chemical potential for $0.1<\phi<0.9\,,$ so the neglection is justified far from the boundary regions. The approximation improves further as the simulation box becomes infinitely long, since $\phi'\rightarrow0\,.$\\
+Comparing Figures \ref{fig:chemical_potential} and \ref{fig:onsager_coeff}, it can be seen that $\Lambda$ is largest where the slope of $\mu$ is smallest. Similarly, small values of $\mu'$ are compensated by large values of $\Lambda\,,$ which is required for the current $J$ to be constant.
+
+
 
 \chapter{Summary}
-Text\dots
+
+The collective diffusion coefficient of a symmetric homopolymer mixture under a boundary-driven diffusion flux has been studied. In the future, more sophisticated and time-dependent boundary conditions will be employed to manipulate the behavior of the bulk, with the ultimate goal to simulate smaller sections of a large continuum simulation using particle-based simulations. The key question is whether or not the time evolution of the boundary densities is sufficient to dictate the time-evolution of the densities in the bulk.
 
 % \appendix
 
