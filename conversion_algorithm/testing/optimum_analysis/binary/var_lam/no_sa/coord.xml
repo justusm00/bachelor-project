@@ -36,11 +36,15 @@
     5000 A{32}
     5000 B{32}
   </poly_arch>
-  <Tmax>10.0</Tmax>
+  <Tmax>
+  0.1
+  </Tmax>
   <Tmin>
-  0.01
+  0.001
   </Tmin>
-  <alpha>0.85</alpha>
+  <alpha>
+  0.85
+  </alpha>
 <area51>
   <box>
    <point>0 0 0</point><point>1 24 24</point><value>1</value>

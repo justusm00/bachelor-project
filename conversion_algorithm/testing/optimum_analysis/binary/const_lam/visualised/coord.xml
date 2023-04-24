@@ -36,9 +36,9 @@
     5000 A{32}
     5000 B{32}
   </poly_arch>
-  <Tmax>10.0</Tmax>
+  <Tmax>1.0</Tmax>
   <Tmin>
-  0.01
+  0.001
   </Tmin>
   <alpha>0.85</alpha>
 <area51>
@@ -102,7 +102,7 @@
       <DeltaMC> 10000 </DeltaMC>
     </dump>
     <density_field>
-      <DeltaMC> 10000 </DeltaMC>
+      <DeltaMC> 1 </DeltaMC>
       <compression> gzip </compression>
     </density_field>
     <non_bonded_energy>
