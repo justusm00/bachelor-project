@@ -27,10 +27,10 @@
     32
   </reference_Nbeads>
   <lxyz>
-    10 10 1
+    10 1 10
   </lxyz>
   <nxyz>
-   80 80 8
+   80 8 80
   </nxyz>
   <poly_arch>
     5000 A{32}

@@ -5,10 +5,10 @@
 \contentsline {section}{\numberline {2.2}Polymeric mixtures}{3}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Flory Huggins Theory}{3}{subsection.2.2.1}%
 \contentsline {section}{\numberline {2.3}Collective diffusion}{5}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Simulation technique}{7}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Collective diffusion of symmetric homopolymers}{9}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Reference system}{9}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Collective diffusion coefficient}{9}{section.4.2}%
-\contentsline {chapter}{\numberline {5}Discussion}{13}{chapter.5}%
-\contentsline {chapter}{\numberline {6}Summary}{15}{chapter.6}%
+\contentsline {chapter}{\numberline {3}Simulation technique}{9}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Collective diffusion of symmetric homopolymers}{11}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Reference system}{11}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Collective diffusion coefficient}{11}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Discussion}{15}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Summary}{17}{chapter.6}%
 \providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

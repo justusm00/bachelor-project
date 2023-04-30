@@ -1,18 +1,18 @@
 # Fdb version 3
-["bibtex /Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis"] 1680023801 "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux" "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl" "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis" 1680024582
-  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux" 1680024582 12798 0eabe18b0da5a8ca79d5d3a1c9c50abe "pdflatex"
+["bibtex /Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis"] 1680075767 "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux" "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl" "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis" 1680254696
+  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux" 1680254695 12900 3b481d6f550164ec12328e003c56220b "pdflatex"
   "/usr/local/texlive/2022/texmf-dist/bibtex/bst/natbib/plainnat.bst" 1233624470 26816 ffe5423d2019860bad9f54bc402fac15 ""
   "bthesis_datenbank.bib" 1679932419 13824 73938ad72a5a2d27c3cd94ac8dac9e70 ""
   (generated)
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl"
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.blg"
-["pdflatex"] 1680024581 "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.tex" "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.pdf" "bthesis" 1680024582
+["pdflatex"] 1680254694 "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.tex" "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.pdf" "bthesis" 1680254696
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/GAUBM.cls" 1680016207 11754 ca29abde92640405d720930b9c4a9f8e ""
-  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux" 1680024582 12798 0eabe18b0da5a8ca79d5d3a1c9c50abe "pdflatex"
-  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl" 1680023801 7313 dc1dc7f3540f26ce49127fb520d5aea2 "bibtex /Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis"
+  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.aux" 1680254695 12900 3b481d6f550164ec12328e003c56220b "pdflatex"
+  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.bbl" 1680075767 7313 dc1dc7f3540f26ce49127fb520d5aea2 "bibtex /Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis"
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.out" 0 -1 0 "pdflatex"
-  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.tex" 1680024581 33004 23b091216745694ae22112f45a6ea60e ""
-  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.toc" 1680024582 1033 34a8b7d87450c111752e3a3ce570d512 "pdflatex"
+  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.tex" 1680254694 34017 b0effa2c7cecb5d748719f95890dd544 ""
+  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/bthesis.toc" 1680254695 1036 5ed9ad4832e9a7def1d2f428add8a018 "pdflatex"
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/datenumber.sty" 1502377932 8182 e5b59103685e95416e5bf89dbca52a21 ""
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/datenumberUSenglish.ldf" 1502377932 1524 1f613b9abd684f3f22c68f953e70be55 ""
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/datenumberenglish.ldf" 1502377932 1717 85432c84fed8beb33d77efbc5dc0693d ""
@@ -22,7 +22,7 @@
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/density_coll_diff.pdf" 1680021365 16057 401c34ca983884ac17b5d934c0d2870f ""
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/mu_coll_diff.pdf" 1680021370 17109 eb06b03226784d4fbade56faed68fbcf ""
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/onsager_coll_diff.pdf" 1680021375 17178 cd4ea46f4070e2be9bb8f8869800b6ee ""
-  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/simulation_box.png" 1680008609 15813 db3df718b5386706d57f3f50b3f3b766 ""
+  "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/simulation_box.png" 1680208575 43951 88f0da877d64396bb9bda54f4265e1ec ""
   "/Users/justusmulthaup/BA/Einführung_ins_wissenschaftliche_Arbeiten/figures/squaregradient_contribution.pdf" 1680020363 13777 15e8659ed045f7a33d8289b9e525c0c1 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1254269338 2375 baa924870cfb487815765f9094cf3728 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc" 1202520719 3486 c7eadf5dcc57b3b2d11736679f6636ba ""

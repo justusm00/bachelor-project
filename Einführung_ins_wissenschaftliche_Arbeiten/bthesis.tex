@@ -1,7 +1,7 @@
 % @Author: Your name
 % @Date:   2017-08-17 15:16:16
 % @Last Modified by:   Your name
-% @Last Modified time: 2023-03-28 19:29:41
+% @Last Modified time: 2023-03-29 09:58:59
 %%    2009/03/12 v1.0 GAUBM Vorlage f�r Aschlussarbeiten Physik
 %% Template fuer Bachelor- und Masterarbeiten
 %% an der Fakultaet fuer Physik (c) Thomas Pruschke der GA Universit�t
@@ -154,6 +154,10 @@ Polymers are highly versatile macromolecules composed of repeating units called 
 One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. These monomer units may arrange into blocks so that the resulting polymer can be viewed as a concatenation of homopolymers of different types and lengths, this is then called a block-copolymer. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases \cite{leibler1980theory}. One of the most important tools in understanding the mechanisms behind this microphase separation, and many other interesting properties, is the use of computer simulations. These include particle-based molecular dynamics (MD), Monte-Carlo (MC) methods as well as continuum-model-based and hybrid methods \cite{Shuanhu2017}. Particle-based simulations accurately model small-scale phenomena. However, despite rapid advancements in computer technology and high parallelizability, they are too computationally expensive to simulate large systems and therefore to capture macroscale phenomena. Continuum models, on the other hand, are less computationally expensive, but at the cost of a lower accuracy on the microscale. On the mesoscale, good agreement between the two types of models was observed, e.g. in the orientation of cylindrical mesophases upon solvent evaporation \cite{Dreyer22}. To evaluate the accuracy of continuum models on small-length scales, it is necessary to compare them to established particle-based models. One approach to this is to consider a simulation box in a particle-based simulation as a small section from a large continuum-model-based simulation. The dynamics are then driven by extracting the time evolution of the density fields at the boundaries from the continuum simulation and applying them in the particle-based simulation, e.g. employing non-periodic boundary conditions. However, dictating the boundary densities in particle-based simulations is not a trivial task. One option is the use of external fields or the umbrella sampling method \cite{glenn74}, although this has the large drawback that the number of particles in the simulation box remains constant, while in the continuum simulation particles can enter and leave the section at any time. An alternative is to employ conversion zones at the boundaries, in which molecules are converted to different types, mimicking particle exchange with the surrounding. If the densities are defined on a discretized grid, this leads to an optimization problem in which the ideal configuration of molecule types needs to be found, such that the mean squared deviation from the target density is minimized. \\
 In this study, as a first step towards boundary-driven particle simulations, the dynamics of noninteracting homopolymers are investigated. Specifically, a system is pushed away from equilibrium by introducing conversion zones at the boundary regions of the simulation box. This results in a diffusion-driven current and allows the calculation of the collective diffusion coefficient of the system. To this end, the SOft coarse-grained Monte-Carlo Acceleration (SOMA) \cite{Schneider_soma} software package based on the single chain in mean field algorithm (SCMF) \cite{Daoulas06} is employed.
 
+\begin{itemize}
+  \item strong bound interactions are responsible for higher computational cost of particle based simulations and limit time step (displacement per MC step is small due to bonds)
+  \item especially time scale is relevant, not so much system size
+\end{itemize}
 
 
 \chapter{Theory}
@@ -185,7 +189,7 @@ Here, $\phi=\frac{n_\mathrm AN_\mathrm A}{n_\mathrm AN_\mathrm A+n_\mathrm BN_\m
   \label{eq:flory_fctl}
 \end{align}
 
-Here, $R_e^2=(N-1)b^2$ is the mean squared end-to-end distance of the polymer in the absence of non-bonded interactions, where $b$ is the statistical segment length, and $\bar N=\left(nR_e^3/V\right)^2$ is the invariant degree of polymerization of the system with volume $V$. The latter is a measure of the number of neighboring chains a chain interacts with. The term proportional to $[\nabla\phi]^2$ is added to the free energy density to ensure that unphysical, sharp changes in the local densities are penalized. The precise form of $k(\phi)$ depends on the strength of the parameter $\chi\,$. For small $\chi N\lesssim 10.5\,,$ one considers the \textit{weak segregation limit} (WSL). For very large $\chi N\gtrsim300\,,$ the \textit{strong segregation limit} (SSL) holds. In these two limits, the prefactor $k$ takes the form \cite{Reister02}:
+Here, $R_e^2=(N-1)b^2$ is the mean squared end-to-end distance of the polymer in the absence of non-bonded interactions, where $b$ is the statistical segment length, and $\bar N=\left(nR_e^3/V\right)^2$ is the invariant degree of polymerization of the system with volume $V$. The latter is a measure of the number of neighboring chains a chain interacts with. The term proportional to $[\nabla\phi]^2$ is added to the free energy density to ensure that unphysical, sharp changes in the local densities are penalized. The precise form of $k(\phi)$ depends on the strength of the parameter $\chi\,$. For small $\chi N\lesssim 5\,,$ one considers the \textit{weak segregation limit} (WSL). For large $\chi N\gtrsim10\,,$ {https://doi.org/10.1051/jp2:1996159} the \textit{strong segregation limit} (SSL) holds. In these two limits, the prefactor $k$ takes the form \cite{Reister02}:
 
 \begin{align}
   k_\mathrm{WSL}=\frac{R_e^2}{36\phi(1-\phi)}\,;\qquad k_\mathrm{SSL}=\frac{R_e^2}{18\phi(1-\phi)}\,.
@@ -264,7 +268,16 @@ The Onsager coefficient $\Lambda(\mathbf{r}, \mathbf{r'})$ relates the force act
 %% Alternative derivation in de Gennes paper
 
 
+\begin{itemize}
+  \item start instead from \eqref{eq:current}, argue why $q=0$ and $\omega=0$ (spatial and temporal variation, fourier transformation)
+  \item $\omega=0$ due to steady state
+  \item $q=0$ ? Must expand around homogeneous state
+  \item then assume ideal gas and identify form of onsager coefficient
+  \item q=0 justifies that gradmu is const
+\end{itemize}
+
 Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of non-interacting chains with densities $\phi_\mathrm A$ and $\phi_\mathrm B\,.$ The currents are simply given by Fick's law of Diffusion:
+
 
 \begin{align}
   \mathbf{J_A}=-D_\mathrm A\nabla\phi_\mathrm A\,; \qquad \mathbf{J_B}=-D_\mathrm B\nabla\phi_\mathrm B\,.
@@ -278,7 +291,7 @@ The chemical potential per monomer for an ideal gas of A chains with concentrati
 
 and similarly for $\mu_\mathrm B\,.$ The currents may then be related to the chemical potential by writing:
 \begin{align}
-  \mathbf{J}_i=-\Lambda_i\nabla\mu_i\,; \qquad \Lambda_i=D_iN\phi_i^{-1}\,.
+  \mathbf{J}_i=-\Lambda_i\nabla\mu_i\,; \qquad \Lambda_i=D_iN\phi_i^{-1}k_BT^{-1}\,.
   \label{eq:current_ideal}
 \end{align}
 
@@ -336,7 +349,7 @@ The computation of the transport properties is complicated by boundary effects, 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{figures/simulation_box.png}
-  \caption{Simulation setup.}
+  \caption{Simulation setup. !!Change color gradient to go from left to right}
   \label{fig:simulation_box}
 \end{figure}
 
@@ -355,7 +368,9 @@ It should be pointed out that the system can be described effectively in one dim
 Here, $\phi'=\frac{\partial\phi}{\partial x}\,.$ The resulting chemical potential profile is shown in Figure \ref{fig:chemical_potential}.
 
 
-
+\begin{itemize}
+  \item fourier transformation, check if $q=0$ is only contribution
+\end{itemize}
 
 \begin{figure}[h]
   \centering
@@ -428,6 +443,7 @@ The resulting Onsager coefficient is plotted in Figure \ref{fig:onsager_coeff}.
 Figure \ref{fig:onsager_coeff} shows that the Onsager coefficients obtained from \eqref{eq:onsager} and \eqref{eq:onsager_num} are in excellent agreement, which implies that the theoretical derivations are consistent with the simulation results. Specifically, the assumptions of incompressibility and local coupling of the current to the chemical potential are justified and the linear density profile observed in \ref{fig:density_profile} is explained. While the neglection of the derivative terms in \eqref{eq:mu_flory} is not physically motivated, it still represents a good approximation. If one accepts the linearity of the density profile, the term containing the second derivative is of course zero, while the term proportional to $\phi'^2$ still contributes to the chemical potential. The relative contribution of this term to the total chemical potential is shown in  Figure \ref{fig:squaregradient_contribution}. 
 
 
+
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.7\linewidth]{figures/squaregradient_contribution.pdf}
@@ -438,9 +454,15 @@ Figure \ref{fig:onsager_coeff} shows that the Onsager coefficients obtained from
 The term accounts for less than two percent of the total chemical potential for $0.1<\phi<0.9\,,$ so the neglection is justified far from the boundary regions. The approximation improves further as the simulation box becomes infinitely long, since $\phi'\rightarrow0\,.$\\
 Comparing Figures \ref{fig:chemical_potential} and \ref{fig:onsager_coeff}, it can be seen that $\Lambda$ is largest where the slope of $\mu$ is smallest. Similarly, small values of $\mu'$ are compensated by large values of $\Lambda\,,$ which is required for the current $J$ to be constant.
 
-
+\begin{itemize}
+  \item to get $\omega$ dependency, oscillate boundary conversion rates
+\end{itemize}
 
 \chapter{Summary}
+
+\begin{itemize}
+  \item time dependency of onsager coefficient
+\end{itemize}
 
 The collective diffusion coefficient of a symmetric homopolymer mixture under a boundary-driven diffusion flux has been studied. In the future, more sophisticated and time-dependent boundary conditions will be employed to manipulate the behavior of the bulk, with the ultimate goal to simulate smaller sections of a large continuum simulation using particle-based simulations. The key question is whether or not the time evolution of the boundary densities is sufficient to dictate the time-evolution of the densities in the bulk.
 

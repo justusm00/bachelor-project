@@ -2,7 +2,7 @@
 # @Author: Your name
 # @Date:   2023-02-09 11:41:03
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-04-23 22:08:04
+# @Last Modified time: 2023-04-24 10:22:08
 
 #remove old files
 rm *.csv
@@ -21,7 +21,7 @@ do
     python3 config_umbrella.py coord.h5 1
     wait
     #iterate over different seeds
-    for j in {1..1000}
+    for j in {1..100}
     do
         ./SOMA -c coord.h5 -t 1  > temp.txt
         grep 'MSE after flips at T=0:' temp.txt | sed 's/^.*: //' >> opt.csv

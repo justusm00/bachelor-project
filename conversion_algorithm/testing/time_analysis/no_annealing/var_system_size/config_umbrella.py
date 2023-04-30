@@ -2,7 +2,7 @@
 # @Author: Your name
 # @Date:   2023-01-25 16:59:12
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-03-13 16:09:40
+# @Last Modified time: 2023-04-19 13:47:14
 import h5py
 import numpy as np
 
@@ -28,7 +28,7 @@ area51=np.zeros((nxyz[0],nxyz[1],nxyz[2])) #need to adjust area51 too since syst
 ##fill with negative values
 umb_field.fill(-1)
 ##define target values
-vals=np.array([0.0,1.0])
+vals=np.array([0.1,0.9])
 
 ##quick function to help creating lamella structure
 def flip(a,arr):

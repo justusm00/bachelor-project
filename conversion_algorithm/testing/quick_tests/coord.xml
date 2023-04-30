@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <soma version="0.2.0">
-<!--Coord file used to add umbrella field and to test conversion algorithm-->
+<!--Coord file used to sample configurations for testing of the algorithm-->
   <interactions>
     <kappaN>
       30
@@ -27,29 +27,20 @@
     32
   </reference_Nbeads>
   <lxyz>
-    3 3 3
+    10 10 1
   </lxyz>
   <nxyz>
-   24 24 24
+   80 80 8
   </nxyz>
   <poly_arch>
-    15000 A{32}
-    15000 B{32}
+    5000 A{32}
+    5000 B{32}
   </poly_arch>
-  <Tmax>
-  0.1
-  </Tmax>
+  <Tmax>5.00000</Tmax>
   <Tmin>
   0.001
   </Tmin>
-  <alpha>
-  0.85
-  </alpha>
-  <umbrella_field>
-    <box>
-      <point>0 0 0</point><point>24 24 24</point><value>-1 -1</value>
-    </box>
-  </umbrella_field>
+  <alpha>0.85</alpha>
 <area51>
   <box>
    <point>0 0 0</point><point>1 24 24</point><value>1</value>
@@ -69,11 +60,10 @@
       <box>
    <point>0 -2 0</point><point>24 -1 24</point><value>1</value>
   </box>
-  
 </area51>
   <polyconversion>
     <DeltaMC>
-      10
+      1
     </DeltaMC>
     <box>
       <point>1 0 0</point><point>2 6 6</point><value>0</value>
@@ -112,7 +102,7 @@
       <DeltaMC> 10000 </DeltaMC>
     </dump>
     <density_field>
-      <DeltaMC> 1 </DeltaMC>
+      <DeltaMC> 10000 </DeltaMC>
       <compression> gzip </compression>
     </density_field>
     <non_bonded_energy>
