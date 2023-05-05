@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<soma version="0.2.0">
+<!--Coord file used to sample configurations for testing of the algorithm-->
+  <interactions>
+    <kappaN>
+      30
+    </kappaN>
+    <chiN>
+      A B 0
+    </chiN>
+    <bonds>
+    A A  harmonic
+    A B  harmonic
+
+    B B  harmonic
+    </bonds>
+  </interactions>
+  <A>
+    <dt>
+    0.17
+    </dt>
+  </A>
+  <time>
+    0
+  </time>
+    <reference_Nbeads>
+    16
+  </reference_Nbeads>
+  <lxyz>
+    5.25 1.25 5.25
+  </lxyz>
+  <nxyz>
+   42 10 42
+  </nxyz>
+  <poly_arch>
+    625 A{16}
+    625 B{16}
+  </poly_arch>
+  <Tmax>
+  1.0
+  </Tmax>
+  <Tmin>
+  0.001
+  </Tmin>
+  <alpha>
+  0.85
+  </alpha>
+<area51>
+  <box>
+   <point>0 0 0</point><point>1 24 24</point><value>1</value>
+  </box>
+  <box>
+   <point>-2 0 0</point><point>-1 24 24</point><value>1</value>
+  </box>
+  <box>
+   <point>0 0 0</point><point>24 24 1</point><value>1</value>
+  </box>
+    <box>
+   <point>0 0 -2</point><point>24 24 -1</point><value>1</value>
+  </box>
+    <box>
+   <point>0 0 0</point><point>24 1 24</point><value>1</value>
+  </box>
+      <box>
+   <point>0 -2 0</point><point>24 -1 24</point><value>1</value>
+  </box>
+</area51>
+  <polyconversion>
+    <DeltaMC>
+      1
+    </DeltaMC>
+    <box>
+      <point>1 0 0</point><point>2 6 6</point><value>0</value>
+    </box>
+    <box>
+     <point>4 0 0</point><point>5 6 6</point><value>1</value>
+    </box>
+    <conversion_list>
+      0 1 0
+      1 0 1
+    </conversion_list>
+  </polyconversion>
+  <analysis>
+    <Re>
+      <DeltaMC> 500 </DeltaMC>
+    </Re>
+    <Rg>
+      <DeltaMC> 500 </DeltaMC>
+    </Rg>
+      <num_conversions>
+      <DeltaMC> 100 </DeltaMC>
+    </num_conversions>
+    <density_var>
+      <DeltaMC> 500 </DeltaMC>
+    </density_var>
+    <bond_anisotropy>
+      <DeltaMC> 500 </DeltaMC>
+    </bond_anisotropy>
+    <acc_ratio>
+      <DeltaMC> 500 </DeltaMC>
+    </acc_ratio>
+    <MSD>
+      <DeltaMC> 500 </DeltaMC>
+    </MSD>
+    <dump>
+      <DeltaMC> 10000 </DeltaMC>
+    </dump>
+    <density_field>
+      <DeltaMC> 1 </DeltaMC>
+      <compression> gzip </compression>
+    </density_field>
+    <non_bonded_energy>
+      <DeltaMC> 5000</DeltaMC>
+    </non_bonded_energy>
+    <bonded_energy>
+      <DeltaMC> 5000</DeltaMC>
+    </bonded_energy>
+  </analysis>
+</soma>
