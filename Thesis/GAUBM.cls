@@ -21,7 +21,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesClass{GAUBM}
-[2009/03/12 v1.0 GAU Vorlage für Abschlussarbeit Physik]
+[2009/03/12 v1.0 GAU Vorlage fÃ¼r Abschlussarbeit Physik]
 \newif\if@nomtotoc\@nomtotocfalse
 \newif\if@englishpreamble\@englishpreambletrue
 \newif\if@preamblelangdef\@preamblelangdeffalse
@@ -136,17 +136,17 @@
   \noindent
   \begin{tabular}[t]{p{0.175\textwidth}p{0.825\textwidth-4\tabcolsep}}
     \bfseries\large Erkl\"arung&
-	Ich versichere hiermit, dass ich die vorliegende Arbeit ohne fremde Hilfe selbstständig
+	Ich versichere hiermit, dass ich die vorliegende Arbeit ohne fremde Hilfe selbststÃ¤ndig
 	verfasst und nur die von mir angegebenen Quellen und Hilfsmittel verwendet habe.
-	Wörtlich oder sinngemä\ss{} aus anderen Werken entnommene Stellen habe ich unter
+	WÃ¶rtlich oder sinngemÃ¤\ss{} aus anderen Werken entnommene Stellen habe ich unter
 	Angabe der Quellen kenntlich gemacht.
-	Die Richtlinien zur Sicherung der guten wissenschaftlichen Praxis an der Universität
-	Göttingen wurden von mir beachtet.
+	Die Richtlinien zur Sicherung der guten wissenschaftlichen Praxis an der UniversitÃ¤t
+	GÃ¶ttingen wurden von mir beachtet.
 	Eine gegebenenfalls eingereichte digitale Version stimmt mit der schriftlichen Fassung
-	überein.
-	Mir ist bewusst, dass bei Versto\ss{} gegen diese Grundsätze die Prüfung mit nicht
+	Ã¼berein.
+	Mir ist bewusst, dass bei Versto\ss{} gegen diese GrundsÃ¤tze die PrÃ¼fung mit nicht
 	bestanden bewertet wird.\\[1em]
-    &\begin{center}Göttingen, den \today\end{center}\\[1.5cm]
+    &\begin{center}GÃ¶ttingen, den \today\end{center}\\[1.5cm]
     &\begin{center}(\@ThesisAuthor)\end{center}
     %\begin{minipage}[t]{0.76\textwidth-4\tabcolsep}
     %  \@author\end{minipage}
