@@ -1,6 +1,7 @@
 *.h5
 *.txt
 *.xmf
+*.csv
 venv/ 
 books/
 papers/
