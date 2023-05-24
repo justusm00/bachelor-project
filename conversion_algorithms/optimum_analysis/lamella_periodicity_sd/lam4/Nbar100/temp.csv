@@ -1,0 +1,39 @@
+Self documentation of SOMA simulation started at Wed May 24 15:59:06 2023
+Version info:
+	Compiled on Darwin-21.6.0 with AppleClang for arm64  with C std 201710.
+	GIT version of SOMA is -unknown MPI DOUBLE compiled on May 16 2023 11:38:41.
+	HDF5 version is 1.12.2
+	MPI version: Open MPI v4.1.4, package: Open MPI brew@HMBRW-A-001-M1-004.local Distribution, ident: 4.1.4, repo rev: v4.1.4, May 26, 2022 3.1
+Arguments used to start SOMA.
+	coord-file="coord.h5"
+	timesteps="2"
+	ana-file="coord_ana.h5"
+	rng-seed="49"
+Selected parameter of the simulation.
+	MC step at beginning 0
+	PRNG seed 49
+	Hamiltionian used 0
+	Interaction parameter (kN and xN): 0x0=30.000000 0x1=0.000000 1x1=30.000000
+	Diffusion constants for types: 0.005313 0.005313
+	Field scaling type: 0.160000 0.160000
+	Strength of umbrella: 0.000000 0.000000
+	Box dimensions: 5.250000 (42)	1.250000 (10)	5.250000 (42)
+	Area51 present: yes
+	Umbrella field present: yes
+	Polytype conversion active 1,	INFO: Generating new bead initial data. If your configuration contains rings equilibration might take long.
+INFO: At t= 0 particle_type test test passed
+INFO: At t= 0 area51 violation test passed
+INFO: At t= 0 area51 exact test passed
+INFO: At t = 0 polytype conversion test passed.
+MSE before optimization 1124.786668 
+MSE after flips at T=0: 274.373399 
+Flip attempts: 13800
+Flippable polymers: 1380
+MSE before optimization 363.336498 
+MSE after flips at T=0: 261.418129 
+Flip attempts: 12456
+Flippable polymers: 1384
+INFO: At t= 2 area51 violation test passed
+INFO: At t= 2 area51 exact test passed
+Rank: 0 	 polymers 2500
+SOMA finished execution without errors.

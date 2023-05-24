@@ -1,0 +1,755 @@
+Self documentation of SOMA simulation started at Mon May 15 22:49:33 2023
+Version info:
+	Compiled on Darwin-21.6.0 with AppleClang for arm64  with C std 201710.
+	GIT version of SOMA is -unknown MPI DOUBLE compiled on May  9 2023 11:27:28.
+	HDF5 version is 1.12.2
+	MPI version: Open MPI v4.1.4, package: Open MPI brew@HMBRW-A-001-M1-004.local Distribution, ident: 4.1.4, repo rev: v4.1.4, May 26, 2022 3.1
+Arguments used to start SOMA.
+	coord-file="coord.h5"
+	timesteps="1"
+	rng-seed="0"
+Selected parameter of the simulation.
+	MC step at beginning 0
+	PRNG seed 0
+	Hamiltionian used 0
+	Interaction parameter (kN and xN): 0x0=30.000000 0x1=0.000000 1x1=30.000000
+	Diffusion constants for types: 0.005313 0.005313
+	Field scaling type: 0.020000 0.020000
+	Strength of umbrella: 0.000000 0.000000
+	Box dimensions: 5.250000 (42)	3.000000 (3)	5.250000 (42)
+	Area51 present: yes
+	Umbrella field present: yes
+	Polytype conversion active 1,	INFO: Generating new bead initial data. If your configuration contains rings equilibration might take long.
+INFO: At t= 0 particle_type test test passed
+INFO: At t= 0 area51 violation test passed
+INFO: At t= 0 area51 exact test passed
+INFO: At t = 0 polytype conversion test passed.
+MSE before optimization 38.490165 
+MSE after flips at T=0: 4.538869 
+T: 0.010000
+Accrate: 0.093600
+Best value: 4.538869
+T: 0.009960
+Accrate: 0.118800
+Best value: 4.538869
+T: 0.009920
+Accrate: 0.113200
+Best value: 4.538869
+T: 0.009880
+Accrate: 0.119600
+Best value: 4.538869
+T: 0.009840
+Accrate: 0.136400
+Best value: 4.538869
+T: 0.009800
+Accrate: 0.120000
+Best value: 4.538869
+T: 0.009760
+Accrate: 0.107600
+Best value: 4.538869
+T: 0.009720
+Accrate: 0.123200
+Best value: 4.538869
+T: 0.009680
+Accrate: 0.118800
+Best value: 4.538869
+T: 0.009640
+Accrate: 0.120000
+Best value: 4.538869
+T: 0.009600
+Accrate: 0.128400
+Best value: 4.538869
+T: 0.009560
+Accrate: 0.126800
+Best value: 4.538869
+T: 0.009520
+Accrate: 0.123200
+Best value: 4.538869
+T: 0.009480
+Accrate: 0.125600
+Best value: 4.538869
+T: 0.009440
+Accrate: 0.123200
+Best value: 4.538869
+T: 0.009400
+Accrate: 0.092000
+Best value: 4.538869
+T: 0.009360
+Accrate: 0.104400
+Best value: 4.538869
+T: 0.009320
+Accrate: 0.118400
+Best value: 4.538869
+T: 0.009280
+Accrate: 0.119200
+Best value: 4.538869
+T: 0.009240
+Accrate: 0.111600
+Best value: 4.538869
+T: 0.009200
+Accrate: 0.112800
+Best value: 4.538869
+T: 0.009160
+Accrate: 0.118800
+Best value: 4.538869
+T: 0.009120
+Accrate: 0.106000
+Best value: 4.538869
+T: 0.009080
+Accrate: 0.102400
+Best value: 4.538869
+T: 0.009040
+Accrate: 0.118400
+Best value: 4.538869
+T: 0.009000
+Accrate: 0.109600
+Best value: 4.538869
+T: 0.008960
+Accrate: 0.099600
+Best value: 4.538869
+T: 0.008920
+Accrate: 0.098000
+Best value: 4.538869
+T: 0.008880
+Accrate: 0.105600
+Best value: 4.538869
+T: 0.008840
+Accrate: 0.104800
+Best value: 4.538869
+T: 0.008800
+Accrate: 0.101200
+Best value: 4.538869
+T: 0.008760
+Accrate: 0.108800
+Best value: 4.538869
+T: 0.008720
+Accrate: 0.093600
+Best value: 4.538869
+T: 0.008680
+Accrate: 0.101600
+Best value: 4.538869
+T: 0.008640
+Accrate: 0.100800
+Best value: 4.538869
+T: 0.008600
+Accrate: 0.096000
+Best value: 4.538869
+T: 0.008560
+Accrate: 0.098800
+Best value: 4.538869
+T: 0.008520
+Accrate: 0.092400
+Best value: 4.538869
+T: 0.008480
+Accrate: 0.086400
+Best value: 4.538869
+T: 0.008440
+Accrate: 0.101200
+Best value: 4.538869
+T: 0.008400
+Accrate: 0.091200
+Best value: 4.538869
+T: 0.008360
+Accrate: 0.096400
+Best value: 4.538869
+T: 0.008320
+Accrate: 0.094000
+Best value: 4.538869
+T: 0.008280
+Accrate: 0.090400
+Best value: 4.538869
+T: 0.008240
+Accrate: 0.082000
+Best value: 4.538869
+T: 0.008200
+Accrate: 0.092400
+Best value: 4.538869
+T: 0.008160
+Accrate: 0.089600
+Best value: 4.538869
+T: 0.008120
+Accrate: 0.105600
+Best value: 4.538869
+T: 0.008080
+Accrate: 0.091600
+Best value: 4.538869
+T: 0.008040
+Accrate: 0.095200
+Best value: 4.538869
+T: 0.008000
+Accrate: 0.088400
+Best value: 4.538869
+T: 0.007960
+Accrate: 0.094800
+Best value: 4.538869
+T: 0.007920
+Accrate: 0.092800
+Best value: 4.538869
+T: 0.007880
+Accrate: 0.080400
+Best value: 4.538869
+T: 0.007840
+Accrate: 0.087600
+Best value: 4.538869
+T: 0.007800
+Accrate: 0.076000
+Best value: 4.538869
+T: 0.007760
+Accrate: 0.072000
+Best value: 4.538869
+T: 0.007720
+Accrate: 0.065200
+Best value: 4.538869
+T: 0.007680
+Accrate: 0.071600
+Best value: 4.538869
+T: 0.007640
+Accrate: 0.078800
+Best value: 4.538869
+T: 0.007600
+Accrate: 0.069200
+Best value: 4.538869
+T: 0.007560
+Accrate: 0.075600
+Best value: 4.538869
+T: 0.007520
+Accrate: 0.084400
+Best value: 4.538869
+T: 0.007480
+Accrate: 0.070400
+Best value: 4.538869
+T: 0.007440
+Accrate: 0.068000
+Best value: 4.538869
+T: 0.007400
+Accrate: 0.080400
+Best value: 4.538869
+T: 0.007360
+Accrate: 0.073200
+Best value: 4.538869
+T: 0.007320
+Accrate: 0.066400
+Best value: 4.538869
+T: 0.007280
+Accrate: 0.080000
+Best value: 4.538869
+T: 0.007240
+Accrate: 0.073600
+Best value: 4.538869
+T: 0.007200
+Accrate: 0.069200
+Best value: 4.538869
+T: 0.007160
+Accrate: 0.063200
+Best value: 4.516192
+T: 0.007120
+Accrate: 0.080800
+Best value: 4.516192
+T: 0.007080
+Accrate: 0.063600
+Best value: 4.516192
+T: 0.007040
+Accrate: 0.048800
+Best value: 4.467175
+T: 0.007000
+Accrate: 0.053600
+Best value: 4.467175
+T: 0.006960
+Accrate: 0.053200
+Best value: 4.467175
+T: 0.006920
+Accrate: 0.055600
+Best value: 4.467175
+T: 0.006880
+Accrate: 0.065200
+Best value: 4.467175
+T: 0.006840
+Accrate: 0.060000
+Best value: 4.467175
+T: 0.006800
+Accrate: 0.054800
+Best value: 4.467175
+T: 0.006760
+Accrate: 0.068000
+Best value: 4.467175
+T: 0.006720
+Accrate: 0.061600
+Best value: 4.467175
+T: 0.006680
+Accrate: 0.061600
+Best value: 4.467175
+T: 0.006640
+Accrate: 0.063200
+Best value: 4.467175
+T: 0.006600
+Accrate: 0.061200
+Best value: 4.425080
+T: 0.006560
+Accrate: 0.064400
+Best value: 4.397978
+T: 0.006520
+Accrate: 0.055600
+Best value: 4.397978
+T: 0.006480
+Accrate: 0.062400
+Best value: 4.367624
+T: 0.006440
+Accrate: 0.050400
+Best value: 4.319994
+T: 0.006400
+Accrate: 0.054000
+Best value: 4.295924
+T: 0.006360
+Accrate: 0.053200
+Best value: 4.151968
+T: 0.006320
+Accrate: 0.053200
+Best value: 4.141004
+T: 0.006280
+Accrate: 0.066800
+Best value: 4.024377
+T: 0.006240
+Accrate: 0.053600
+Best value: 4.022384
+T: 0.006200
+Accrate: 0.048000
+Best value: 4.005547
+T: 0.006160
+Accrate: 0.043600
+Best value: 3.944635
+T: 0.006120
+Accrate: 0.046000
+Best value: 3.931442
+T: 0.006080
+Accrate: 0.053600
+Best value: 3.931442
+T: 0.006040
+Accrate: 0.049200
+Best value: 3.921094
+T: 0.006000
+Accrate: 0.036800
+Best value: 3.921094
+T: 0.005960
+Accrate: 0.050000
+Best value: 3.891687
+T: 0.005920
+Accrate: 0.036800
+Best value: 3.858699
+T: 0.005880
+Accrate: 0.040400
+Best value: 3.847083
+T: 0.005840
+Accrate: 0.040000
+Best value: 3.847083
+T: 0.005800
+Accrate: 0.045200
+Best value: 3.847083
+T: 0.005760
+Accrate: 0.044800
+Best value: 3.847083
+T: 0.005720
+Accrate: 0.040000
+Best value: 3.847083
+T: 0.005680
+Accrate: 0.040400
+Best value: 3.847083
+T: 0.005640
+Accrate: 0.043200
+Best value: 3.847083
+T: 0.005600
+Accrate: 0.034400
+Best value: 3.830394
+T: 0.005560
+Accrate: 0.045200
+Best value: 3.760961
+T: 0.005520
+Accrate: 0.034800
+Best value: 3.664182
+T: 0.005480
+Accrate: 0.025200
+Best value: 3.580530
+T: 0.005440
+Accrate: 0.026000
+Best value: 3.546888
+T: 0.005400
+Accrate: 0.032000
+Best value: 3.546888
+T: 0.005360
+Accrate: 0.028000
+Best value: 3.546888
+T: 0.005320
+Accrate: 0.035200
+Best value: 3.535633
+T: 0.005280
+Accrate: 0.027600
+Best value: 3.530982
+T: 0.005240
+Accrate: 0.033200
+Best value: 3.530982
+T: 0.005200
+Accrate: 0.028400
+Best value: 3.530982
+T: 0.005160
+Accrate: 0.025600
+Best value: 3.530982
+T: 0.005120
+Accrate: 0.032400
+Best value: 3.530982
+T: 0.005080
+Accrate: 0.024000
+Best value: 3.530982
+T: 0.005040
+Accrate: 0.032000
+Best value: 3.530982
+T: 0.005000
+Accrate: 0.030800
+Best value: 3.530982
+T: 0.004960
+Accrate: 0.024400
+Best value: 3.530982
+T: 0.004920
+Accrate: 0.018800
+Best value: 3.486089
+T: 0.004880
+Accrate: 0.023200
+Best value: 3.459379
+T: 0.004840
+Accrate: 0.026800
+Best value: 3.459379
+T: 0.004800
+Accrate: 0.024800
+Best value: 3.459379
+T: 0.004760
+Accrate: 0.024800
+Best value: 3.459379
+T: 0.004720
+Accrate: 0.023600
+Best value: 3.459379
+T: 0.004680
+Accrate: 0.022400
+Best value: 3.459379
+T: 0.004640
+Accrate: 0.026000
+Best value: 3.459379
+T: 0.004600
+Accrate: 0.022800
+Best value: 3.459379
+T: 0.004560
+Accrate: 0.029200
+Best value: 3.459379
+T: 0.004520
+Accrate: 0.027600
+Best value: 3.459379
+T: 0.004480
+Accrate: 0.022400
+Best value: 3.439756
+T: 0.004440
+Accrate: 0.014400
+Best value: 3.439756
+T: 0.004400
+Accrate: 0.025600
+Best value: 3.439756
+T: 0.004360
+Accrate: 0.027200
+Best value: 3.407908
+T: 0.004320
+Accrate: 0.029600
+Best value: 3.407908
+T: 0.004280
+Accrate: 0.025600
+Best value: 3.407908
+T: 0.004240
+Accrate: 0.022800
+Best value: 3.407908
+T: 0.004200
+Accrate: 0.024000
+Best value: 3.383170
+T: 0.004160
+Accrate: 0.017600
+Best value: 3.373110
+T: 0.004120
+Accrate: 0.015600
+Best value: 3.349925
+T: 0.004080
+Accrate: 0.016400
+Best value: 3.349925
+T: 0.004040
+Accrate: 0.018800
+Best value: 3.326754
+T: 0.004000
+Accrate: 0.021600
+Best value: 3.326754
+T: 0.003960
+Accrate: 0.016800
+Best value: 3.282955
+T: 0.003920
+Accrate: 0.018800
+Best value: 3.274290
+T: 0.003880
+Accrate: 0.015600
+Best value: 3.234908
+T: 0.003840
+Accrate: 0.019200
+Best value: 3.234908
+T: 0.003800
+Accrate: 0.015600
+Best value: 3.234908
+T: 0.003760
+Accrate: 0.015600
+Best value: 3.234908
+T: 0.003720
+Accrate: 0.020000
+Best value: 3.234908
+T: 0.003680
+Accrate: 0.015600
+Best value: 3.234908
+T: 0.003640
+Accrate: 0.010800
+Best value: 3.180102
+T: 0.003600
+Accrate: 0.010400
+Best value: 3.175835
+T: 0.003560
+Accrate: 0.012000
+Best value: 3.175835
+T: 0.003520
+Accrate: 0.016400
+Best value: 3.175835
+T: 0.003480
+Accrate: 0.012400
+Best value: 3.145255
+T: 0.003440
+Accrate: 0.008000
+Best value: 3.121104
+T: 0.003400
+Accrate: 0.012400
+Best value: 3.112568
+T: 0.003360
+Accrate: 0.012800
+Best value: 3.083292
+T: 0.003320
+Accrate: 0.006400
+Best value: 3.083292
+T: 0.003280
+Accrate: 0.009200
+Best value: 3.083292
+T: 0.003240
+Accrate: 0.009600
+Best value: 3.083292
+T: 0.003200
+Accrate: 0.010000
+Best value: 3.083292
+T: 0.003160
+Accrate: 0.008000
+Best value: 3.083292
+T: 0.003120
+Accrate: 0.007200
+Best value: 3.083292
+T: 0.003080
+Accrate: 0.010000
+Best value: 3.066674
+T: 0.003040
+Accrate: 0.004400
+Best value: 3.058027
+T: 0.003000
+Accrate: 0.010800
+Best value: 3.038081
+T: 0.002960
+Accrate: 0.007200
+Best value: 3.032286
+T: 0.002920
+Accrate: 0.008000
+Best value: 3.032286
+T: 0.002880
+Accrate: 0.008000
+Best value: 3.032286
+T: 0.002840
+Accrate: 0.005600
+Best value: 3.032286
+T: 0.002800
+Accrate: 0.006000
+Best value: 2.998768
+T: 0.002760
+Accrate: 0.005600
+Best value: 2.998768
+T: 0.002720
+Accrate: 0.004000
+Best value: 2.998768
+T: 0.002680
+Accrate: 0.006000
+Best value: 2.998768
+T: 0.002640
+Accrate: 0.008400
+Best value: 2.998768
+T: 0.002600
+Accrate: 0.011200
+Best value: 2.998768
+T: 0.002560
+Accrate: 0.006000
+Best value: 2.998768
+T: 0.002520
+Accrate: 0.005600
+Best value: 2.996504
+T: 0.002480
+Accrate: 0.004400
+Best value: 2.996504
+T: 0.002440
+Accrate: 0.006800
+Best value: 2.980208
+T: 0.002400
+Accrate: 0.004400
+Best value: 2.977997
+T: 0.002360
+Accrate: 0.006400
+Best value: 2.977636
+T: 0.002320
+Accrate: 0.003200
+Best value: 2.976599
+T: 0.002280
+Accrate: 0.004400
+Best value: 2.971001
+T: 0.002240
+Accrate: 0.006400
+Best value: 2.964468
+T: 0.002200
+Accrate: 0.002400
+Best value: 2.959502
+T: 0.002160
+Accrate: 0.003600
+Best value: 2.957407
+T: 0.002120
+Accrate: 0.003200
+Best value: 2.957407
+T: 0.002080
+Accrate: 0.004000
+Best value: 2.957407
+T: 0.002040
+Accrate: 0.005200
+Best value: 2.948875
+T: 0.002000
+Accrate: 0.003200
+Best value: 2.943961
+T: 0.001960
+Accrate: 0.006800
+Best value: 2.943961
+T: 0.001920
+Accrate: 0.003200
+Best value: 2.943961
+T: 0.001880
+Accrate: 0.002800
+Best value: 2.943961
+T: 0.001840
+Accrate: 0.002400
+Best value: 2.943961
+T: 0.001800
+Accrate: 0.001200
+Best value: 2.943961
+T: 0.001760
+Accrate: 0.001600
+Best value: 2.943406
+T: 0.001720
+Accrate: 0.001200
+Best value: 2.943406
+T: 0.001680
+Accrate: 0.002400
+Best value: 2.942189
+T: 0.001640
+Accrate: 0.004800
+Best value: 2.942189
+T: 0.001600
+Accrate: 0.002800
+Best value: 2.942189
+T: 0.001560
+Accrate: 0.001600
+Best value: 2.942189
+T: 0.001520
+Accrate: 0.004000
+Best value: 2.942189
+T: 0.001480
+Accrate: 0.002800
+Best value: 2.942189
+T: 0.001440
+Accrate: 0.002800
+Best value: 2.938405
+T: 0.001400
+Accrate: 0.004800
+Best value: 2.938405
+T: 0.001360
+Accrate: 0.001200
+Best value: 2.938405
+T: 0.001320
+Accrate: 0.001200
+Best value: 2.935862
+T: 0.001280
+Accrate: 0.001200
+Best value: 2.927888
+T: 0.001240
+Accrate: 0.002000
+Best value: 2.926671
+T: 0.001200
+Accrate: 0.001600
+Best value: 2.926671
+T: 0.001160
+Accrate: 0.002800
+Best value: 2.926671
+T: 0.001120
+Accrate: 0.000800
+Best value: 2.926671
+T: 0.001080
+Accrate: 0.000400
+Best value: 2.926671
+T: 0.001040
+Accrate: 0.002000
+Best value: 2.926671
+T: 0.001000
+Accrate: 0.000400
+Best value: 2.926671
+T: 0.000960
+Accrate: 0.002400
+Best value: 2.924698
+T: 0.000920
+Accrate: 0.000400
+Best value: 2.923192
+T: 0.000880
+Accrate: 0.002000
+Best value: 2.923167
+T: 0.000840
+Accrate: 0.001600
+Best value: 2.912727
+T: 0.000800
+Accrate: 0.000400
+Best value: 2.912727
+T: 0.000760
+Accrate: 0.000000
+Best value: 2.912727
+T: 0.000720
+Accrate: 0.000000
+Best value: 2.912727
+T: 0.000680
+Accrate: 0.000400
+Best value: 2.912727
+T: 0.000640
+Accrate: 0.000000
+Best value: 2.912727
+T: 0.000600
+Accrate: 0.000400
+Best value: 2.912727
+T: 0.000560
+Accrate: 0.000000
+Best value: 2.912727
+T: 0.000520
+Accrate: 0.000000
+Best value: 2.912727
+T: 0.000480
+Accrate: 0.000000
+Best value: 2.912727
+T: 0.000440
+Accrate: 0.000400
+Best value: 2.912727
+MSE after annealing: 2.912727 
+Flip attempts: 642500
+Flippable polymers: 2500
+INFO: At t= 1 area51 violation test passed
+INFO: At t= 1 area51 exact test passed
+Rank: 0 	 polymers 2500
+SOMA finished execution without errors.
