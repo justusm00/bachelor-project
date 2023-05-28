@@ -1,7 +1,4 @@
-% @Author: Your name
-% @Date:   2023-05-09 14:10:54
-% @Last Modified by:   Your name
-% @Last Modified time: 2023-05-09 17:50:11
+\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %%    2009/03/12 v1.0 GAUBM Vorlage für Aschlussarbeiten Physik
 %% Template fuer Bachelor- und Masterarbeiten
 %% an der Fakultaet fuer Physik (c) Thomas Pruschke der GA Universität
@@ -139,6 +136,7 @@
  \acro{SA}{Simulated Annealing}
  \acro{SCFT}{Self-Consistent Field Theory}
  \acro{SCMF}{Single-Chain-in-Mean-Field}
+ \acro{SD}{Steepest descent}
  \acro{SMC}{Smart Monte-Carlo}
  \acro{SOMA}{SOft coarse-grained Monte-Carlo Acceleration}
  \acro{SSL}{Strong-segregation limit}
@@ -381,44 +379,63 @@ This approximation is frequently used in the literature for the sake of computat
 
 \section{Single chain in mean field simulations}
 
-\begin{itemize}
-    \item Briefly explain SCMF basics, either here or in introduction
-    \item \textbf{paraphrase!!}
-\end{itemize}
-
 
 % First option following http://dx.doi.org/10.1063/1.2364506
 
-Although the soft, coarse grained model used in this thesis provides a high flexibility in molecular architectures, the following discussion is restricted to symmetric  AB-diblock copolymers in a volume $V$ at temperature $T$ for simplicity. The partition function in the canonical ensemble takes the form:
+Although the soft, coarse grained model used in this thesis provides a high flexibility in molecular architectures, the following discussion is restricted to symmetric  AB-diblock copolymers in a volume $V$ at temperature $T$ for simplicity. As usual, we first write down the partition function:
 
 \begin{align}
     \mathcal{Z}\propto\frac{1}{n!}\int{\prod_{i=1}^n\mathcal{D}[\mathbf r_i(s)]\mathcal P_0[\mathbf r_i(s)]\exp\left(\frac{-\mathcal H_{\text{nb}}[\hat\phi_\text A,\hat\phi_\text B]}{k_BT}\right)}\,,
+    \label{eq:partition_function}
 \end{align}
 
-where $\mathbf r_i(s)$ with $i=1,\dots,n$ is the position of segment $s$ that belongs to molecule $i\,.$ The factor $\int\mathcal{D}[\mathbf r_i(s)]\equiv \int\prod_sd^3\mathbf r_i(s)$ accounts for the different configurations that molecule $i$ can take $P_0[\mathbf r_i(s)]\propto\exp\left(-\mathcal H_{\text{b}}[\mathbf r_i(s)]/k_BT\right)$ is the probability distribution of configurations in the abscence of non-bonded interactions. For Gaussian polymers, the bonded interactions $\mathcal H_{\text{b}}[\mathbf r_i(s)]$ are modeled by the following discretized Hamiltonian:
+where $\mathbf r_i(s)$ is the position of segment $s$ from molecule $i\,.$ The factor $\int\mathcal{D}[\mathbf r_i(s)]\equiv \int\prod_sd^3\mathbf r_i(s)$ integrates over the conformation space of molecule $i\,.$ Conformations are weighted by a Boltzmann factor $P_0[\mathbf r_i(s)]\propto\exp\left(-\mathcal H_{\text{b}}[\mathbf r_i(s)]/k_BT\right)$ that involves the bonded interactions in the abscence of any intermolecular interactions. The bonded interactions $\mathcal H_{\text{b}}[\mathbf r_i(s)]$ are modeled by harmonic potentials, which is appropriate for Gaussian polymers. The discretized form reads:
 
 \begin{align}
     \frac{\mathcal H_\text b[\mathbf r_i(s)]}{k_BT}=\sum_{s=1}^{N-1}\frac{3(N-1)}{2R_e^2}[\mathbf r_i(s)-\mathbf r_i(s+1)]\,.
 \end{align}
 
-The non-bonded interactions depend on the local, normalised monomer densities, $\hat\phi_\text A$ and $\hat\phi_\text B\,,$ and are modeled by the following excess interaction free energy functional:
+The non-bonded interactions $\mathcal H_\text{nb}$ in \eqref{eq:partition_function} depend on the local particle densities $\hat\phi_\text A$ and $\hat\phi_\text B$ and are modeled by the following excess interaction free energy functional:
 
 \begin{align}
     \frac{\mathcal H_\text{nb}[\hat\phi_\text A,\hat\phi_\text B]}{k_BT}=\frac{\rho_0}{N}\int_Vd^3\mathbf r\left(\frac{\kappa N}{2}[\hat\phi_\text A+\hat\phi_\text B-1]^2-\frac{\chi N}{4}[\hat\phi_\text A-\hat\phi_\text B]^2\right)\,,
     \label{eq:nonbonded}
 \end{align}
 
-where $\rho_0=\frac{nN}{V}$ is the average monomer density, $\kappa$ describes the the compressibility of the system and $\chi$ is the Flory-Huggins parameter. The first term in the integrand penalises excluded volume and thus determines the compressibility, the second term describes the repulsion of monomers of different types. The densities $\hat\phi_{\alpha,m}$ ($\alpha=\text A,B$) are defined on a cubic grid with spacing $\Delta L\,,$ the total number of cells is $N_{cells}=V/(\Delta L)^3\,.$ With $\mathbf c_m$ being the center of the $m$th cell, one can write:
+where $\rho_0=\frac{nN}{V}$ is the average monomer density. The first term in the integrand penalizes deviations of the total density from unity, and therefore controls the extent of density fluctuations with the control parameter $\kappa\,.$ The second term enforces the repulsion of monomers of different types with the control parameter $\chi\,.$ The densities $\hat\phi_{\alpha,m}$ ($\alpha=\text A,\text B$) are defined on a cubic grid with spacing $\Delta L\,,$ the total number of cells is $N_{cells}=V/(\Delta L)^3\,.$ They are obtained by summing over all beads and assigning them to their according cell:
 
 \begin{align}
     \hat\phi_{\alpha,m}=\sum_{i=1}^n\sum_{s=1}^N\Pi(\mathbf r_i(s),\mathbf c_m)\gamma_\alpha(s)\,,
 \end{align}
 
-where $\gamma_\alpha(s)=1$ if the $s$th segment is of type $\alpha$ and $\gamma_\alpha(s)=0$ otherwise. $\Pi(\mathbf r_i(s),\mathbf c_m)$ is the characteristic function of the grid cell. This way, $\eqref{eq:nonbonded}$ may be discretized in the following way:
+where $\gamma_\alpha(s)$ assigns the segments to their respective types: it is one if segment $s$ is of type $\alpha\,,$ and zero otherwise. $\Pi(\mathbf r_i(s),\mathbf c_m)$ is the characteristic function of the grid cell centered at $\mathbf c_m\,.$ This way, $\eqref{eq:nonbonded}$ may be discretized in the following way:
 
 \begin{align}
     \frac{\mathcal H_\text{nb}[\hat\phi_\text A,\hat\phi_\text B]}{k_BT}=\frac{\rho_0\Delta L^3}{N}\sum_{m=1}^{N_{cells}}\left(\frac{\kappa N}{2}[\hat\phi_{\text A,m}+\hat\phi_{\text B,m}-1]^2-\frac{\chi N}{4}[\hat\phi_{\text A,m}-\hat\phi_{\text B,m}]^2\right)\,.
+    \label{eq:nonbonded_discretized}
 \end{align}
+
+Since the non-bonded interactions vary on a time-scale that is much slower than the bonded interactions \cite{Daoulas06}, they are approximated by quasi-instantaneous external fields $\omega_{\alpha,m}$:
+
+\begin{align}
+    \omega_{\alpha,m}&=\frac{1}{k_BT\rho_0\Delta L^3}\frac{\partial \mathcal H_{\text{nb}}}{\partial \hat\phi_{\alpha,m}}\,,\nonumber \\
+    \omega_{\text A,m}&=\kappa N\left(\hat\phi_{\text A,m}+\hat\phi_{\text B,m}-1\right)-\frac{\chi N}{2}\left(\hat\phi_{\text A,m}-\hat\phi_{\text B,m}\right)\,,
+    \label{eq:calc_omegafields}
+\end{align}
+
+and similarly for $\omega_{\text B,m}\,.$ In the \ac{SCMF} algorithm, these external fields are kept constant over a short duration. A \ac{MC} scheme is used to update the particle positions. A trial move is proposed according to a predefined rule and accepted according to the Metropolis-Hastings criterion \cite{metropolis}:
+
+\begin{align}
+    p_{\text{acc}}=\min\left\{1\,,\exp\left(-\frac{\Delta E}{k_BT}\right)\right\}\,,
+    \label{eq:metropolis_mc}
+\end{align}
+
+where $\Delta E=\Delta\mathcal H_{\text b}+\Delta\mathcal H_{\text{nb}}^{\text{SCMF}}$ is the energy change associated with the move. After a predefined number of \ac{MC} steps, the external fields are recalculated from the current densities. The accuracy of this approximation depends on the update frequency of the external fields as well as the parameter:
+
+\begin{align}
+    \epsilon =\frac{1}{\sqrt{N\bar{\mathcal N}}}\left(\frac{a}{\Delta L}\right)^3\,.
+\end{align}
+
 
 
 % Second option following http://dx.doi.org/10.1063/1.2364506
@@ -480,18 +497,18 @@ where $\gamma_\alpha(s)=1$ if the $s$th segment is of type $\alpha$ and $\gamma_
 % where $c_j$ denotes the cell of particle $j\,.$
 
 
-\section{Smart Monte Carlo move}
+% \section{Smart Monte Carlo move}
 
-\begin{itemize}
-    \item to be extended
-\end{itemize}
-The friction from the Rouse model can be incorporated into MC simulations by using a Smart Monte Carlo (SMC) scheme \cite{SMC}. The particle positions are proposed according to:
+% \begin{itemize}
+%     \item to be extended
+% \end{itemize}
+% The friction from the Rouse model can be incorporated into MC simulations by using a Smart Monte Carlo (SMC) scheme \cite{SMC}. The particle positions are proposed according to:
 
-\begin{align}
-    \mathbf{r}_i'(s)=\mathbf{r}_i(s)+\frac{\Delta t}{\zeta}\mathbf F_i(\mathbf r)+\Delta \mathbf r\,,
-\end{align}
+% \begin{align}
+%     \mathbf{r}_i'(s)=\mathbf{r}_i(s)+\frac{\Delta t}{\zeta}\mathbf F_i(\mathbf r)+\Delta \mathbf r\,,
+% \end{align}
 
-where $\Delta \mathbf r$ is from the usual MC algorithm and $\mathbf F_i(s)$ is the bonded force acting on the segment. $\Delta t$ is the time step of the simulation and $\zeta$ controls the segmental friction. The value of $\Delta t\,,$ that maximizes the MC acceptance rate, was found to be $\Delta t=0.17(\zeta R_e^2/Nk_BT)\,$ \cite{mueller_deltat}.
+% where $\Delta \mathbf r$ is from the usual MC algorithm and $\mathbf F_i(s)$ is the bonded force acting on the segment. $\Delta t$ is the time step of the simulation and $\zeta$ controls the segmental friction. The value of $\Delta t\,,$ that maximizes the MC acceptance rate, was found to be $\Delta t=0.17(\zeta R_e^2/Nk_BT)\,$ \cite{mueller_deltat}.
 
 \chapter{Simulation technique}
 \begin{itemize}
@@ -755,10 +772,12 @@ We now want to take a step towards simulating the setting depicted in Figure \re
     \tilde\phi_\alpha(c)=\frac{\hat\phi_\alpha(c)}{\sum_{i=1}^{n_t}\hat\phi_i(c)}=\frac{n_\alpha(c)}{\sum_{i=1}^{n_t}n_i(c)}\,,
 \end{align}
 
-where $n_i(c)$ is the number of beads of type $i$ in cell $c\,.$ To dictate the composition in specific cells, target values $\tilde\phi_{\alpha,T}(c)$ are defined, with $\tilde\phi_{\alpha,T}(c)<0$ $\forall\alpha$ for cells in which no target composition is desired. In the following, the cells $c$ for which $\tilde\phi_{\alpha,T}(c)\ge 0$ $\forall\alpha$ are called \enquote{target cells}. Mixed cells with $\tilde\phi_{\alpha,T}(c)\ge 0$ for some $\alpha$ and $\tilde\phi_{\alpha,T}(c)<0$ for other $\alpha$ are not allowed and target cells must fulfill the condition $\sum_\alpha\tilde\phi_{\alpha,T}(c)=1\, .$  (\textbf{Write a test to ensure this is true!}). The total number of target cells is denoted $n_T\,.$ Instead of using external fields, like in the previous section, the goal is to reach the target density by converting macromolecule types, see chapter \ref{chap:colldiff}. For now, only conversions between macromolecules with the same bond topology are considered. Due to the chain connectivity, this leads to a complex optimization problem for the polymer type configurations, which aims to minimize the following loss function:
+
+
+where $n_i(c)$ is the number of beads of type $i$ in cell $c\,.$ To dictate the composition in specific cells, target values $\tilde\phi_{\alpha,T}(c)$ are defined, with $\tilde\phi_{\alpha,T}(c)<0$ $\forall\alpha$ for cells in which no target composition is desired. In the following, the cells $c$ for which $\tilde\phi_{\alpha,T}(c)\ge 0$ $\forall\alpha$ are called \enquote{target cells}. Mixed cells with $\tilde\phi_{\alpha,T}(c)\ge 0$ for some $\alpha$ and $\tilde\phi_{\alpha,T}(c)<0$ for other $\alpha$ are not allowed and target cells must fulfill the condition $\sum_\alpha\tilde\phi_{\alpha,T}(c)=1\, .$  (\textbf{Write a test to ensure this is true!}). The total number of target cells is denoted $n_T\,.$ Instead of using external fields, like in the previous section, the goal is to reach the target density by converting macromolecule types, see chapter \ref{chap:colldiff}. For now, only conversions between macromolecules with the same bond topology are considered. Due to the chain connectivity, this leads to a complex optimization problem for the polymer type configurations, which aims to minimise the following loss function:
 
 \begin{align}
-    L[\{\tilde\phi_i\}]=\frac{1}{n_tn_T}\sum_{\alpha=0}^{n_t}\sum_{c\in \{\text{cells}\}}\theta(\tilde{\phi}_{\alpha,T}(c))\left(\tilde{\phi}_\alpha(c)-\tilde{\phi}_{\alpha,T}(c)\right)^2\,,
+    L[\{\tilde\phi_i\}]=\sum_{\alpha=0}^{n_t}\sum_{c\in \{\text{cells}\}}\theta(\tilde{\phi}_{\alpha,T}(c))\left(\tilde{\phi}_\alpha(c)-\tilde{\phi}_{\alpha,T}(c)\right)^2\,,
     \label{eq:lossfunction}
 \end{align}
 
@@ -766,85 +785,56 @@ where $\theta(\tilde{\phi}_{\alpha,T}(c))=1$ if $\tilde{\phi}_{\alpha,T}(c)\ge 0
 
 \begin{align}
     L^*_{\beta_j\rightarrow\beta_j^*}[\{\tilde\phi_i\}] &= L[\{\tilde\phi_i\}] 
-    - \frac{1}{n_tn_T}\sum_{\alpha=0}^{n_t}\sum_{k=0}^{n_{cells,j}-1}  \left(\tilde{\phi}_\alpha(q_{jk})-\tilde{\phi}_{\alpha,T}(q_{jk})\right)^2\nonumber \\
-    & \quad + \frac{1}{n_tn_T}\sum_{\alpha=0}^{n_t}\sum_{k=0}^{n_{cells,j}-1}  \left(\tilde{\phi}_\alpha(q_{jk})+\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)-\tilde{\phi}_{\alpha,T}(q_{jk})\right)^2\nonumber \\
+    - \sum_{\alpha=0}^{n_t}\sum_{k=0}^{n_{cells,j}-1}  \left(\tilde{\phi}_\alpha(q_{jk})-\tilde{\phi}_{\alpha,T}(q_{jk})\right)^2\nonumber \\
+    & \quad + \sum_{\alpha=0}^{n_t}\sum_{k=0}^{n_{cells,j}-1}  \left(\tilde{\phi}_\alpha(q_{jk})+\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)-\tilde{\phi}_{\alpha,T}(q_{jk})\right)^2\nonumber \\
     &= L[\{\tilde\phi_i\}] 
-    + \frac{1}{n_tn_T}\sum_{\alpha=0}^{n_t}\sum_{k=0}^{n_{cells,j}-1}  \biggl\{\Delta\tilde\phi^2_{ j\alpha k}(\beta\rightarrow\beta^*) \nonumber\\
+    + \sum_{\alpha=0}^{n_t}\sum_{k=0}^{n_{cells,j}-1}  \biggl\{\Delta\tilde\phi^2_{ j\alpha k}(\beta\rightarrow\beta^*) \nonumber\\
     &\quad + 2\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)\left(\tilde\phi_{\alpha}(q_{jk})-\tilde\phi_{\alpha,T}(q_{jk})\right)\biggr\}
 \end{align}
 
 where $\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)\equiv\frac{n_{j\beta_j^*\alpha k}-n_{j\beta_j\alpha k}}{\sum_{i=1}^{n_t}n_i(c)}$ is the change in the composition of type $\alpha$ in cell $q_{jk}$ due to the flip $\beta_j\rightarrow\beta_j^*\,$. Thus, for an efficient implementation of an optimization algorithm, the matrices $q_{jk}$ and $n_{j\beta\alpha k}$ have to be determined first. How this is done with the memory structure used in \ac{SOMA} is explained in algorithms \ref{alg:get_cell_indices} and \ref{alg:get_cell_numbers}. 
 
-\section{Hill-climbing algorithm}
+\section{Steepest descent}
 
-In the simplest approach, flippable polymers are selected at random and flipped to a random target type. The flip is only accepted if it decreases the loss function. $n_{acc}$ counts the number of accepted flips. Every $n_f$ flips, the acceptance rate $r=n_{acc}/n_f$ is calculated and $n_{acc}$ is reset to zero until the convergence criterion $r=0$ is fulfilled. Then, each flippable polymer is tried to be flipped one more time. Since this algorithm is only guaranteed to find a local minimum, more sophisticated optimization alogrithms may need to be employed.
+In the \ac{SD} algorithm, flippable polymers are selected at random and flipped to a random target type. The flip is only accepted if it decreases the loss function. $n_{acc}$ counts the number of accepted flips. Every $n_f$ flips, the acceptance rate $r=n_{acc}/n_f$ is calculated and $n_{acc}$ is reset to zero until the convergence criterion $r=0$ is fulfilled. Then, each flippable polymer is given one more chance to be flipped. Since this algorithm is only guaranteed to find a local minimum, more sophisticated optimization alogrithms may need to be employed.
 
 \section{Simulated annealing}
 
-If neighbouring solutions are generated by the flip of a single polymer type, \eqref{eq:lossfunction} is not a convex function of the polymer type configurations, this is discussed in Figure \ref{fig:loss} in the appendix. Therefore, a simple hill-climbing algorithm, as discussed in the previous section, might fail at finding the global minimum. To tackle these kind of combinatorial optimization problems, the probabilistic \ac{SA} technique \cite{simulated_annealing} is frequently used. In this heuristic algorithm, a parameter $T$ is introduced in analogy to temperature in statistical mechanics. Starting from a predefined temperature $T_0\,,$ an initial guess $S$ for the solution and a loss function $L\,$, a neighbouring solution $S^*$ is generated by a specific rule and accepted with a probability given by the Metropolis-Hastings criterion \cite{metropolis}:
+If neighbouring solutions are generated by the flip of a single polymer type, \eqref{eq:lossfunction} is not a convex function of the polymer type configurations, this is discussed in Figure \ref{fig:loss} in the appendix. Therefore, a simple \ac{SD} algorithm, as discussed in the previous section, might fail at finding the global minimum. To tackle these kind of combinatorial optimization problems, the probabilistic \ac{SA} technique \cite{simulated_annealing} is frequently used. In this heuristic algorithm, a parameter $T$ is introduced in analogy to temperature in statistical mechanics. Starting from a predefined temperature $T_0\,,$ an initial guess $S$ for the solution and a loss function $L\,$, a neighbouring solution $S^*$ is generated by a specific rule and accepted with a probability given by the Metropolis-Hastings criterion, similarly to \eqref{eq:metropolis_mc}:
 
 \begin{align}
     p(S\rightarrow S^*)=\min\left\{1\,,\exp\left(-\frac{L(S^*)-L(S)}{T}\right)\right\}\,.
 \end{align}
 
-Subsequently, the temperature is decreased by a predefined scheme and the procedure is repeated until a final temperature $T_f$ is reached. A slightly modified algorithm that generates multiple neighbouring solutions for each temperature $T$ is used in this thesis and explained in algorithm \ref{alg:sa} in the appendix. After the annealing schedule, a few more flips are carried out at $T=0$ using the hill-climbing algorithm until the acceptance rate reaches zero. 
+Subsequently, the temperature is decreased by a predefined scheme and the procedure is repeated until a final temperature $T_f$ is reached. A slightly modified algorithm that generates multiple neighbouring solutions for each temperature $T$ is used in this thesis and explained in algorithm \ref{alg:sa} in the appendix.
 
 \section{Comparison of algorithms}
 
-In the following, the hill-climbing algorithm is called \enquote{algorithm 1}, the \ac{SA} algorithm is called \enquote{algorithm 2}. In order to compare the performance of the two algorithms, optimizations are carried out with both algorithms on several randomly generated initial configurations with different target densities. A binary system of homopolymers with $N=32$ and dimensions $L_x\times L_y\times L_z=5\times1\times5\,R_e^3$ is used with $\Delta x=\Delta z=1/8\,R_e$ and $\Delta y=1\,R_e$ and hard walls. The number of beads per cell is varied and for each value, 100 random initial configurations are optimized and the average optimum for both algorithms is computed. $\langle  L_{opt,i}\rangle\,,$ with $i=1,2\,,$  denotes the average optimum of $L$ for algorithm $i\,.$ The cooling schedule needs to be chosen in such a fashion that the acceptance rate is close to one for $T=T_0$ and approaches zero as $T\rightarrow T_f\,.$ Specifically, the acceptance rate at a given temperature $T$ depends on the number of beads per cell $\rho_{cell}=nN/n_{cells}\,.$ An exponential cooling schedule  is applied:
+In order to compare the performance of the two presented algorithms, several randomly generated initial configurations are optimized with lamellar  target densities. A binary blend of homopolymers with $N=32$ and $\sqrt{\bar N}=100$ is used. The box dimensions are $L_x\times L_y\times L_z=5\times1\times5\,R_e^3$ with $\Delta L=1/8\,R_e$ and hard, impenetrable  walls are applied at all boundaries. The target composition is defined directly behind the walls with a width of one grid point. The lamella periodictiy is characterized by a wave number $q$ and the deviation of the lamella composition from the homogeneous value is given by $\Delta\tilde\phi\,,$ so the target values are $0.5\pm\Delta\tilde\phi\,.$ A simple linear cooling schedule is employed for the \ac{SA} algorithm:
 
 \begin{align}
-    T_k=T_0\alpha^k\,,
+    T_k=T_0-\alpha k\,.
 \end{align}
 
-with $T_0=1.0\,,$ $\alpha=0.85$ and $k_{max}=57\,,$ which corresponds to $T_f=10^{-4}$. This schedule was found to be appropriate for the considered range of $\rho_{cell}=0.2\dots 10.0\,,$ see Figure \ref{fig:accrate}.
+Optimizations are performed on 50 different initial structures. The loss function is normalized by the number monomer types $n_t\,,$ the number of target cells $n_T$ and the natural density fluctuations $\sigma_0^2\,,$ which is calculated as $\sigma_0^2=1/\rho_0\Delta L^3\kappa$ in the mean field approximation \cite{Daoulas06}. The \ac{SA} algorithm is run after the \ac{SD} algorithm, so it starts from a local minimum of \eqref{eq:lossfunction}. The resulting optimized structures are shown in Figure \ref{fig:comparison_sd_sa} for different parameters. For $\Delta\tilde\phi=0.1$ and $qR_e/2\pi=0.8\,,$ the optimized composition profile matches the target profile very well. For $\Delta\tilde\phi=0.49\,,$ only an amplitude of about $0.35$ is reached. For  $qR_e/2\pi=4.0\,,$ which corresponds to the highest possible lamella frequency of the used grid discretization, the amplitude further decreases to to about $0.11\,.$ Interestingly, the composition profiles obtained from \ac{SD} and \ac{SA} are virtually the same. Figure \ref{fig:comparison_sd_sa} shows that the composition clearly drops after staying on a plateau given by the local minimum that it started from. The critical temperature $T^*$ of this drop depends on $q$ and $\Delta\tilde\phi\,.$ After the steep drop, the loss function reaches a plateau region again, which likely corresponds to the global minimum. The difference between the two plateau regions is very small. For $\Delta\tilde\phi=0.1\,,$ one obtains $\Delta L_{opt}/n_tn_T\sigma_0^2\approx 0.04\,.$ This value decreases even further as $\Delta\tilde\phi$ is increased, as shown in Figure \ref{fig:dl_dphi}. The acceptance rate does not display any particular change of course at the critical temperature $T^*\,.$ This shows that any local minima that the \ac{SD} algorithm may become trapped in are already close to the global minimum. Since the computational cost of the \ac{SA} algorithm outweighs the improvement in the loss function by far, it is concluded that the \ac{SD} algorithm is sufficient. 
 
-
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/accrate.pdf}
-    \caption{Acceptance rate for different values of $\rho_{cell}\,.$}
-    \label{fig:accrate}
+    \includegraphics[width=0.7
+    \linewidth]{figures/dL-dphi.pdf}
+    \caption{Change of loss function after kink as a function of $\Delta\tilde\phi\,.$}
+    \label{fig:dl_dphi}
 \end{figure}
 
-The optimum values are rescaled by the density variance predicted by the mean field approximation $\sigma^2_0=\rho_0V_c\kappa$ \cite{Daoulas06}.
 
- 
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{figures/opt_var_rhoc_dphi0.pdf}
-      \caption{}
-      \label{fig:opt_var_rhoc_dphi0}
-  \end{subfigure}
-    \hfill
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{figures/diff_var_rhoc_dphi0.pdf}
-      \caption{}
-      \label{fig:diff_var_rhoc_dphi0}
-  \end{subfigure}
-     \caption{$\Delta\tilde\phi=0 $ (a) Mean squared deviation from target density for $\Delta L=1/8\,R_e$ and different values of $\sqrt{\bar N}\,.$ (b) Difference}
-     \label{fig:var_rhoc_dphi0}
-\end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.6\linewidth]{figures/flips_var_rhoc_dphi0.pdf}
-    \caption{Number of flips until convergence for both algorithms.}
-    \label{fig:flips}
+    \includegraphics[width=\linewidth]{Thesis/figures/comparison_sd_sa.pdf}
+    \caption{(a) Amplitude after optimization and target profile. (b) \ac{SA} optimum as a function of temperature. (c) Acceptance rate as a function of temperature. Top: $qR_e/2\pi=0.8\,,$ $\Delta\tilde\phi=0.1\,.$ Middle: $qR_e/2\pi=0.8\,,$ $\Delta\tilde\phi=0.49\,$ Bottom: $qR_e/2\pi=4.0\,,$ $\Delta\tilde\phi=0.49\,.$ For clarity, only a section of the $x$ axis is plotted for $qR_e/2\pi=4.0\,.$}
+    \label{fig:comparison_sd_sa}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\linewidth]{figures/opt_var_dx_dphi0.pdf}
-    \caption{Difference for different discretizations.}
-    \label{fig:opt_var_dx_dphi0}
-\end{figure}
-
-
-Algorithm 2 is slower and does not significantly improve the optimum, especially for large values $\sqrt{\bar N}\,.$ 
 
 
 % \subsection{Reference system}
@@ -874,6 +864,27 @@ Algorithm 2 is slower and does not significantly improve the optimum, especially
 %     \label{fig:checkerboard_opt}
 % \end{figure}
 
+\newpage
+\section{Structure factor}
+
+\begin{itemize}
+    \item From here on, only use SD algorithm
+    \item Target density over whole system, compare collective structure factor before and after optimization
+\end{itemize}
+
+The collective structure factor is \cite{Reister02}:
+
+\begin{align}
+    S_\text{coll}(\mathbf q)=\rho_0\int_Vd^3\mathbf r\exp(i\mathbf{qr})P_\text{coll}(\mathbf r)\,,
+\end{align}
+ 
+where $P_\text{coll}(\mathbf r)$ is the auto-correlation of the density:
+
+\begin{align}
+    P_\text{coll}(\mathbf r)=\langle\phi(\mathbf x)\phi(\mathbf x +\mathbf r)\rangle_{\mathbf{x}}\,,
+\end{align}
+ 
+where $\mathbf{r}$ is the separation vector, $\mathbf x$ is the position and $\langle .\rangle_\mathbf x$ denotes the ensemble average.
  
 \chapter{Outlook}
 
