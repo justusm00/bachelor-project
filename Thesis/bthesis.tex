@@ -46,7 +46,7 @@
                      %% "normalen" EC-Schrift
 %% Paket fuer bibtex-Datenbanken
 \usepackage[comma,numbers,sort&compress]{natbib}
-\bibliographystyle{plainnat}
+\bibliographystyle{unsrtnat}
 
 \newcommand{\tabheadfont}[1]{\textbf{#1}} %% Tabellenkopf in Fett
 \usepackage{booktabs}                      %% Befehle fuer besseres Tabellenlayout
@@ -89,8 +89,8 @@
 \Institute{Institut f\"ur Theoretische Physik}
 \SecondReferee{Prof. Dr. Stefan Klumpp}
 %% Beginn und Ende des Anfertigungszeitraumes
-\ThesisBegin{1}{4}{2023}
-\ThesisEnd{30}{6}{2023}
+\ThesisBegin{8}{5}{2023}
+\ThesisEnd{14}{8}{2023}
 %% DO NOT TOUCH THESE LINES!!!!
 \frontmatter
 \maketitle
@@ -132,7 +132,10 @@
  \acro{GPU}{Graphics processing unit}
  \acro{MC}{Monte-Carlo}
  \acro{MD}{Molecular Dynamics}
- \acro{NESS}{non-equilibrium steady state}
+ \acro{MPI}{Message Passing Interface}
+ \acro{NESS}{Non-equilibrium steady state}
+ \acro{ODT}{Order-to-disorder transition}
+ \acro{OOT}{Order-to-order transition}
  \acro{SA}{Simulated Annealing}
  \acro{SCFT}{Self-Consistent Field Theory}
  \acro{SCMF}{Single-Chain-in-Mean-Field}
@@ -162,7 +165,7 @@ One important class of polymers is the so-called homopolymer, which is made of a
 In this study, as a first step towards boundary-driven particle simulations, the dynamics of noninteracting homopolymers are investigated. Specifically, a system is pushed away from equilibrium by introducing conversion zones at the boundary regions of the simulation box. This results in a diffusive current and allows the calculation of the collective diffusion coefficient of the system. To this end, the \ac{SOMA} \cite{Schneider_soma} software package based on the \ac{SCMF} algorithm \cite{Daoulas06} is employed.
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.6\linewidth]{figures/continuum_section.png}
+  \includegraphics[width=0.5\linewidth]{figures/continuum_section.png}
   \caption{Sketch of the setting explained in the text. Polymers of different types may be exchanged with the surrounding, but the number of molecules $N_0$ inside the section of the particle simulation remains constant.}
   \label{fig:continuum_section}
 \end{figure}
@@ -174,19 +177,36 @@ In this study, as a first step towards boundary-driven particle simulations, the
 \section{Single-chain properties}
 
 Since the collective dynamics of polymer mixtures can often be directly related to the single-chain properties, some selected aspects are briefly discussed here. The simplest model to describe a polymer chain is the ideal chain, for which any non-bonded interaction between monomers is neglected.
+
+\subsection{Polymer types}
+
+The properties of polymers depend greatly on the their molecular architecture. The simplest type of polymer is the homopolymer, which is a linear chain of monomers of the same monomer type. 
+
+\begin{itemize}
+    \item Show picture of different polymer types here
+\end{itemize}
+
 \subsection{The freely jointed chain}
 
-The freely jointed chain model is an ideal model in which the chain is composed of $N$ segments of length $a\,,$ whose orientation vectors $\mathbf r_i$ ($a=|\mathbf r_i|$) can face in any direction and are completely independent from each other. The chain configuration may be characterised by the \textit{end-to-end-vector} $\mathbf R$:
+The freely jointed chain model is an ideal model in which the chain is composed of $N$ segments of length $b_0\,,$ whose orientation vectors $\mathbf r_i$ ($b_0=|\mathbf r_i|$) can face in any direction and are completely independent from each other. Each segment therefore represents a step in a random walk \cite{Doi_edwards}. The chain configuration may be characterised by the end-to-end vector $\mathbf R$:
 
 \begin{align}
-    \mathbf R=\sum_{i=1}^{N}\mathbf r_i\,.
+    \mathbf R=\sum_{i=1}^{N}\mathbf r_i\,,
 \end{align}
 
-Due to the completely random orientation, $\mathbf R$ has zero mean. A useful property to quantify the spatial extension of the chain is the mean square of $\mathbf R\,,$ which calculates to:
+connecting the first and last segments. This is shown in Figure \ref{fig:ideal_chain}. Due to the completely random orientation, $\mathbf R$ has zero mean. A useful property to quantify the spatial extension of the chain is the mean square of $\mathbf R\,,$ which calculates to:
 
 \begin{align}
-    R_e^2\equiv \langle\mathbf R^2\rangle=Na^2\,.
+    R_e^2\equiv \langle\mathbf R^2\rangle=Nb_0^2\,.
+    \label{eq:Re}
 \end{align}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\linewidth]{figures/ideal_chain.png}
+  \caption{Freely jointed chain.}
+  \label{fig:ideal_chain}
+\end{figure}
 
 For large $N\,,$ $\mathbf R$ has a Gaussian distribution \cite{Rubin03}:
  
@@ -199,7 +219,7 @@ For large $N\,,$ $\mathbf R$ has a Gaussian distribution \cite{Rubin03}:
  
 \subsection{Rouse model}
 
-The Rouse model \cite{Rouse} is used to describe the dynamics of a Gaussian chain moving through a solvent. The stiff bonds are replaced by springs of root-mean-square size $b\,,$ through which a monomer interacts with its neighbours. The monomers experience a friction force with friction coefficient  $\zeta\,,$ and the total friction coefficient of the center of mass is:
+The Rouse model \cite{Rouse} is used to describe the dynamics of a Gaussian chain moving through a solvent. The stiff bonds are replaced by springs of root-mean-square size $b_0\,,$ through which a monomer interacts with its neighbours. The monomers experience a friction force with friction coefficient  $\zeta\,,$ and the total friction coefficient of the center of mass is:
 
 \begin{align}
     \zeta_\mathrm R=N\zeta\,.
@@ -215,9 +235,8 @@ Within the Rouse model, the diffusion coefficient of the chain is computed as:
 For an $n$-dimensional diffusion of a Brownian particle, the single chain diffusion constant is related to the mean squared displacement of the chain center of mass $g_3(t)$ by the Einstein relation \cite{einstein_1905}:
 
 \begin{align}
-    D&=\frac{g_3(t)}{2nt}\,,\\
+    D&=\frac{g_3(t)}{2nt}\,, \label{eq:einstein_relation}\\
     g_3(t)&=\langle (\mathbf r_{cm}(t)-\mathbf r_{cm}(t_0))^2\rangle\,,\nonumber
-    \label{eq:einstein_relation}
 \end{align}
 
 where $\mathbf r_{cm}(t)$ is the center of mass position at time $t$ and $t_0$ is the time at which the measurement is started. The time in which a polymer diffuses a distance of the order of its size is called relaxation time $\tau_\mathrm R\,$:
@@ -235,14 +254,14 @@ If the composition is uniform everywhere, the mixture is called homogeneous. In 
 
 \subsection{Flory-Huggins Theory}
 
-Whether mixing or phase separation will be favored can be predicted by determining the free-energy change associated with mixing the components. This free energy-change can be computed within the lattice model developed by Flory and Huggins \cite{Flory42}. Within the Flory-Huggins framework, no volume change is assumed upon mixing. With this assumption, it is convenient to represent the system on a lattice. A lattice site corresponds to the smallest molecular unit and every macromolecule takes up one or multiple lattice sites. Consider a binary mixture with $n_\mathrm A$ polymers of species A and chain length $N_\mathrm A$ and $n_\mathrm B$ polymers of species B and chain length $N_\mathrm B$. Let the total number of polymers be $n=n_\mathrm A+n_\mathrm B\,.$ The free energy of mixing per monomer $\Delta F_{mix}$ is then given by the Flory-Huggins equation of polymer solutions \cite[S. 143]{Rubin03}:
+Whether mixing or phase separation will be favored can be predicted by determining the free-energy change associated with mixing the components. This free energy-change can be computed within the lattice model developed by Flory and Huggins \cite{Flory42}. Within the Flory-Huggins framework, no volume change is assumed upon mixing. With this assumption, it is convenient to represent the system on a lattice. A lattice site corresponds to the smallest molecular unit and every macromolecule takes up one or multiple lattice sites. Consider a binary mixture with $n_A$ polymers of species A and chain length $N_A$ and $n_B$ polymers of species B and chain length $N_B$. Let the total number of polymers be $n=n_A+n_B\,.$ The free energy of mixing per monomer $\Delta F_{mix}$ is then given by the Flory-Huggins equation of polymer solutions \cite[S. 143]{Rubin03}:
 
 \begin{align}
-  \frac{\Delta F_{mix}}{k_BT}=\frac{\phi}{N_\mathrm A}\ln\phi+\frac{1-\phi}{N_\mathrm B}\ln(1-\phi)+\chi\phi(1-\phi)\,.
+  \frac{\Delta F_{mix}}{k_BT}=\frac{\phi}{N_A}\ln\phi+\frac{1-\phi}{N_B}\ln(1-\phi)+\chi\phi(1-\phi)\,.
   \label{eq:floryhuggins}
 \end{align}
 
-Here, $\phi=n_\mathrm AN_\mathrm A/(n_\mathrm AN_\mathrm A+n_\mathrm BN_\mathrm B)$ is the monomer fraction of species A, $k_B$ is the Boltzmann constant, $T$ is the system temperature and $\chi$ is the Flory interaction parameter which characterizes the interaction between different polymer species and can be obtained from experiments. A positive value of $\chi$ opposes mixing while a negative value promotes it; knowing the value of $\chi$, therefore, allows us to qualitatively predict the phase separation behavior. For $\chi=0\,,$ \eqref{eq:floryhuggins} reduces to regular solution theory for an ideal gas of polymers with concentrations $\phi/N_A$ and $(1-\phi)/N_B\,.$  Note that so far, no space dependency of $\phi$ has been assumed. In the following discussion, a symmetric mixture with $N_\mathrm A=N_\mathrm B=N$ is assumed. To fully capture the complexity of the system, the Flory-Huggins model has to be extended to include spatial variations of $\phi$, which gives rise to the de Gennes-Flory-Huggins free-energy functional  \cite{deGennes80, Reister02}:
+Here, $\phi=n_\mathrm AN_A/(n_\mathrm AN_A+n_\mathrm BN_B)$ is the monomer fraction of species A, $k_B$ is the Boltzmann constant, $T$ is the system temperature and $\chi$ is the Flory interaction parameter which characterizes the interaction between different polymer species and can be obtained from experiments. A positive value of $\chi$ opposes mixing while a negative value promotes it; knowing the value of $\chi$, therefore, allows us to qualitatively predict the phase separation behavior. For $\chi=0\,,$ \eqref{eq:floryhuggins} reduces to regular solution theory for an ideal gas of polymers with concentrations $\phi/N_A$ and $(1-\phi)/N_B\,.$  Note that so far, no space dependency of $\phi$ has been assumed. In the following discussion, a symmetric mixture with $N_A=N_B=N$ is assumed. To fully capture the complexity of the system, the Flory-Huggins model has to be extended to include spatial variations of $\phi$, which gives rise to the de Gennes-Flory-Huggins free-energy functional  \cite{deGennes80, Reister02}:
 
 
 \begin{align}
@@ -256,36 +275,49 @@ Here, $\bar N=\left(nR_e^3/V\right)^2$ is the invariant degree of polymerization
   k_\mathrm{WSL}=\frac{R_e^2}{36\phi(1-\phi)}\,;\qquad k_\mathrm{SSL}=\frac{R_e^2}{24\phi(1-\phi)}\,.
 \end{align}
 
+\subsection{Phase separation}
+
+The incompatibility between different monomer types causes diblock copolymers to self-assemble into interesting equilibrium morphologies. Besides the Flory-Huggins parameter $\chi N\,,$ the volume fraction $f$ of the $A$ block is crucial in determining the phase-separation behavior. Typical morphologies are shown in \ref{fig:diblock_phasediagram} for increasing $f\,.$ The corresponding phase diagram may be obtained from experiments, or, numerically, from \ac{SCFT} computations \cite{matsen_copolymer}. The result of the latter is shown in \ref{fig:diblock_phasediagram}.
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\linewidth]{figures/diblock_phasediagram.png}
+  \caption{(a) Different equilibrium morphologies of diblock-copolymers for increasing values of $f\,.$ (b) $\chi N$-$f$ phase diagram. CPS stands for closely packed spheres, S for body-centered cubic spheres, C for hexagonally packed cylinders, G for bicontinuous gyroids and L for lamelale. Adapted from \cite{Mai_diblock_selfassembly}. }
+  \label{fig:diblock_phasediagram}
+\end{figure}
+
+Below a critical value of $\chi N\approx 10.5\,,$ no structure formation occurs. This value is called the \ac{ODT}. At a fixed $\chi N> 10.5\,,$ several transitions between distinct, ordered morphologies occur for increasing $f\,.$ These transitions are called \acp{OOT}. The $A$ blocks first form closely packed spheres (CPS), which then transition into body-centered cubic spheres (S) and for even larger $f$ into cylindrical phases (C). Before reaching the lamellar phase (L), for not too large values of $\chi N\,,$ an additional phase is observed, the bicontinous gyroids (G). The same transitions occur in reversed order if $f$ is increased further beyond $0.5\,,$ where the characteristic morphologies are now assumed by the $B$ blocks.
 
 \section{Collective diffusion}
 
-Consider again a binary mixture of polymers with $N_\mathrm A=N_\mathrm B=N\,$. Since the number of polymers in the system is constant, the continuity equation holds:
+Consider again a binary mixture of homopolymers with $N_A=N_B=N\,$. Since the number of polymers in the system is constant, the continuity equation holds:
 
 \begin{align}
-  \frac{\partial\phi}{\partial t}+\nabla\cdot\mathbf{J}_\mathrm A=0\,.
+  \frac{\partial\phi}{\partial t}+\nabla\cdot\mathbf{J}_A=0\,.
   \label{eq:conti}
 \end{align}
 
-Here, $\mathbf{J}_\mathrm A$ is the local current of polymer species A. Near equilibrium, one postulates a linear relation between $\mathbf{J}_\mathrm A$ and the local chemical potential $\mu_\mathrm A$ \cite{deGennes80}. In the most general case, this relation is non-local in space and time. Assuming translational invariance in space and time, it reads \cite{erukhimovich1986nonexponential}:
+Here, $\mathbf{J}_A$ is the local current of polymer species A. Near equilibrium, one postulates a linear relation between $\mathbf{J}_A$ and the local chemical potential $\mu_A$ \cite{deGennes80}. In the most general case, this relation is non-local in space and time. Assuming translational invariance in space and time, it reads \cite{erukhimovich1986nonexponential}:
 
 
 \begin{align}
-    \mathbf{J}_\mathrm A(\mathbf{r},t)=-\int_{t'=-\infty}^t\mathrm d t'\int_V\mathrm d \mathbf{r'}\,\frac{\Lambda_\mathrm A(\mathbf{r}- \mathbf{r'},t-t')}{k_BT}\nabla '\mu_\mathrm A(\mathbf{r'},t')\,.
+    \mathbf{J}_A(\mathbf{r},t)=-\int_{t'=-\infty}^t\mathrm d t'\int_V\mathrm d \mathbf{r'}\,\frac{\Lambda_A(\mathbf{r}- \mathbf{r'},t-t')}{k_BT}\nabla '\mu_A(\mathbf{r'},t')\,.
     \label{eq:linear_response}
 \end{align}
 
-The Onsager coefficient $\Lambda_\mathrm{A}(\mathbf{r}- \mathbf{r'},t-t')$ relates the gradient of the chemical potential at position $\mathbf{r'}$ to a density flux at position $\mathbf r$ and also accounts for memory effects. The non-localities in \eqref{eq:linear_response} translate into a dependency of $\Lambda$ on the wave vector $\mathbf q$ and the frequency $\omega$ in Fourier space. In the time-independent steady state, this gives:
+The Onsager coefficient $\Lambda_A(\mathbf{r}- \mathbf{r'},t-t')$ relates the gradient of the chemical potential at position $\mathbf{r'}$ to a density flux at position $\mathbf r$ and also accounts for memory effects. The non-localities in \eqref{eq:linear_response} translate into a dependency of $\Lambda$ on the wave vector $\mathbf q$ and the frequency $\omega$ in Fourier space. In the time-independent steady state, this gives:
 
 
 \begin{align}
-    \mathbf {J}_{\mathrm A, q}=-iq\frac{\Lambda_{\mathrm A, q}}{k_BT}\mu_{\mathrm A, q}\,,
+    \mathbf {J}_{A, q}=-iq\frac{\Lambda_{A, q}}{k_BT}\mu_{A, q}\,,
 \end{align}
 
 where $q=|\mathbf q|\,.$ In the following, it is assumed that $\mu[\phi(x)]\propto x\,,$ so $\mu_q\propto 1/q$ and $\nabla\mu=\mathrm{const}\,.$ For a spatially independent current, this implies that $\Lambda$ must also be independent of $q\,,$ so in the spatial picture: 
 
 
 \begin{align}
-    \mathbf {J}_\mathrm A=-\frac{\Lambda_\mathrm A}{k_BT}\nabla\mu_\mathrm A\,.
+    \mathbf {J}_A=-\frac{\Lambda_A}{k_BT}\nabla\mu_A\,.
     \label{eq:current_local}
 \end{align}
 
@@ -297,40 +329,40 @@ This approximation holds for small $q$ and therefore prohibits the probing of th
 % Following the discussion in the appendix of \cite{Binder83}, a continuity equation can be written down for each type individually:
 
 % \begin{align}
-%   \frac{\partial\phi_\mathrm A}{\partial t}+\nabla\cdot\mathbf{J_A}=0\,; \qquad \frac{\partial\phi_\mathrm B}{\partial t}+\nabla\cdot\mathbf{J_B}=0\,.
+%   \frac{\partial\phi_A}{\partial t}+\nabla\cdot\mathbf{J_A}=0\,; \qquad \frac{\partial\phi_B}{\partial t}+\nabla\cdot\mathbf{J_B}=0\,.
 %   \label{eq:conti_ab}
 % \end{align}
 
-% With the additional assumption of incompressibility, e.g. $\rho(\mathbf{r},t)\equiv\phi_\mathrm A(\mathbf{r},t)+\phi_\mathrm B(\mathbf{r},t)=1$ everywhere for all times, the continuity equation for the total density $\rho$ separates into two distinct equations:
+% With the additional assumption of incompressibility, e.g. $\rho(\mathbf{r},t)\equiv\phi_A(\mathbf{r},t)+\phi_B(\mathbf{r},t)=1$ everywhere for all times, the continuity equation for the total density $\rho$ separates into two distinct equations:
 
 % \begin{align}
-%   \frac{\partial}{\partial t}(\phi_\mathrm A+\phi_\mathrm B)=0\,; \qquad \nabla\cdot (\mathbf{J_A}+\mathbf{J_B})=0  \,.
+%   \frac{\partial}{\partial t}(\phi_A+\phi_B)=0\,; \qquad \nabla\cdot (\mathbf{J_A}+\mathbf{J_B})=0  \,.
 % \end{align}
 
 % This implies that $\mathbf{J_A}=-\mathbf{J_B}\,,$ which simply reflects the condition of incompressibility: for a bead of type A to move, a bead of type B has to take its place and vice-versa. The Onsager relations are then
 % \begin{subequations}
 %   \begin{align}
-%     \mathbf{J_A}&=-\frac{\Lambda_{\mathrm{AA}}}{k_BT}\nabla\mu_\mathrm A\,,\\
-%     \mathbf{J_B}&=-\frac{\Lambda_{\mathrm{BB}}}{k_BT}\nabla\mu_\mathrm B\,,
+%     \mathbf{J_A}&=-\frac{\Lambda_{\mathrm{AA}}}{k_BT}\nabla\mu_A\,,\\
+%     \mathbf{J_B}&=-\frac{\Lambda_{\mathrm{BB}}}{k_BT}\nabla\mu_B\,,
 %     \label{eq:current_onsager}
 %   \end{align}
 % \end{subequations}
 
 
-% where $\Lambda_\mathrm{AA}$ and $\Lambda_\mathrm{BB}$ are the diagonal elements of the matrix of Onsager coefficients, which is assumed to be diagonal. Since $\mu_\mathrm A$ and  $\mu_\mathrm B$ are not independent variables, their difference $\Delta\mu=\mu_\mathrm A-\mu_\mathrm B$ is considered instead. The goal is now to relate $\Delta\mu$ to the current $\mathbf J(\mathbf r,t)=\mathbf {J_A}(\mathbf r,t)=-\mathbf {J_B}(\mathbf r,t)\,.$ From \eqref{eq:current_onsager}, it is easily seen that
+% where $\Lambda_\mathrm{AA}$ and $\Lambda_\mathrm{BB}$ are the diagonal elements of the matrix of Onsager coefficients, which is assumed to be diagonal. Since $\mu_A$ and  $\mu_B$ are not independent variables, their difference $\Delta\mu=\mu_A-\mu_B$ is considered instead. The goal is now to relate $\Delta\mu$ to the current $\mathbf J(\mathbf r,t)=\mathbf {J_A}(\mathbf r,t)=-\mathbf {J_B}(\mathbf r,t)\,.$ From \eqref{eq:current_onsager}, it is easily seen that
 
 % \begin{align}
-%   \nabla(\mu_\mathrm A-\mu_\mathrm B)&=-k_BT\left (\mathbf{J_A}\Lambda_{\mathrm{AA}}^{-1} - \mathbf{J_B}\Lambda_{\mathrm{BB}}^{-1}\right )\nonumber\\
+%   \nabla(\mu_A-\mu_B)&=-k_BT\left (\mathbf{J_A}\Lambda_{\mathrm{AA}}^{-1} - \mathbf{J_B}\Lambda_{\mathrm{BB}}^{-1}\right )\nonumber\\
 %   &=-k_BT\left (\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\right )\mathbf{J}
 % \end{align}
 
 % and therefore
 
 % \begin{align}
-%   \mathbf J=-\frac{1}{k_BT}\left (\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\right )^{-1}\nabla(\mu_\mathrm A-\mu_\mathrm B)\,.
+%   \mathbf J=-\frac{1}{k_BT}\left (\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\right )^{-1}\nabla(\mu_A-\mu_B)\,.
 % \end{align}
 
-% The Onsager coefficient that relates $\mathbf{J}$ to the local chemical potential difference is identified as $\Lambda^{-1}=\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\,.$ By relating the currents in \eqref{eq:current_onsager} to the single chain diffusion coefficients $D_A$ and $D_B\,,$ the Onsager coefficients may be identified as $\Lambda_\mathrm{AA}=N_\mathrm AD_A\phi$ and $\Lambda_\mathrm{BB}=N_\mathrm BD_B(1-\phi)\,.$ For a symmetric mixture with $N_\mathrm A=N_\mathrm B\equiv N $ and $D_A=D_B\equiv D\,,$ the Onsager coefficient corresponding to $\Delta\mu$ becomes
+% The Onsager coefficient that relates $\mathbf{J}$ to the local chemical potential difference is identified as $\Lambda^{-1}=\Lambda_\mathrm{AA}^{-1}+\Lambda_\mathrm{BB}^{-1}\,.$ By relating the currents in \eqref{eq:current_onsager} to the single chain diffusion coefficients $D_A$ and $D_B\,,$ the Onsager coefficients may be identified as $\Lambda_\mathrm{AA}=N_\mathrm AD_A\phi$ and $\Lambda_\mathrm{BB}=N_\mathrm BD_B(1-\phi)\,.$ For a symmetric mixture with $N_A=N_B\equiv N $ and $D_A=D_B\equiv D\,,$ the Onsager coefficient corresponding to $\Delta\mu$ becomes
 
 
 % \begin{align}
@@ -345,31 +377,31 @@ This approximation holds for small $q$ and therefore prohibits the probing of th
 %% Alternative derivation in de Gennes paper
 
 
-Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of polymer chains with densities $\phi_\mathrm A$ and $\phi_\mathrm B\,.$ Incompressibility, e.g. $\phi_\mathrm A+\phi_\mathrm B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so from \eqref{eq:current_local} one obtains:
+Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of polymer chains with densities $\phi_A$ and $\phi_B\,.$ Incompressibility, e.g. $\phi_A+\phi_B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so from \eqref{eq:current_local} one obtains:
 
 
 
 \begin{subequations}
   \begin{align}
-    \mathbf{J}_\mathrm A&=-\Lambda_\mathrm A\nabla [(\mu_\mathrm A + U)/k_BT]\,,\\
-    \mathbf{J_B}&=-\Lambda_\mathrm B\nabla [(\mu_\mathrm B + U)/k_BT]\,.
+    \mathbf{J}_A&=-\Lambda_A\nabla [(\mu_A + U)/k_BT]\,,\\
+    \mathbf{J_B}&=-\Lambda_B\nabla [(\mu_B + U)/k_BT]\,.
   \end{align}
   \label{eq:current_onsager}
 \end{subequations}
 
-Due to the incompressibility, the total current $\mathbf J=\mathbf{J}_\mathrm A+\mathbf{J}_\mathrm B$ must have zero divergence, which in one dimension means $\mathbf J\equiv J\mathbf{e_x}=\mathrm{const}\,.$ From the Galilei invariance of the system, we can simply choose $J=0\,.$ From this condition, $U$ can be calculated explicitly:
+Due to the incompressibility, the total current $\mathbf J=\mathbf{J}_A+\mathbf{J}_B$ must have zero divergence, which in one dimension means $\mathbf J\equiv J\mathbf{e_x}=\mathrm{const}\,.$ From the Galilei invariance of the system, we can simply choose $J=0\,.$ From this condition, $U$ can be calculated explicitly:
 
 \begin{align}
-  U=(\Lambda_\mathrm A\mu_\mathrm A+\Lambda_\mathrm B\mu_\mathrm B)/(\Lambda_\mathrm A+\Lambda_\mathrm B)\,.
+  U=(\Lambda_A\mu_A+\Lambda_B\mu_B)/(\Lambda_A+\Lambda_B)\,.
 \end{align}
 
 Since one of the currents is redundant, write $J\equiv J_A\,.$ From \eqref{eq:current_onsager}, obtain:
 
 \begin{align}
-  J=-\Lambda\nabla(\mu_\mathrm A - \mu_\mathrm B)\equiv -\Lambda\nabla\mu\,,
+  J=-\Lambda\nabla(\mu_A - \mu_B)\equiv -\Lambda\nabla\mu\,,
 \end{align}
 
-where $\Lambda=\Lambda_\mathrm A\Lambda_\mathrm B/(\Lambda_\mathrm A+\Lambda_\mathrm B)$ and $\mu$ is the exchange chemical potential. In the limit of no interactions, the mixture can be considered as an ideal gas, so $\Lambda_i=D_i/\phi_i$ for $i=\mathrm A, \mathrm B\,.$ For $D_\mathrm A=D_\mathrm B\equiv D\,,$ this yields:
+where $\Lambda=\Lambda_A\Lambda_B/(\Lambda_A+\Lambda_B)$ and $\mu$ is the exchange chemical potential. In the limit of no interactions, the mixture can be considered as an ideal gas, so $\Lambda_i=D_i/\phi_i$ for $i=A, B\,.$ For $D_A=D_B\equiv D\,,$ this yields:
 
 \begin{align}
   \Lambda=D\phi(\mathbf{r})(1-\phi(\mathbf{r}))\,.
@@ -382,60 +414,73 @@ This approximation is frequently used in the literature for the sake of computat
 
 % First option following http://dx.doi.org/10.1063/1.2364506
 
-Although the soft, coarse grained model used in this thesis provides a high flexibility in molecular architectures, the following discussion is restricted to symmetric  AB-diblock copolymers in a volume $V$ at temperature $T$ for simplicity. As usual, we first write down the partition function:
+Although the model used in this thesis provides a high flexibility in molecular architectures, the following discussion is restricted to symmetric  AB-diblock copolymers in a volume $V$ at temperature $T$ for simplicity. We consider the partition function \cite{Daoulas06}:
 
 \begin{align}
-    \mathcal{Z}\propto\frac{1}{n!}\int{\prod_{i=1}^n\mathcal{D}[\mathbf r_i(s)]\mathcal P_0[\mathbf r_i(s)]\exp\left(\frac{-\mathcal H_{\text{nb}}[\hat\phi_\text A,\hat\phi_\text B]}{k_BT}\right)}\,,
-    \label{eq:partition_function}
+    \mathcal{Z}\propto\frac{1}{n!}\int{\prod_{i=1}^n\mathcal{D}[\mathbf r_i(s)]\mathcal P_0[\mathbf r_i(s)]\exp\left(\frac{-\mathcal H_{\text{nb}}[\hat\phi_A,\hat\phi_B]}{k_BT}\right)}\,,
+    \label{eq:partition_punction}
 \end{align}
 
 where $\mathbf r_i(s)$ is the position of segment $s$ from molecule $i\,.$ The factor $\int\mathcal{D}[\mathbf r_i(s)]\equiv \int\prod_sd^3\mathbf r_i(s)$ integrates over the conformation space of molecule $i\,.$ Conformations are weighted by a Boltzmann factor $P_0[\mathbf r_i(s)]\propto\exp\left(-\mathcal H_{\text{b}}[\mathbf r_i(s)]/k_BT\right)$ that involves the bonded interactions in the abscence of any intermolecular interactions. The bonded interactions $\mathcal H_{\text{b}}[\mathbf r_i(s)]$ are modeled by harmonic potentials, which is appropriate for Gaussian polymers. The discretized form reads:
 
 \begin{align}
-    \frac{\mathcal H_\text b[\mathbf r_i(s)]}{k_BT}=\sum_{s=1}^{N-1}\frac{3(N-1)}{2R_e^2}[\mathbf r_i(s)-\mathbf r_i(s+1)]\,.
+    \frac{\mathcal H_B[\mathbf r_i(s)]}{k_BT}=\sum_{s=1}^{N-1}\frac{3(N-1)}{2R_{e0}^2}[\mathbf r_i(s)-\mathbf r_i(s+1)]\,.
 \end{align}
 
-The non-bonded interactions $\mathcal H_\text{nb}$ in \eqref{eq:partition_function} depend on the local particle densities $\hat\phi_\text A$ and $\hat\phi_\text B$ and are modeled by the following excess interaction free energy functional:
-
-\begin{align}
-    \frac{\mathcal H_\text{nb}[\hat\phi_\text A,\hat\phi_\text B]}{k_BT}=\frac{\rho_0}{N}\int_Vd^3\mathbf r\left(\frac{\kappa N}{2}[\hat\phi_\text A+\hat\phi_\text B-1]^2-\frac{\chi N}{4}[\hat\phi_\text A-\hat\phi_\text B]^2\right)\,,
-    \label{eq:nonbonded}
-\end{align}
-
-where $\rho_0=\frac{nN}{V}$ is the average monomer density. The first term in the integrand penalizes deviations of the total density from unity, and therefore controls the extent of density fluctuations with the control parameter $\kappa\,.$ The second term enforces the repulsion of monomers of different types with the control parameter $\chi\,.$ The densities $\hat\phi_{\alpha,m}$ ($\alpha=\text A,\text B$) are defined on a cubic grid with spacing $\Delta L\,,$ the total number of cells is $N_{cells}=V/(\Delta L)^3\,.$ They are obtained by summing over all beads and assigning them to their according cell:
+Here, $R_{e0}^2$ is the mean squared end-to-end distance of the polymer in the absence of non-bonded interactions. The non-bonded interactions $\mathcal H_\text{nb}$ in \eqref{eq:partition_punction} depend on the local particle densities $\hat\phi_A$ and $\hat\phi_B\,,$ which are defined on a cubic grid with spacing $\Delta L$ in the discretized model, the total number of cells is $N_{cells}=V/(\Delta L)^3\,.$ The densities are obtained by summing over all beads and assigning them to their according cell:
 
 \begin{align}
     \hat\phi_{\alpha,m}=\sum_{i=1}^n\sum_{s=1}^N\Pi(\mathbf r_i(s),\mathbf c_m)\gamma_\alpha(s)\,,
+    \label{eq:normalized_densities}
 \end{align}
 
-where $\gamma_\alpha(s)$ assigns the segments to their respective types: it is one if segment $s$ is of type $\alpha\,,$ and zero otherwise. $\Pi(\mathbf r_i(s),\mathbf c_m)$ is the characteristic function of the grid cell centered at $\mathbf c_m\,.$ This way, $\eqref{eq:nonbonded}$ may be discretized in the following way:
+where $\gamma_\alpha(s)$ assigns the segments to their respective types: it is one if segment $s$ is of type $\alpha\,,$ and zero otherwise. $\Pi(\mathbf r_i(s),\mathbf c_m)$ is the characteristic function of the grid cell centered at $\mathbf c_m\,.$ The non-bonded interactions are modeled by the following discretized excess free energy functional:
 
 \begin{align}
-    \frac{\mathcal H_\text{nb}[\hat\phi_\text A,\hat\phi_\text B]}{k_BT}=\frac{\rho_0\Delta L^3}{N}\sum_{m=1}^{N_{cells}}\left(\frac{\kappa N}{2}[\hat\phi_{\text A,m}+\hat\phi_{\text B,m}-1]^2-\frac{\chi N}{4}[\hat\phi_{\text A,m}-\hat\phi_{\text B,m}]^2\right)\,.
+    \frac{\mathcal H_\text{nb}[\hat\phi_A,\hat\phi_B]}{k_BT}=\frac{\rho_0\Delta L^3}{N}\sum_{m=1}^{N_{cells}}\left(\frac{\kappa_0 N}{2}[\hat\phi_{A,m}+\hat\phi_{B,m}-1]^2-\frac{\chi_0 N}{4}[\hat\phi_{A,m}-\hat\phi_{B,m}]^2\right)\,.
     \label{eq:nonbonded_discretized}
 \end{align}
 
-Since the non-bonded interactions vary on a time-scale that is much slower than the bonded interactions \cite{Daoulas06}, they are approximated by quasi-instantaneous external fields $\omega_{\alpha,m}$:
+where $\rho_0=\frac{nN}{V}$ is the average monomer density. The first term in the sum penalizes deviations of the total density from unity, and therefore controls the extent of density fluctuations with the control parameter $\kappa_0\,.$ The second term enforces the repulsion of monomers of different types with the control parameter $\chi_0\,.$ It should be emphasized that $R_{e0}^2\,,$ $\kappa_0N$ and $\chi_0N$ are coarse-grained parameters. The spatial discretization and the presence of density fluctuations give rise to deviations of the inverse compressibility $\kappa N\,,$ the Flory-Huggins parameter $\chi N$ and the mean squared end-to-end distance $R_e^2$ from the corresponding model parameters. For most systems, these deviations are small. For this reason, the physical quantities and model parameters will be used interchangeably in the following. \\
+Instead of using direct \ac{MC} simulations, it is useful to look at typical scales of the bonded and non-bonded interactions. The bonded interactions are typically much stronger and less computationally expensive. For a given $\chi N\,,$ the typical ratio of bonded to non-bonded forces scales like $N^{3/2}$ \cite{Mueller_daoulas11}. Furthermore, the variations of the non-bonded interactions are much slower. The key idea behind \ac{SCMF} simulations is to exploit these scaling differences to replace the explicit non-bonded interactions by quasi-instantaneous external fields $\omega_{\alpha,m}$:
+
 
 \begin{align}
     \omega_{\alpha,m}&=\frac{1}{k_BT\rho_0\Delta L^3}\frac{\partial \mathcal H_{\text{nb}}}{\partial \hat\phi_{\alpha,m}}\,,\nonumber \\
-    \omega_{\text A,m}&=\kappa N\left(\hat\phi_{\text A,m}+\hat\phi_{\text B,m}-1\right)-\frac{\chi N}{2}\left(\hat\phi_{\text A,m}-\hat\phi_{\text B,m}\right)\,,
+    \omega_{A,m}&=\kappa N\left(\hat\phi_{A,m}+\hat\phi_{B,m}-1\right)-\frac{\chi N}{2}\left(\hat\phi_{A,m}-\hat\phi_{B,m}\right)\,,
     \label{eq:calc_omegafields}
 \end{align}
 
-and similarly for $\omega_{\text B,m}\,.$ In the \ac{SCMF} algorithm, these external fields are kept constant over a short duration. A \ac{MC} scheme is used to update the particle positions. A trial move is proposed according to a predefined rule and accepted according to the Metropolis-Hastings criterion \cite{metropolis}:
+and similarly for $\omega_{B,m}\,.$ This way, \eqref{eq:nonbonded_discretized} is rewritten to:
+
+\begin{align}
+    \frac{\mathcal H_\text{nb}^{\text{SCMF}}[\hat\phi_A,\hat\phi_B]}{k_BT}=\frac{\rho_0\Delta L^3}{2N}\sum_{m=1}^{N_\text{cells}}\omega_{A,m}\hat\phi_{A,m}+\omega_{B,m}\hat\phi_{B,m}\,.
+\end{align}
+
+The actual \ac{SCMF} algorithm consists of two steps. First, the external fields are computed according to \eqref{eq:calc_omegafields}. Subsequently, they are kept constant over a short duration during which a \ac{MC} scheme is used to update the particle positions. A trial move is proposed according to a predefined rule and accepted according to the Metropolis-Hastings criterion \cite{metropolis}:
 
 \begin{align}
     p_{\text{acc}}=\min\left\{1\,,\exp\left(-\frac{\Delta E}{k_BT}\right)\right\}\,,
     \label{eq:metropolis_mc}
 \end{align}
 
-where $\Delta E=\Delta\mathcal H_{\text b}+\Delta\mathcal H_{\text{nb}}^{\text{SCMF}}$ is the energy change associated with the move. After a predefined number of \ac{MC} steps, the external fields are recalculated from the current densities. The accuracy of this approximation depends on the update frequency of the external fields as well as the parameter:
+where $\Delta E=\Delta\mathcal H_b+\Delta\mathcal H_{\text{nb}}^{\text{SCMF}}$ is the energy change associated with the move. After a predefined number of \ac{MC} steps, the external fields are recalculated from the current densities and the procedure is repeated. The independent time evolution of polymers thanks to the quasi-instantaneous field approximation allow for an efficient implementation on parallel computers. The accuracy of the \ac{SCMF} algorithm depends on the update frequency of the external fields and the parameter
 
 \begin{align}
-    \epsilon =\frac{1}{\sqrt{N\bar{\mathcal N}}}\left(\frac{a}{\Delta L}\right)^3\,.
+    \epsilon=\frac{1}{\sqrt{N\bar N}}\left(\frac{b_0}{\Delta L}\right)^3\,,
 \end{align}
 
+which needs to be small \cite{Schneider_soma}.
+
+\section{Smart Monte Carlo Move}
+
+Traditionally, a \ac{MC} trial move would consists of a displacement of each particle by a random, normalized, Gaussian distributed vector $\Delta\mathbf R\,.$ The freedom of choice of this trial move in the original Metropolis Algorithm \cite{metropolis} can be exploited to achieve higher acceptance rates. The \ac{SMC} move introduces an additional term proportional to the bonded forces $\mathbf{F}_i(\mathbf r)$ \cite{smc, mueller_deltat}:
+
+\begin{align}
+    \mathbf{r'}_i(s)=\mathbf{r}_i(s)+\mathbf{F}_i(\mathbf r)\Delta A+\Delta\mathbf R\,,
+\end{align}
+
+which is simply and Euler integration with time step $\Delta t=\zeta_0\Delta A\,.$
 
 
 % Second option following http://dx.doi.org/10.1063/1.2364506
@@ -445,7 +490,7 @@ where $\Delta E=\Delta\mathcal H_{\text b}+\Delta\mathcal H_{\text{nb}}^{\text{S
 % Macromolecules, which are defined as a group of particles linked together by bonds, can take one of $m_t$ different molecular architectures. These architectures define the bond topology. The total bonded interactions are obtained by summation over all interactions of bonds $b$ in every molecule $m\,$: 
 
 % \begin{align}
-%     \frac{\mathcal H_\text b}{k_BT}=\sum_{m\in \text{\{mol\}}}\sum_{b\in {\text{\{bonds\}}}_m}V_{m,b}(\mathbf r)\,,
+%     \frac{\mathcal H_B}{k_BT}=\sum_{m\in \text{\{mol\}}}\sum_{b\in {\text{\{bonds\}}}_m}V_{m,b}(\mathbf r)\,,
 % \end{align}
 
 % where $V_{m,b}(\mathbf r)$ is the interaction energy of a single bond and $\mathbf r$ denotes the distance vector between the two bond partners. Motivated by a coarse-graining of Gaussian chains, it is chosen as a harmonic potential:
@@ -488,7 +533,7 @@ where $\Delta E=\Delta\mathcal H_{\text b}+\Delta\mathcal H_{\text{nb}}^{\text{S
 % \end{align}
 
 
-% In the SCMF algorithm, the particle  configuration at the current time step is used to compute the external fields, $\omega_i\,,$ given by  \eqref{eq:density_grid} and \eqref{eq:calc_omegafields}. Subsequently, the particles are subjected to these external fields and displaced according to a MC scheme, which involves the bonded interactions $\mathcal H_\text b$ and the SCMF interaction with the external field: 
+% In the SCMF algorithm, the particle  configuration at the current time step is used to compute the external fields, $\omega_i\,,$ given by  \eqref{eq:density_grid} and \eqref{eq:calc_omegafields}. Subsequently, the particles are subjected to these external fields and displaced according to a MC scheme, which involves the bonded interactions $\mathcal H_B$ and the SCMF interaction with the external field: 
 
 % \begin{align}
 %     \frac{\mathcal H_{\text{nb}}^\text{SCMF}}{k_BT}=\sum_{i=0}^{n_t-1}\sum_{c\in\{cells\}}\Delta L^3\rho_0\hat\phi_i(c)\omega_i(c)=\sum_{j\in\{beads\}}\omega_{\text{type}(j)}(c_j)\,,
@@ -511,21 +556,37 @@ where $\Delta E=\Delta\mathcal H_{\text b}+\Delta\mathcal H_{\text{nb}}^{\text{S
 % where $\Delta \mathbf r$ is from the usual MC algorithm and $\mathbf F_i(s)$ is the bonded force acting on the segment. $\Delta t$ is the time step of the simulation and $\zeta$ controls the segmental friction. The value of $\Delta t\,,$ that maximizes the MC acceptance rate, was found to be $\Delta t=0.17(\zeta R_e^2/Nk_BT)\,$ \cite{mueller_deltat}.
 
 \chapter{Simulation technique}
+
 \begin{itemize}
-    \item Still the old version from Einfuehrung ins Wissenschaftliche Arbeiten
+    \item nicht so allgemein
+    \item anknüpfen an das, was ich gemacht habe
+    \item Teilchenkonversionen, Wände
+    \item Parallelisierung der Aufstellung der Matrizen erwähnen
 \end{itemize}
-To simulate the collective dynamics, a coarse-grained model of the polymers is employed. Within this model, several monomeric repeat units are grouped into an effective interaction center, called \textit{bead}, which allows for an efficient numerical implementation. Nevertheless, in this study, the terms \enquote{bead} and \enquote{monomer} will be used interchangeably. A great variety of universal properties of polymeric materials on mesoscopic length scales is accurately captured by coarse-grained models \cite{Baschnagel03}.\\
-The software package that is used for the numerical calculations, \ac{SOMA} \cite{Schneider_soma}, uses a combination of a coarse-grained model and the \ac{SCMF} algorithm \cite{Daoulas06}. Unlike the widely used \ac{SCFT}, the \ac{SCMF} method includes fluctuation effects which are required to accurately describe certain systems and effects, e.g. dilute polymer solutions, the vicinity of phase transitions, or polymeric microemulsions \cite{Bates97, Mueller02, Schmid03}. Instead of calculating the interaction of a chain with all its surrounding explicitly, the chains are subjected to fluctuating external fields which are frequently recalculated from the density distribution. The densities are defined on a cubic grid. The time evolution of the system is then performed by \ac{MC} simulation and the external fields remain constant during one \ac{MC} sweep, this is called \textit{quasi-instantaneous field approximation}. The enormous benefit of this is that the chains are decoupled, making it possible to implement it effectively on parallel machines and leverage accelerators like Nivida \acp{GPU} \cite{Schneider_soma}. Additionally, \ac{SMC} scheme is employed that uses the strong bonded forces to propose a trial displacement resembling Brownian motion and produces Rouse-like dynamics \cite{Pangali78,Rossky78}.\\
-While a full description of the \ac{SCMF} equations can be found in \cite{Daoulas06}, and will be omitted here, it is important to note that the interactions are fully described by three coarse-grained parameters: the average mean squared end-to-end distance $R_{e}^2$ of a chain in the absence of non-bonded interactions, the inverse thermal compressibility $\kappa_o N$ and the incompatibility between different bead types $\chi_o N$. The term \enquote{soft} in \ac{SOMA} relates to the soft nature of the non-bonded interactions, which arises from the systematic coarse-graining and allows for an overlap of beads \cite{Mueller11soft}.
+
+To simulate the collective dynamics, a coarse-grained model of the polymers is employed. Within this model, several monomeric repeat units are grouped into an effective interaction center, called \textit{bead}, which allows for an efficient numerical implementation. Nevertheless, in this study, the terms \enquote{bead} and \enquote{monomer} will be used interchangeably. Each macromolecule is assigned one of $m_t$ possible architectures upon initialization. The architecture describes the bead types and bond topology of the macromolecule. Other than simple homopolymers, more complex bond topolgies like copolymers, star polymers and rings are possible. A great variety of universal properties of polymeric materials on mesoscopic length scales is accurately captured by coarse-grained models \cite{Baschnagel03}.\\
+The software package that is used for the numerical calculations, \ac{SOMA}, uses a combination of the described coarse-grained model and the \ac{SCMF} algorithm \cite{Daoulas06}. Unlike the widely used \ac{SCFT}, the \ac{SCMF} method includes fluctuation effects which are required to accurately describe certain systems and effects, e.g. dilute polymer solutions, the vicinity of phase transitions, or polymeric microemulsions \cite{Bates97, Mueller02, Schmid03}. The interactions are fully described by three coarse-grained parameters: the average mean squared end-to-end distance $R_{e}^2$ of a chain in the absence of non-bonded interactions, the inverse thermal compressibility $\kappa_0 N$ and the incompatibility between different bead types $\chi_0 N$. The term \enquote{soft} in \ac{SOMA} relates to the soft nature of the non-bonded interactions, which arises from the systematic coarse-graining and allows for an overlap of beads \cite{Mueller11soft}. As mentioned before, the enormous benefit of the \ac{SCMF} algorithm is that the chains are decoupled, making it possible to implement it effectively on parallel machines. For this, the \ac{MPI} standard is employed. Each molecule is assigned to a specific \ac{MPI} rank and the densities are computed according to \eqref{eq:normalized_densities}. \ac{SOMA} also supports parallelization on shared-memory systems using the OpenMP standard as well as the use of accelerators like Nivida \acp{GPU} \cite{Schneider_soma} using the OpenACC standard. For the particle propagation, a \ac{SMC} scheme is employed that uses the strong bonded forces to propose a trial displacement resembling Brownian motion and produces Rouse-like dynamics \cite{Pangali78,Rossky78}. Another important feature of \ac{SOMA} is the conversion of macromolecules to different types of the same bond architecture, but with different bead types. This allows for the simulation of chemical reactions, or, as used in this thesis, to generate a flux. \\
+
 
 
 \chapter{Collective diffusion of symmetric homopolymers}
 \label{chap:colldiff}
 
+To describe the collective diffusion behavior of polymer mixtures, the most important quantity is the Onsager coefficient. In this section, the simple case of an effectively one-dimensional current is investigated by simulation of a binary homopolymer mixture in a confined simulation box. The form \eqref{eq:onsager} for the Onsager coefficient is obtained. 
+
 \section{Reference system}
 
-In this section, the collective diffusion properties of noninteracting homopolymers with $N_\mathrm A=N_\mathrm B=N$ and $\chi=0$ are investigated. As a reference system, a simulation box with $n=10000$ polymers and dimensions $L_x\times L_y\times L_z=9.75\times3\times3\,R_e^3$ is used, so the invariant degree of polymerization is $\sqrt{\bar{N}}\approx 114\,$. The spatial discretization is $\Delta L=0.125\,R_e\,$.  Periodic boundary conditions are applied in the lateral $y$ and $z$ directions, whereas impenetrable walls are applied in the $x$ direction. Initially, the polymers are distributed homogeneously in the system. To stimulate a flux in a \ac{NESS}, conversion zones of width $d=0.25\,R_e$ are introduced close to the walls. In each time step, if the center-of-mass coordinate $\mathbf r_{cm}$ of a polymer of type A lies in the left conversion zone, it is converted to type B with probability $p(A\rightarrow B)=r\,$. Analogously, conversion from B to A takes place in the right conversion zone with the same probability $r\,$. The current $\mathbf J$ is measured by tracking the number of polymer conversions. The simulation setup is depicted in Figure \ref{fig:simulation_box}. \\
-The computation of the transport properties is complicated by boundary effects, such as a steep density drop close to the hard walls, which is of entropic origin. Furthermore, chains whose center of mass lies in the conversion zone may extend far beyond that zone. The range of these effects is approximated as $R_e$ and measurements are only taken in the region where the effects are negligible. 
+The collective diffusion properties of non-interacting homopolymers with $N_A=N_B=N$ and $\chi=0$ are investigated. As a reference system, a simulation box with $n_A=n_B=5000$ polymers and dimensions $L_x\times L_y\times L_z=9.75\times3\times3\,R_e^3$ is used, so the invariant degree of polymerization is $\sqrt{\bar{N}}\approx 114\,$. The spatial discretization is $\Delta L=0.125\,R_e\,$.  Periodic boundary conditions are applied in the lateral $y$ and $z$ directions, whereas impenetrable walls are applied in the $x$ direction. Initially, the polymers are distributed homogeneously in the system. To stimulate a flux in a \ac{NESS}, conversion zones of width $d=0.25\,R_e$ are introduced close to the walls. In each time step, if the center-of-mass coordinate $\mathbf r_{cm}$ of a polymer of type A lies in the left conversion zone, it is converted to type B with probability $p(A\rightarrow B)=r\,$. Analogously, conversion from B to A takes place in the right conversion zone with the same probability $r\,$. The current $\mathbf J$ is measured by tracking the number of polymer conversions. The simulation setup is depicted in Figure \ref{fig:simulation_box}. \\
+The computation of the transport properties is complicated by boundary effects, such as a steep density drop close to the hard walls, which is of entropic origin. As a result, the densities defined in \eqref{eq:normalized_densities} do not exactly sum up to one in the bulk. In Figure \ref{fig:density_drop}, it can be seen that the total density is about $1.01$ in the bulk and drops to $0.65$ in the cells that border the walls directly.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/density_drop.pdf}
+  \caption{One dimensional profile of the total density.}
+  \label{fig:density_drop}
+\end{figure}
+
+Furthermore, chains whose center of mass lies in the conversion zone may extend far beyond that zone. The range of these effects is approximated as $R_e$ and measurements are only taken in the region where the effects are negligible. The total densities are re-normalized by dividing by the average value in the bulk.
 
 
 \begin{figure}[h]
@@ -597,7 +658,7 @@ Together with \eqref{eq:conti}, this gives the standard diffusion equation:
   \label{eq:diffusion}
 \end{align}
 
-where $D$ is obtained from \eqref{eq:einstein_relation}. In the steady state, this simply yields $\phi''=0\,,$ so a linear density profile is obtained, as expected. From \eqref{eq:current_a} and the condition that $\phi(L_x/2)=1/2\,,$ which follows from the symmetry of the conversion rates, the density profile becomes:
+where $D$ is obtained from \eqref{eq:einstein_relation}. In the steady state, this simply yields $\phi''=0\,,$ so a linear density profile is obtained, as expected. From \eqref{eq:current_a}, and the condition that $\phi(L_x/2)=1/2\,,$ which follows from the symmetry of the conversion rates, the density profile becomes:
 
 \begin{align}
   \phi(x)=\frac{JR_e^3}{D\sqrt{\bar{N}}}\left(\frac{L_x}{2}-x\right) + \frac{1}{2}\,,
@@ -633,22 +694,58 @@ One of the simplest ways to implement time-dependent boundary conditions in \ac{
     E_i(\mathbf{r},t)=f_i(\mathbf r,t)\phi_i({\mathbf r,t})\,,
 \end{align}
 
-where $i=\mathrm A,\mathrm B$ denotes the monomer types. In this section, layers of lamellar diblock-copolymers are moved at constant speed $v$ perpendicular to their orientation using spatially periodic external fields close to the boundaries. In a system that moves along with the external field, each monomer experiences a friction force $\zeta v$ in the opposite direction, where $\zeta$ is obtained from \eqref{eq:d_rouse}. The degree of deformation depends on the P\'eclet number $P_e\equiv vR_e/D\,.$ For large values $P_e\approx 1\,,$ the chains cannot keep up with the external field movement and the lamellae break. For small $P_e\approx0\,,$ they have enough time to fully relax to the undeformed shape. In this section, an intermediate regime is investigated to obtain the bending modulus $K\,.$ 
+where $i=A,B$ denotes the monomer types. In this section, layers of lamellar diblock-copolymers are moved at constant speed $v$ perpendicular to their orientation using spatially periodic external fields close to the boundaries. In the applied \ac{MC} scheme, the friction coefficient $\zeta$ in \eqref{eq:d_rouse} is determined relative to a fixed background. In a system that moves along with the external field, this background is moving at the speed $-v\,,$ so the system is not Galilei-invariant and each monomer experiences a friction force $-\zeta v\,,$ causing the whole lamellae to bend. The convective motion due to the moving fields is opposed by the diffusive motion due to the Brownian dynamics. It is therefore useful to define a P\'eclet number \cite{peclet}:
+
+\begin{align}
+    P_e= vR_e/D\,,
+\end{align}
+
+
+which puts the two transport mechanisms in relation on the typical length scale $R_e\,.$ For small $P_e\approx0\,,$ the chains are able to fully relax to the undeformed shape. Beyond a critical value $P_e^*\,,$ they cannot keep up with the movement of the external field anymore, which causes the lamella to break and reconnect to the boundaries periodically. This is shown in Figure \ref{fig:lamella_break} for $P_e=0.92\,.$ In this section, an intermediate regime of $P_e$ is investigated to obtain the bending modulus $K\,.$ 
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/lamella_t1.png}
+      \caption{}
+      \label{fig:lamella_t1}
+  \end{subfigure}
+    \hfill
+  \begin{subfigure}[b]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/lamella_t2.png}
+      \caption{}
+      \label{fig:lamella_t2}
+  \end{subfigure}
+  \hfill
+    \begin{subfigure}[b]{0.3\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/lamella_t3.png}
+      \caption{}
+      \label{fig:lamella_t3}
+  \end{subfigure}
+     \caption{Snapshots of breaking lamellae at $P_e=0.92\,.$ (a) Shortly before breaking. (b) Lamella breaks. (c) Broken end reconnects to nearest lamella part.}
+     \label{fig:lamella_break}
+\end{figure}
+
 
 \section{Reference system}
-A system of $n=750$ symmetric diblock-copolymers with $N_A=N_B=N/2=16$ and $\chi N=20$ is used. The box dimensions are $L_x\times L_y\times L_z=2.5\times2.82\times1\,R_e^3\,,$ which corresponds to $\sqrt{\bar{N}}=106\,.$ The spatial discretizations are $\Delta x=1/16\,R_e\,,$ $\Delta y=47/800\,R_e$ and $\Delta z=1\,R_e\,.$ To generate the initial lamellar structure, external fields are applied, as shown in Figure \ref{fig:fext}. The interlayer spacing of $d=1.41\,R_e$ was found to be stable over the duration of the simulations, but it does not correspond to the equilibrium spacing.
+A system of $n=750$ symmetric diblock-copolymers with $N_A=N_B=N/2=16$ and $\chi N=20$ is used. This corresponds to a lamellar phase in Figure \ref{fig:diblock_phasediagram}. The box dimensions are $L_x\times L_y\times L_z=2.5\times2.82\times1\,R_e^3\,,$ which corresponds to $\sqrt{\bar{N}}=106\,.$ The spatial discretizations are $\Delta x=1/16\,R_e\,,$ $\Delta y=47/800\,R_e$ and $\Delta z=1\,R_e\,.$ To generate the initial lamellar structure, external fields are applied, as shown in Figure \ref{fig:fext}. The interlayer spacing of $d=1.41\,R_e$ was found to be stable over the duration of the simulations, but it does not correspond to the equilibrium spacing.
 
-Subsequently, the external fields are switched off everywhere except at a distance less than $b=0.5\,R_e$ from the boundaries in the $x$-direction, so the length of the part of the lamellae that is not supported by the external fields is $L=1.5\,R_e$. Every $\Delta t$ MCS, the fields are moved by a distance of $\Delta y$ in the $y$-direction, so the velocity is $v=47R_e/(800\Delta t)\,.$ The external fields balance the friction forces at the boundaries and therefore act as bearings for the lamellae. The diffusion constant $D$ is obtained from \eqref{eq:einstein_relation}, where $g_3(t)$ is measured in a system without external fields and $\chi N=0\,.$
+Subsequently, the external fields are switched off everywhere except at a distance less than $b=0.5\,R_e$ from the boundaries in the $x$-direction, so the length of the part of the lamellae that is not supported by the external fields is $L=1.5\,R_e$. Every $\Delta t$ MCS, the fields are moved by a distance of $\Delta y$ in the $y$-direction, so the velocity is $v=47R_e/(800\Delta t)\,.$ Snapshots of the density profile are taken every $\Delta t$ MCS. The external fields balance the friction forces at the boundaries and therefore act as bearings for the lamellae. The diffusion constant $D$ is obtained from \eqref{eq:einstein_relation}, where $g_3(t)$ is measured in a system without external fields and $\chi N=0\,.$
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.6\linewidth]{figures/fext.png}
-    \caption{Sketch of the external field $f_\text A(\mathbf r,0)\,.$ Red domains correspond to $f_\text A=1.0\,,$ blue domains to $f_\text A=0.0\,.$ $f_\text B(\mathbf r,0)$ is exactly complementary. Within the region bounded by the dotted lines, the external fields are switched off after the initial lamella structure has been generated.}
+    \caption{Sketch of the external field $f_A(\mathbf r,0)\,.$ Red domains correspond to $f_A=1.0\,,$ blue domains to $f_A=0.0\,.$ $f_B(\mathbf r,0)$ is exactly complementary. Within the region bounded by the dotted lines, the external fields are switched off after the initial lamella structure has been generated.}
     \label{fig:fext}
 \end{figure}
 
 
 \section{Bending modulus}
+
+
 For small deformations, in the \ac{SSL}, the free energy of a bent lamella is \cite{wang94}:
 
 \begin{align}
@@ -671,28 +768,15 @@ With the boundary conditions $u(0)=u(L)=0$ and $u''(0)=u''(L)=0\,,$ one obtains:
     u(x)=\frac{N\sqrt{\bar N}\zeta P_e Dx}{24KR_e^4}(L^3-2L^2x+x^3)\,,
     \label{eq:deflection}
 \end{align}
-in analogy to a beam bending under a uniform load in the Euler-Bernoulli theory. The resulting lamella profile for $P_e=0.24$ is shown in Figure \ref{fig:lamella_bent}. The fit is in excellent agreement with the simulation data. 
+in analogy to a beam bending under a uniform load in the Euler-Bernoulli theory. The resulting lamella profiles are shown in Figure \ref{fig:deflection_N32} for $P_e=0.24$ and $P_e=0.85\,.$ For $P_e=0.24$, the fit is in excellent agreement with the simulation data. $P_e=0.85\approx P_e^*$ was found to be the critical P\'eclet number beyond which the lamellae break. At these large deformations, the computation of the center of mass curve is complicated by the fact that a single $A$-monoblock, from the top at the boundaries to the bottom in the center, is at the order of the lamella spacing $d\,,$ so it is barely possible to fit a single $A$-block in a square without interference from other monoblocks. This interference of neighboring blocks explains the deviations in \ref{fig:deflection_N32}b for $P_e=0.85\,.$ It can also be observed that the lamella thickness reduces close to to the boundaries.
 
-
-
-\begin{figure}[h]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{figures/heatmap_t2000.pdf}
-      \caption{}
-      \label{fig:lamella_heatmap}
-  \end{subfigure}
-    \hfill
-  \begin{subfigure}[b]{0.45\textwidth}
-      \centering
-      \includegraphics[width=\textwidth]{figures/lamella_profile_t2000.pdf}
-      \caption{}
-      \label{fig:lamella_deflection}
-  \end{subfigure}
-     \caption{(a) Heatmap of the steady-state lamella profile in the reference frame that moves with the external field, averaged over all lamellae. (b) Lamella center of mass curve for $P_e=0.34\,$. The fit corresponds to \eqref{eq:deflection}.}
-     \label{fig:lamella_bent}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth]{Thesis/figures/deflection_N32.pdf}
+    \caption{(a) Heatmap of the steady-state lamella profile in the reference frame that moves with the external field, averaged over all lamellae. (b) Lamella center of mass curve. The fit corresponds to \eqref{eq:deflection}. The top row corresponds to $P_e=0.24\,.$ The bottom row corresponds to $P_e=0.85\,.$}
+    \label{fig:deflection_N32}
 \end{figure}
+
 
 
 The maximum deformation is:
@@ -703,15 +787,28 @@ The maximum deformation is:
 
 To obtain the bending modulus, $u_{max}$ is measured for various values of $P_e\,$, this is shown in Figure \ref{fig:stress_strain}.
 
+
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.6\linewidth]{figures/stress_strain_plot.pdf}
-    \caption{Maximum deflection  $u_{max}$ as a function of the P\'eclet number $P_e\,.$ The fit corresponds to \eqref{eq:umax}.}
-    \label{fig:stress_strain}
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/stress_strain_plot_N32.pdf}
+      \caption{}
+      \label{fig:stress_strain_N32}
+  \end{subfigure}
+    \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/stress_strain_plot_N64.pdf}
+      \caption{}
+      \label{fig:stress_strain_N64}
+  \end{subfigure}
+     \caption{Maximum deflection  $u_{max}$ as a function of the P\'eclet number $P_e\,.$ The fit corresponds to \eqref{eq:umax}. (a) $N=32\,.$ (b) $N=64\,.$}
+     \label{fig:stress_strain}
 \end{figure}
 
 
-From $\eqref{eq:umax}\,,$ one obtains $K=19.98\,k_BT/R_e\,.$ Alternatively, $K$ may also be obtained from exact \ac{SCFT}. For this, the free energy of bending is computed for a sinusoidal deformation $u(x)=a\sin2\pi x/L\,,$ as shown in Figure \ref{fig:bend_scft}. From \eqref{eq:F_bend}, the total free energy may be calculated as:
+From $\eqref{eq:umax}\,,$ one obtains $K=20.71\,k_BT/R_e\,.$ Alternatively, $K$ may also be obtained from exact \ac{SCFT}. For this, the free energy of bending is computed for a sinusoidal deformation $u(x)=a\sin2\pi x/L\,,$ as shown in Figure \ref{fig:bend_scft}. From \eqref{eq:F_bend}, the total free energy may be calculated as:
 
 \begin{align}
     F&=dL_z\int dx\left\{f_0+\frac{1}{2}Ka^2\left(\frac{2\pi}{L}\right)^4\sin\left(\frac{2\pi}{L}x\right)^2\right\}\nonumber\\
@@ -719,7 +816,7 @@ From $\eqref{eq:umax}\,,$ one obtains $K=19.98\,k_BT/R_e\,.$ Alternatively, $K$ 
     \label{eq:f_scft_1}
 \end{align}
 
-On the other hand, the total free energy may be obtained by integrating over the free energy density:
+On the other hand, the total free energy may be obtained by integrating the free energy density over the lamella volume:
 \begin{align}
     F&=\int d\mathbf r(f_0+f_b)\nonumber\\
     &\approx dLL_z(f_0+f_b)\nonumber \\
@@ -757,14 +854,15 @@ The result is $K_\text{SCFT}=17.47\,k_BT/R_e\,,$ which is slightly smaller than 
 % The result is $K=38.94\,k_BT/R_e\,,$ in excellent agreement with the simulation results. However, it should be noted that $\eqref{eq:k_ana}$ is derived from the equilibrium spacing $d_0\,.$ For $\chi N=20\,,$ \cite{wang94} predicts $d_0=1.24\,R_e\,,$ which is too small (\textbf{Need some reference value here to cite}). This is likely to indicate that the strong segregation is not fully reached at $\chi N=20\,.$ Nevertheless, the results might suggest that the bending modulus $K$ only weakly depends on the monolayer tickness.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\linewidth]{figures/bend_scft.pdf}
     \caption{Free energy per chain as a function of the square of the amplitude from exact \ac{SCFT} calculations. The inset shows the lamella cross-section for $a/R_e=0.3\,.$}
     \label{fig:bend_scft}
 \end{figure}
 
-\chapter{Polymer-type-conversion-based target density}
+
+\chapter{Polymer-type-conversion-based target composition}
 \section{Formulation of the problem}
 We now want to take a step towards simulating the setting depicted in Figure \ref{fig:continuum_section}. For this, we define the composition of bead-type $\alpha$ in cell $c$ as:
 
@@ -774,14 +872,14 @@ We now want to take a step towards simulating the setting depicted in Figure \re
 
 
 
-where $n_i(c)$ is the number of beads of type $i$ in cell $c\,.$ To dictate the composition in specific cells, target values $\tilde\phi_{\alpha,T}(c)$ are defined, with $\tilde\phi_{\alpha,T}(c)<0$ $\forall\alpha$ for cells in which no target composition is desired. In the following, the cells $c$ for which $\tilde\phi_{\alpha,T}(c)\ge 0$ $\forall\alpha$ are called \enquote{target cells}. Mixed cells with $\tilde\phi_{\alpha,T}(c)\ge 0$ for some $\alpha$ and $\tilde\phi_{\alpha,T}(c)<0$ for other $\alpha$ are not allowed and target cells must fulfill the condition $\sum_\alpha\tilde\phi_{\alpha,T}(c)=1\, .$  (\textbf{Write a test to ensure this is true!}). The total number of target cells is denoted $n_T\,.$ Instead of using external fields, like in the previous section, the goal is to reach the target density by converting macromolecule types, see chapter \ref{chap:colldiff}. For now, only conversions between macromolecules with the same bond topology are considered. Due to the chain connectivity, this leads to a complex optimization problem for the polymer type configurations, which aims to minimise the following loss function:
+where $n_i(c)$ is the number of beads of type $i$ in cell $c\,.$ The composition is used here since the total density fluctuates and experiences a sharp drop in the proximity of hard walls, as mentioned already in chapter \ref{chap:colldiff}. To dictate the composition in specific cells, target values $\tilde\phi_{\alpha,T}(c)$ are defined, with $\tilde\phi_{\alpha,T}(c)<0$ $\forall\alpha$ for cells in which no target composition is desired. In the following, the cells $c$ for which $\tilde\phi_{\alpha,T}(c)\ge 0$ $\forall\alpha$ are called \enquote{target cells}. Mixed cells with $\tilde\phi_{\alpha,T}(c)\ge 0$ for some $\alpha$ and $\tilde\phi_{\alpha,T}(c)<0$ for other $\alpha$ are not allowed and target cells must fulfill the condition $\sum_\alpha\tilde\phi_{\alpha,T}(c)=1\, .$ The total number of target cells is denoted $n_T\,.$ Instead of using external fields, like in the previous section, the goal is to reach the target composition by switching polymer types, see chapter \ref{chap:colldiff}. Only conversions between macromolecules with the same bond topology are considered. Due to the chain connectivity, this leads to a complex optimization problem for the polymer type configurations, which aims to minimize the following loss function:
 
 \begin{align}
     L[\{\tilde\phi_i\}]=\sum_{\alpha=0}^{n_t}\sum_{c\in \{\text{cells}\}}\theta(\tilde{\phi}_{\alpha,T}(c))\left(\tilde{\phi}_\alpha(c)-\tilde{\phi}_{\alpha,T}(c)\right)^2\,,
     \label{eq:lossfunction}
 \end{align}
 
-where $\theta(\tilde{\phi}_{\alpha,T}(c))=1$ if $\tilde{\phi}_{\alpha,T}(c)\ge 0$ and $\theta(\tilde{\phi}_{\alpha,T}(c))=0$ otherwise. Let $n_f$ be the number of polymers that have at least one monomer in a target cell $c\,.$ In the following, these polymers are called \enquote{flippable polymers}. To minimise $\eqref{eq:lossfunction}$, one must first define the notion of a neighbouring solution. If $\{\beta_1,\dots,\beta_j,\dots\beta_{n_f}\}$ is the current configuration of polymer types, then we define a neighbouring solution as $\{\beta_1,\dots,\beta^*_j,\dots\beta_{n_f}\}\,,$ where the type of the $j$th polymer has been changed from $\beta_j$ to $\beta_j^*$ and every other polymer type is unchanged. In the following, this rule to generate a neighbouring solution is called a \enquote{flip}. The flippable polymers are identified and saved to a list by algorithm \ref{alg:get_flip_candidates}. $n_f$ is not constant and must be determined during runtime. The target cells in which a flippable polymer $j$ has monomers are saved to an $n_f\times N$ matrix $q_{jk}\,.$ The number of target cells $n_{cells,j}\,,$ over which a flippable polymer $j$ extends, varies, and is bounded by $N\,,$ this is incorporated by setting $q_{jk}<0$ for $k\ge n_{cells,j}\,.$ Let $n_{j\beta\alpha k}$ be the $n_f\times m_t\times n_t\times N$ matrix that holds the number of monomers of type $\alpha$ that flippable polymer $j$ has in target cell $q_{jk}$ if it has the molecule type $\beta\,,$ where $n_{j\beta\alpha k}=0$ for $k\ge n_{cells,j}\,.$ After the flip $\beta_j\rightarrow \beta_j^*$ of an arbitrary, flippable polymer $j\,,$ the value of the loss function is updated according to:
+where $\theta(\tilde{\phi}_{\alpha,T}(c))=1$ if $\tilde{\phi}_{\alpha,T}(c)\ge 0$ and $\theta(\tilde{\phi}_{\alpha,T}(c))=0$ otherwise. Let $n_p$ be the number of polymers that have at least one monomer in a target cell $c\,.$ In the following, these polymers are called \enquote{target polymers}. To minimize $\eqref{eq:lossfunction}$, one must first define the notion of a neighboring solution. If $\{\beta_1,\dots,\beta_j,\dots\beta_{n_p}\}$ is the current configuration of polymer types, then we define a neighboring solution as $\{\beta_1,\dots,\beta^*_j,\dots\beta_{n_p}\}\,,$ where the type of the $j$th target polymer has been changed from $\beta_j$ to $\beta_j^*$ and every other polymer type is unchanged. In the following, this rule to generate a neighboring solution is called a \enquote{flip}. The target polymers are identified and saved to a list by algorithm \ref{alg:get_flip_candidates}. $n_p$ varies between \ac{MC} steps and must be determined during runtime. The target cells in which a target polymer $j$ has monomers are saved to an $n_p\times N$ matrix $q_{jk}\,.$ The number of target cells $n_{cells,j}\,,$ over which a target polymer $j$ extends, varies, and is bounded by $N\,,$ this is incorporated by setting $q_{jk}<0$ for $k\ge n_{cells,j}\,.$ Let $n_{j\beta\alpha k}$ be the $n_p\times m_t\times n_t\times N$ matrix that holds the number of monomers of type $\alpha$ that target polymer $j$ has in target cell $q_{jk}$ if it has the molecule type $\beta\,,$ where $n_{j\beta\alpha k}=0$ for $k\ge n_{cells,j}\,.$ This is especially important for copolymers; for homopolymers it would be sufficient to only consider the polymer types. After the flip $\beta_j\rightarrow \beta_j^*$ of an arbitrary target polymer $j\,,$ the value of the loss function is updated according to:
 
 \begin{align}
     L^*_{\beta_j\rightarrow\beta_j^*}[\{\tilde\phi_i\}] &= L[\{\tilde\phi_i\}] 
@@ -792,15 +890,15 @@ where $\theta(\tilde{\phi}_{\alpha,T}(c))=1$ if $\tilde{\phi}_{\alpha,T}(c)\ge 0
     &\quad + 2\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)\left(\tilde\phi_{\alpha}(q_{jk})-\tilde\phi_{\alpha,T}(q_{jk})\right)\biggr\}
 \end{align}
 
-where $\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)\equiv\frac{n_{j\beta_j^*\alpha k}-n_{j\beta_j\alpha k}}{\sum_{i=1}^{n_t}n_i(c)}$ is the change in the composition of type $\alpha$ in cell $q_{jk}$ due to the flip $\beta_j\rightarrow\beta_j^*\,$. Thus, for an efficient implementation of an optimization algorithm, the matrices $q_{jk}$ and $n_{j\beta\alpha k}$ have to be determined first. How this is done with the memory structure used in \ac{SOMA} is explained in algorithms \ref{alg:get_cell_indices} and \ref{alg:get_cell_numbers}. 
+where $\Delta\tilde\phi_{ j\alpha k}(\beta\rightarrow\beta^*)\equiv\frac{n_{j\beta_j^*\alpha k}-n_{j\beta_j\alpha k}}{\sum_{i=1}^{n_t}n_i(c)}$ is the change in the composition of type $\alpha$ in cell $q_{jk}$ due to the flip $\beta_j\rightarrow\beta_j^*\,$. Thus, for an efficient implementation of an optimization algorithm, the matrices $q_{jk}$ and $n_{j\beta\alpha k}$ have to be determined first. For the determination of the unique target cells of a given target polymer, one first has to loop over all its bead positions and determine the corresponding cells using the assignment function in \eqref{eq:normalized_densities}. The cells are then sorted by their indices and the unique ones are identified. This is described in algorithm \ref{alg:get_cell_indices}. This may seem tedious, however, it is necessary since a polymer can leave a given cell and reenter it at later segments. For a homopolymer, the number of monomers it has of type $\alpha$ in a target cell $c$ is simply given by the polymer type and the number of monomers it has in that cell. For a copolymer, it is necessary to compute the exact number of monomers it has of a given type in a given target cell, for each possible architecture it can assume. How this is done in \ac{SOMA} is explained in algorithm \ref{alg:get_cell_numbers}. 
 
 \section{Steepest descent}
 
-In the \ac{SD} algorithm, flippable polymers are selected at random and flipped to a random target type. The flip is only accepted if it decreases the loss function. $n_{acc}$ counts the number of accepted flips. Every $n_f$ flips, the acceptance rate $r=n_{acc}/n_f$ is calculated and $n_{acc}$ is reset to zero until the convergence criterion $r=0$ is fulfilled. Then, each flippable polymer is given one more chance to be flipped. Since this algorithm is only guaranteed to find a local minimum, more sophisticated optimization alogrithms may need to be employed.
+In the \ac{SD} algorithm, target polymer are selected at random and flipped to a random target type. This process is repeated, until the acceptance rate $r_{acc}$ reaches zero. Subsequently, each target polymer is given one more chance to be flipped. Since this algorithm is only guaranteed to find a local minimum, more sophisticated optimization algorithms may need to be employed.
 
 \section{Simulated annealing}
 
-If neighbouring solutions are generated by the flip of a single polymer type, \eqref{eq:lossfunction} is not a convex function of the polymer type configurations, this is discussed in Figure \ref{fig:loss} in the appendix. Therefore, a simple \ac{SD} algorithm, as discussed in the previous section, might fail at finding the global minimum. To tackle these kind of combinatorial optimization problems, the probabilistic \ac{SA} technique \cite{simulated_annealing} is frequently used. In this heuristic algorithm, a parameter $T$ is introduced in analogy to temperature in statistical mechanics. Starting from a predefined temperature $T_0\,,$ an initial guess $S$ for the solution and a loss function $L\,$, a neighbouring solution $S^*$ is generated by a specific rule and accepted with a probability given by the Metropolis-Hastings criterion, similarly to \eqref{eq:metropolis_mc}:
+If neighbouring solutions are generated by the flip of a single polymer type, \eqref{eq:lossfunction} is not a convex function of the polymer type configurations, this is discussed in Figure \ref{fig:loss} in the appendix. Therefore, a simple \ac{SD} algorithm, as discussed in the previous section, generally does not find the global minimum. To tackle these kind of combinatorial optimization problems, the probabilistic \ac{SA} technique \cite{simulated_annealing} is frequently used. In this heuristic algorithm, a parameter $T$ is introduced in analogy to temperature in statistical mechanics. Starting from a predefined temperature $T_0\,,$ an initial guess $S$ for the solution and a loss function $L\,$, a neighbouring solution $S^*$ is generated by a specific rule and accepted with a probability given by the Metropolis-Hastings criterion, similarly to \eqref{eq:metropolis_mc}:
 
 \begin{align}
     p(S\rightarrow S^*)=\min\left\{1\,,\exp\left(-\frac{L(S^*)-L(S)}{T}\right)\right\}\,.
@@ -810,17 +908,36 @@ Subsequently, the temperature is decreased by a predefined scheme and the proced
 
 \section{Comparison of algorithms}
 
-In order to compare the performance of the two presented algorithms, several randomly generated initial configurations are optimized with lamellar  target densities. A binary blend of homopolymers with $N=32$ and $\sqrt{\bar N}=100$ is used. The box dimensions are $L_x\times L_y\times L_z=5\times1\times5\,R_e^3$ with $\Delta L=1/8\,R_e$ and hard, impenetrable  walls are applied at all boundaries. The target composition is defined directly behind the walls with a width of one grid point. The lamella periodictiy is characterized by a wave number $q$ and the deviation of the lamella composition from the homogeneous value is given by $\Delta\tilde\phi\,,$ so the target values are $0.5\pm\Delta\tilde\phi\,.$ A simple linear cooling schedule is employed for the \ac{SA} algorithm:
+In order to compare the performance of the two presented algorithms, several randomly generated initial configurations are optimized with lamellar target compositions. A binary blend of homopolymers with $N=32$ and $\sqrt{\bar N}=100$ is used. The box dimensions are $L_x\times L_y\times L_z=5\times1\times5\,R_e^3$ with $\Delta L=1/8\,R_e$ and hard, impenetrable  walls are applied at all boundaries. The target composition is defined directly behind the walls with a width of one grid point. The lamella periodictiy is characterized by a wave number $q$ and the deviation of the lamella composition from the homogeneous value is given by $\Delta\tilde\phi\,,$ so the target values are $0.5\pm\Delta\tilde\phi\,.$ The optimized structure for $qR_e/2\pi=0.8$ and $\Delta\tilde\phi=0.5$ is shown in Figure \ref{fig:conversion_box}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5
+    \linewidth]{figures/conversion_box_large}
+    \caption{Optimized lamella structure $\tilde\phi_A(\mathbf r)$ for $qR_e/2\pi=0.8$ and $\Delta\tilde\phi=0.5\,,$ obtained from using \ac{SD} algorithm. Averaged over 50 optimization runs starting from randomly generated initial configurations. The conversion zone is marked by the thin frame at the top.}
+    \label{fig:conversion_box}
+\end{figure}
+
+
+A simple linear cooling schedule is employed for the \ac{SA} algorithm:
 
 \begin{align}
     T_k=T_0-\alpha k\,.
 \end{align}
 
-Optimizations are performed on 50 different initial structures. The loss function is normalized by the number monomer types $n_t\,,$ the number of target cells $n_T$ and the natural density fluctuations $\sigma_0^2\,,$ which is calculated as $\sigma_0^2=1/\rho_0\Delta L^3\kappa$ in the mean field approximation \cite{Daoulas06}. The \ac{SA} algorithm is run after the \ac{SD} algorithm, so it starts from a local minimum of \eqref{eq:lossfunction}. The resulting optimized structures are shown in Figure \ref{fig:comparison_sd_sa} for different parameters. For $\Delta\tilde\phi=0.1$ and $qR_e/2\pi=0.8\,,$ the optimized composition profile matches the target profile very well. For $\Delta\tilde\phi=0.49\,,$ only an amplitude of about $0.35$ is reached. For  $qR_e/2\pi=4.0\,,$ which corresponds to the highest possible lamella frequency of the used grid discretization, the amplitude further decreases to to about $0.11\,.$ Interestingly, the composition profiles obtained from \ac{SD} and \ac{SA} are virtually the same. Figure \ref{fig:comparison_sd_sa} shows that the composition clearly drops after staying on a plateau given by the local minimum that it started from. The critical temperature $T^*$ of this drop depends on $q$ and $\Delta\tilde\phi\,.$ After the steep drop, the loss function reaches a plateau region again, which likely corresponds to the global minimum. The difference between the two plateau regions is very small. For $\Delta\tilde\phi=0.1\,,$ one obtains $\Delta L_{opt}/n_tn_T\sigma_0^2\approx 0.04\,.$ This value decreases even further as $\Delta\tilde\phi$ is increased, as shown in Figure \ref{fig:dl_dphi}. The acceptance rate does not display any particular change of course at the critical temperature $T^*\,.$ This shows that any local minima that the \ac{SD} algorithm may become trapped in are already close to the global minimum. Since the computational cost of the \ac{SA} algorithm outweighs the improvement in the loss function by far, it is concluded that the \ac{SD} algorithm is sufficient. 
+While other cooling schedules might be more efficient, a slow, linear cooling allows for a detailed exploration of the configuration space. The loss function is normalized by the number of monomer types $n_t$ and the number of target cells $n_T$ to obtain the mean squared deviation from the target composition. The thermal density variance $\sigma_0^2$ is taken as a reference value. It is calculated as $\sigma_0^2=1/\rho_0\Delta L^3\kappa$ in the mean field approximation \cite{Daoulas06}. For the \ac{SA} optimizations, the \ac{SD} algorithm is run first. This way, it can be easily quantified how much better the \ac{SA} algorithm performs. The resulting composition profiles at $y=0\,,$ averaged over $z\,,$ are shown in Figure \ref{fig:comparison_sd_sa} for different parameters. For $\Delta\tilde\phi=0.1$ and $qR_e/2\pi=0.8\,,$ the optimized composition profile matches the target profile very well. For $\Delta\tilde\phi=0.5\,,$ only an amplitude of about $0.35$ is reached. For  $qR_e/2\pi=4.0\,,$ which corresponds to the highest possible lamella frequency of the used grid discretization, the amplitude further decreases to to about $0.11\,.$ Interestingly, the composition profiles obtained from \ac{SD} and \ac{SA} are barely distinguishable. Figure \ref{fig:comparison_sd_sa} shows that the loss function value clearly drops after staying on a plateau corresponding to the local minimum that it started from. The critical temperature $T^*$ of this drop depends on $q$ and $\Delta\tilde\phi\,.$ After the steep drop, the loss function reaches a plateau region again, which likely corresponds to the global minimum. The difference between the two plateau regions is very small. For $\Delta\tilde\phi=0.1\,,$ one obtains $\Delta L_{opt}/n_tn_T\sigma_0^2\approx 0.04\,.$ This value decreases even further as $\Delta\tilde\phi$ is increased, as shown in Figure \ref{fig:dl_dphi}. The acceptance rate does not display any particular change of course at the critical temperature $T^*\,.$ This suggests that any local minimum that the \ac{SD} may become trapped in is already close to the global minimum. Intuitively, there are enough non-interfering target polymers to choose from to obtain a solution that is reasonably close to the global minimum. Since the computational cost of the \ac{SA} algorithm outweighs the improvement in the loss function by far, is is concluded that the \ac{SD} algorithm is more appropriate.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.7
+    \includegraphics[width=0.7\textwidth]{Thesis/figures/comparison_sd_sa.pdf}
+    \caption{(a) Amplitude after optimization and target profile. (b) \ac{SA} optimum as a function of temperature. (c) Acceptance rate as a function of temperature. Top: $qR_e/2\pi=0.8\,,$ $\Delta\tilde\phi=0.1\,.$ Middle: $qR_e/2\pi=0.8\,,$ $\Delta\tilde\phi=0.5\,$ Bottom: $qR_e/2\pi=4.0\,,$ $\Delta\tilde\phi=0.5\,.$ For clarity, only a section of the $x$ axis is plotted for $qR_e/2\pi=4.0\,.$}
+    \label{fig:comparison_sd_sa}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5
     \linewidth]{figures/dL-dphi.pdf}
     \caption{Change of loss function after kink as a function of $\Delta\tilde\phi\,.$}
     \label{fig:dl_dphi}
@@ -828,14 +945,70 @@ Optimizations are performed on 50 different initial structures. The loss functio
 
 
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=\linewidth]{Thesis/figures/comparison_sd_sa.pdf}
-    \caption{(a) Amplitude after optimization and target profile. (b) \ac{SA} optimum as a function of temperature. (c) Acceptance rate as a function of temperature. Top: $qR_e/2\pi=0.8\,,$ $\Delta\tilde\phi=0.1\,.$ Middle: $qR_e/2\pi=0.8\,,$ $\Delta\tilde\phi=0.49\,$ Bottom: $qR_e/2\pi=4.0\,,$ $\Delta\tilde\phi=0.49\,.$ For clarity, only a section of the $x$ axis is plotted for $qR_e/2\pi=4.0\,.$}
-    \label{fig:comparison_sd_sa}
+
+
+
+\section{SD simulations}
+
+In the previous section, it was concluded that the \ac{SA} algorithm does not yield significantly better results than the \ac{SD} algorithm. The latter has the additional advantage of adapting better to solutions which are already close to the optimum. While the number of flip trials performed in the \ac{SA} algorithm is fixed for a given number of target polymers and temperatures, the \ac{SD} algorithm is expected to converge faster for configurations which are already close to the optimum than for completely random configurations. Therefore, the latter algorithm is employed in this section to investigate how well it can be used to impose lamellar boundary conditions.
+
+\subsection{Lamella periodicity}
+
+One limiting factor in achieving the desired target composition is the lamella periodicity $\lambda=q/2\pi\,.$ The optimum of the loss function is shown in Figure \ref{fig:L-lambda} as a function of $\lambda$ for $\Delta\tilde\phi=0.5\,.$ The optimum decreases monotonically with $\lambda.$ Due to the extension of a single chain across multiple lamellae, finding the proper type configurations becomes more difficult as sharp composition changes are required on smaller length scales. On large length scales $>R_e\,,$ \enquote{compromises} only have to be made in the proximity of two neighboring lamellae. The decrease in the loss function corresponds to a larger amplitude in the one dimensional composition profile, as shown in Figure \ref{fig:amplitude_lamella_per}. 
+
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/amplitude_lamella_per.pdf}
+      \caption{}
+      \label{fig:amplitude_lamella_per}
+  \end{subfigure}
+    \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{Thesis/figures/L_lambda.pdf}
+      \caption{}
+      \label{fig:L-lambda}
+  \end{subfigure}
+     \caption{(a) One dimensional composition profile $\tilde\phi_A(x)$ at $y=0\,,$ averaged over $z\,.$ (b) Normalized loss function optimum as a function of the lamella periodicity $\lambda\,.$}
+     \label{fig:periodicity-lossfunction}
 \end{figure}
 
+For $\lambda<0.5\,R_e\,,$ the mean squared deviation from the target composition is greater than $50\%$ of the natural density variance. This large deviation is not surprising, since the lamellar assembly of noninteracting homopolymers with sharp boundaries is entropically highly disfavored. For diblock-copolymers with $\chi N\neq 0\,,$ on the other hand, dictating sharp boundaries on small length scales might be desirable. For this, it is necessary to also allow the particle positions to relax.
 
+\subsection{Impact on bulk}
+
+Another issue caused by the finite chain-extension is the range of the target compositions into the bulk, this can already be seen in Figure \ref{fig:conversion_box}. The composition profile is shown in Figure \ref{fig:amplitude_decay_profile} for several values of $y\,.$ Figure \ref{fig:amplitude_decay} shows the maximum composition $\tilde\phi_{A,\mathrm{max}}$ as a function of $y\,.$ It reaches the homogeneous value of $0.5$ at a distance of about $1R_e$ from the conversion zone, as one would expect. 
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/amplitude_decay_profile.pdf}
+      \caption{}
+      \label{fig:amplitude_decay_profile}
+  \end{subfigure}
+    \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{figures/ampltitude_decay.pdf}
+      \caption{}
+      \label{fig:amplitude_decay}
+  \end{subfigure}
+     \caption{(a) 1D composition profile of type $A$ for various values of $y\,.$ (b) Composition amplitude as a function of $y\,.$}
+     \label{fig:conversion_range_bulk}
+\end{figure}
+
+\section{Additional improvements}
+
+\begin{itemize}
+    \item Umbrella feld, Optimierung und Umbrellafeld hintereinander schalten
+    \item ggf mobility modifier auf null setzen für polymere die nicht in Referenzzone liegen
+    \item Dichte am Rand ausrechnen, mal Zusammensetzung
+    \item In config umbrella script einbauen
+\end{itemize}
 
 % \subsection{Reference system}
 
@@ -864,27 +1037,29 @@ Optimizations are performed on 50 different initial structures. The loss functio
 %     \label{fig:checkerboard_opt}
 % \end{figure}
 
-\newpage
-\section{Structure factor}
+% \newpage
+% \section{Structure factor}
 
-\begin{itemize}
-    \item From here on, only use SD algorithm
-    \item Target density over whole system, compare collective structure factor before and after optimization
-\end{itemize}
+% \begin{itemize}
+%     \item From here on, only use SD algorithm
+%     \item Target density over whole system, compare collective structure factor before and after optimization
+% \end{itemize}
 
-The collective structure factor is \cite{Reister02}:
+% The collective structure factor is \cite{Reister02}:
 
-\begin{align}
-    S_\text{coll}(\mathbf q)=\rho_0\int_Vd^3\mathbf r\exp(i\mathbf{qr})P_\text{coll}(\mathbf r)\,,
-\end{align}
+% \begin{align}
+%     S_\text{coll}(\mathbf q)=\rho_0\int_Vd^3\mathbf r\exp(i\mathbf{qr})P_\text{coll}(\mathbf r)\,,
+% \end{align}
  
-where $P_\text{coll}(\mathbf r)$ is the auto-correlation of the density:
+% where $P_\text{coll}(\mathbf r)$ is the auto-correlation of the density:
 
-\begin{align}
-    P_\text{coll}(\mathbf r)=\langle\phi(\mathbf x)\phi(\mathbf x +\mathbf r)\rangle_{\mathbf{x}}\,,
-\end{align}
+% \begin{align}
+%     P_\text{coll}(\mathbf r)=\langle\phi(\mathbf x)\phi(\mathbf x +\mathbf r)\rangle_{\mathbf{x}}\,,
+% \end{align}
  
-where $\mathbf{r}$ is the separation vector, $\mathbf x$ is the position and $\langle .\rangle_\mathbf x$ denotes the ensemble average.
+% where $\mathbf{r}$ is the separation vector, $\mathbf x$ is the position and $\langle .\rangle_\mathbf x$ denotes the ensemble average.
+
+\chapter{Conclusion}
  
 \chapter{Outlook}
 
@@ -899,26 +1074,26 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
 
 
 \begin{algorithm}
-\caption{Get flippable polymers}\label{alg:get_flip_candidates}
-\begin{algorithmic}
-\State Let $polyIsflippable[n]$ be a new boolean array initialised with $0$'s
-\State $n_f\gets 0$
+\caption{Get target polymers}\label{alg:get_flip_candidates}
+\begin{algorithmic}[1]
+\State Let $polyIsTarget[n]$ be a new boolean array initialised with $0$'s
+\State $n_p\gets 0$
 \For{$poly\gets 0$ to $n-1$}
     \For{$monomer\gets 0$ to $N-1$}
         \State $monoCell\gets poly.beads[monomer].cell$
-        \If{Target density available for $monoCell$}
-            \State $polyIsflippable[poly]\gets 1$
-            \State $n_f\gets n_f+1$
+        \If{target composition available for $monoCell$}
+            \State $polyIsTarget[poly]\gets 1$
+            \State $n_p\gets n_p+1$
             \State \textbf{break}
         \EndIf
     \EndFor
 \EndFor
-\State Let $polyFlippableIndices[n_f]$ be a new array
+\State Let $targetPolyIndices[n_p]$ be a new array
 \State $i\gets 0$
 \For{$poly\gets 0$ to $n-1$}
-\Comment{Store indices of flippable polymers to new array}
-    \If{$polyIsflippable[poly]==1$}
-        \State $polyFlippableIndices[j]\gets poly$
+\Comment{Store indices of target polymer to new array}
+    \If{$polyIsTarget[poly]==1$}
+        \State $targetPolyIndices[j]\gets poly$
         \State $j\gets j+1$
     \EndIf
 \EndFor
@@ -926,12 +1101,12 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
 \end{algorithm}
 
 \begin{algorithm}
-\caption{Get cell index matrix}\label{alg:get_cell_indices}
-\begin{algorithmic}
-\State Let $polyCellIndices[n_f][N]$ be a new array initialised with $-1$'s
-\For{$i\gets 0$ to $n_f-1$}
-\Comment{Loop over flippable polymers}
-    \State $poly \gets polymers[polyFlippableIndices[i]]$
+\caption{Get unique target cells}\label{alg:get_cell_indices}
+\begin{algorithmic}[1]
+\State Let $targetPolyCells[n_p][N]$ be a new array initialised with $-1$'s
+\For{$i\gets 0$ to $n_p-1$}
+\Comment{Loop over target polymer}
+    \State $poly \gets polymers[targetPolyIndices[i]]$
     \State let $monoCells[N]$ be a new array
     \State $j\gets 0$
     \For{$monomer\gets 0$ to $N-1$}
@@ -946,11 +1121,11 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
     \For{$monomer\gets 0$ to $j-1$}
     \Comment{Find unique cells}
         \If{$monoCells[monomer]\neq monoCells[monomer+1]$}
-            \State $polyCellIndices[i][k]\gets monoCells[monomer]$
+            \State $targetPolyCells[i][k]\gets monoCells[monomer]$
             \State $k\gets k+1$
         \EndIf
     \EndFor
-    \State $polyCellIndices[i][k]\gets monoCells[j-1]$
+    \State $targetPolyCells[i][k]\gets monoCells[j-1]$
 \EndFor
 \end{algorithmic}
 \end{algorithm}
@@ -958,12 +1133,12 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
 
 
 \begin{algorithm}
-\caption{Get cell number matrix}\label{alg:get_cell_numbers}
-\begin{algorithmic}
-\State Let $polyCellNum[n_f][m_t][n_t][N]$ be a new array initialised with $0$'s
-\For{$i\gets 0$ to $n_f-1$}
-\Comment{Loop over flippable polymers}
-    \State $poly \gets polymers[polyFlippableIndices[i]]$
+\caption{Get monomer numbers}\label{alg:get_cell_numbers}
+\begin{algorithmic}[1]
+\State Let $polyCellNum[n_p][m_t][n_t][N]$ be a new array initialized with $0$'s
+\For{$i\gets 0$ to $n_p-1$}
+\Comment{Loop over target polymer}
+    \State $poly \gets polymers[targetPolyIndices[i]]$
     \State $initialPolytype\gets poly.type$
     \For{$polyType\gets 0$ to $n_t-1$}
         \State $poly.type\gets polyType$
@@ -973,7 +1148,7 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
             \State $monoType\gets poly.beads[monomer].type$
             \For{$j\gets 0$ to $N-1$}
             \Comment{Find corresponding entry}
-            \If{$polyCellIndices[i][j]==monoCell$}
+            \If{$targetPolyCells[i][j]==monoCell$}
                 \State $polyCellNum[i][polyType][monoType][j]++$ 
                 \State \textbf{break}
             \EndIf
@@ -989,13 +1164,14 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
 
 \begin{algorithm}[H]
 \caption{Simulated annealing}\label{alg:sa}
-\begin{algorithmic}
-\State $S \gets$ current configuration of polymer types
+\begin{algorithmic}[1]
+\State $S \gets$ current configuration of target polymer types
+\State $S_\text{best}\gets S$
 \State $T \gets T_0$
 \While{$T>T_f$}
     \State $n_{flip} \gets 0$
     \While{$n_{flip}<n_{max}$}
-        \State Generate new configuration $S^*$ by flipping a random polymer
+        \State generate new configuration $S^*$ by flipping a random polymer
         \State $n_{flip}\gets n_{flip}+1$
         \State $\Delta L\gets L(S^*)-L(S)$
         \State $r\gets$ random number between 0 and 1
@@ -1003,7 +1179,10 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
             \State $S\gets S^*$
         \EndIf
     \EndWhile
-\State $T\gets\alpha*T$ \Comment{or different cooling schedule}
+\If{$L(S)<L(S_\text{best})$}
+    \State $S_\text{best}\gets S$ \Comment{Update best solution}
+\EndIf
+\State $T\gets T-\alpha$ \Comment{or different cooling schedule}
 \EndWhile
 \end{algorithmic}
 \end{algorithm}
@@ -1032,7 +1211,7 @@ The collective diffusion coefficient of a symmetric homopolymer mixture under a 
       \caption{}
       \label{fig:loss-3}
   \end{subfigure}
-     \caption{Example for $n=4$ homopolymers with $N=2$ on a $2\times 2$ grid to show that the loss function defined by $\eqref{eq:lossfunction}$ is in general non-convex in the polymer type configurations, where a neighbouring solution is defined as a configuration of polymer types, where only a single polymer type is changed. Different colours denote different types. The target compositions are $\tilde\phi_{\text A,T}=\tilde\phi_{\text B,T}=0.5$ for all cells. In (a), any possible flip will not lead to a better value of $L\,.$ (b) shows the configuration after conversion of a red polymer to a green one. A flip of the lower polymer now leads to a decrease of the loss function, as shown in (c). Note that this minimum is not unique, since a flip of every polymer would also yield $L=0\,.$}
+     \caption{Example for $n=4$ homopolymers with $N=2$ on a $2\times 2$ grid to show that the loss function defined by $\eqref{eq:lossfunction}$ is in general non-convex in the polymer type configurations, where a neighbouring solution is defined as a configuration of polymer types, where only a single polymer type is changed. Different colours denote different types. The target compositions are $\tilde\phi_{A,T}=\tilde\phi_{B,T}=0.5$ for all cells. In (a), any possible flip will not lead to a better value of $L\,.$ (b) shows the configuration after conversion of a red polymer to a green one. A flip of the lower polymer now leads to a decrease of the loss function, as shown in (c). Note that this minimum is not unique, since a flip of every polymer would also yield $L=0\,.$}
      \label{fig:loss}
 \end{figure}
 

@@ -1,0 +1,1 @@
+/Users/justusmulthaup/SOMA/install/python-script/ConfGen.py
