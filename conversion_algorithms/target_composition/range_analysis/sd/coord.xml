@@ -3,7 +3,7 @@
 <!--Coord file used to sample configurations for testing of the algorithm-->
   <interactions>
     <kappaN>
-      30
+      100
     </kappaN>
     <chiN>
       A B 0
@@ -27,9 +27,9 @@
     32
   </reference_Nbeads>
   <lxyz>
-    5.25 5.25 5.25
+    10 5.25 10
   </lxyz>
-  <nxyz>42 42 42</nxyz>
+  <nxyz>80 42 80</nxyz>
   <poly_arch>
     NUM_POLY A{32}
     NUM_POLY B{32}
@@ -45,7 +45,7 @@
   </alpha>
   <polyconversion>
     <DeltaMC>
-      10
+      1
     </DeltaMC>
     <box>
       <point>1 0 0</point><point>2 6 6</point><value>0</value>

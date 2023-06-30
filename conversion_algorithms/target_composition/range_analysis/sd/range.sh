@@ -2,7 +2,7 @@
 # @Author: Your name
 # @Date:   2023-02-09 11:41:03
 # @Last Modified by:   Your name
-# @Last Modified time: 2023-05-24 15:44:18
+# @Last Modified time: 2023-06-30 17:23:29
 
 #script to get acceptance rate for each temperature and number of cells of accepted polymers
 #Usage: bash optimum.sh <Nbar> <dphi>
@@ -25,7 +25,7 @@ n=$((V*$1/2))
 sed -i''  -e "s/NUM_POLY/$n/g" coord.xml
 ##create configuration
 python3 ConfGen.py -i coord.xml
-python3 config_umbrella.py coord.h5 $2 0
+python3 config_umbrella.py coord.h5 $2 0 1.0 40
 # python3 change_deltamc.py 100 coord.h5
 # #first run SOMA a bit to fill empty cells
 # ./SOMA -c coord.h5 -t 1
