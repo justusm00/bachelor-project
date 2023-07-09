@@ -1,0 +1,37 @@
+\babel@toc {english}{}\relax 
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Theory}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Single-chain properties}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Polymer types}{4}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}The freely jointed chain}{4}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Rouse model}{5}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}Polymeric mixtures}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Flory-Huggins Theory}{7}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Phase separation}{8}{subsection.2.2.2}%
+\contentsline {section}{\numberline {2.3}Collective diffusion}{8}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Single chain in mean field simulations}{11}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Smart Monte Carlo Move}{13}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Discrete optimization}{14}{section.2.6}%
+\contentsline {section}{\numberline {2.7}Simulated Annealing}{14}{section.2.7}%
+\contentsline {chapter}{\numberline {3}Simulation technique}{16}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Collective diffusion of symmetric homopolymers}{18}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Reference system}{18}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Collective diffusion coefficient}{20}{section.4.2}%
+\contentsline {chapter}{\numberline {5}External-field-driven flow}{24}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Reference system}{25}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Bending modulus}{26}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Polymer-type-conversion-based target composition}{31}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Formulation of the problem}{31}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Steepest Descent}{37}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Simulated annealing}{37}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Comparison of algorithms}{38}{section.6.4}%
+\contentsline {subsection}{\numberline {6.4.1}SA parameter choice}{39}{subsection.6.4.1}%
+\contentsline {section}{\numberline {6.5}SD simulations}{43}{section.6.5}%
+\contentsline {subsection}{\numberline {6.5.1}Impact on bulk}{45}{subsection.6.5.1}%
+\contentsline {section}{\numberline {6.6}Hybrid strategy}{45}{section.6.6}%
+\contentsline {chapter}{\numberline {7}Summary}{47}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Collective diffusion}{47}{section.7.1}%
+\contentsline {section}{\numberline {7.2}External field driven flow}{47}{section.7.2}%
+\contentsline {section}{\numberline {7.3}Polymer-type-conversion-based target composition}{48}{section.7.3}%
+\contentsline {chapter}{\numberline {8}Outlook}{49}{chapter.8}%
+\providecommand \tocbasic@end@toc@file {}\tocbasic@end@toc@file 

@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: bthesis.aux
+The style file: unsrtnat.bst
+Database file #1: bthesis_datenbank.bib
+Warning--empty school in Reister02
+Warning--empty author in simulated_annealing
+You've used 39 entries,
+            2481 wiz_defined-function locations,
+            892 strings with 13108 characters,
+and the built_in function-call counts, 15759 in all, are:
+= -- 1461
+> -- 654
+< -- 30
++ -- 268
+- -- 189
+* -- 1305
+:= -- 2538
+add.period$ -- 187
+call.type$ -- 39
+change.case$ -- 74
+chr.to.int$ -- 38
+cite$ -- 42
+duplicate$ -- 745
+empty$ -- 1436
+format.name$ -- 255
+if$ -- 3373
+int.to.chr$ -- 2
+int.to.str$ -- 40
+missing$ -- 41
+newline$ -- 271
+num.names$ -- 116
+pop$ -- 228
+preamble$ -- 1
+purify$ -- 39
+quote$ -- 0
+skip$ -- 427
+stack$ -- 0
+substring$ -- 825
+swap$ -- 102
+text.length$ -- 2
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 261
+warning$ -- 2
+while$ -- 116
+width$ -- 0
+write$ -- 652
+(There were 2 warnings)

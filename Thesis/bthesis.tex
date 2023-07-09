@@ -1,4 +1,7 @@
-\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+% @Author: Your name
+% @Date:   2023-06-30 18:10:56
+% @Last Modified by:   Your name
+% @Last Modified time: 2023-07-01 11:14:53
 %%    2009/03/12 v1.0 GAUBM Vorlage für Aschlussarbeiten Physik
 %% Template fuer Bachelor- und Masterarbeiten
 %% an der Fakultaet fuer Physik (c) Thomas Pruschke der GA Universität
@@ -37,9 +40,9 @@
 \usepackage{babel}     %% Sprachen-Unterstuetzung
 \usepackage{calc}      %% ermoeglicht Rechnen mit Laengen und Zaehlern
 \usepackage[T1]{fontenc}       %% Unterstutzung von Umlauten etc.
-\usepackage[latin1]{inputenc}  %% 
+%% \usepackage[latin1]{inputenc}  %% 
 %% in aktuellem Linux & MacOS X wird standardmaessig UTF8 kodiert!
-%\usepackage[utf8]{inputenc}    %% Wenn latin1 nicht geht ...
+\usepackage[utf8]{inputenc}    %% Wenn latin1 nicht geht ...
 
 \usepackage{amsmath,amssymb} %% zusaetzliche Mathe-Symbole
 
@@ -161,18 +164,19 @@
 
 
 \chapter{Introduction}
-\begin{itemize}
-    \item Still the old version from Einfuehrung ins Wissenschaftliche Arbeiten
-\end{itemize}
+
 Polymers are highly versatile macromolecules composed of repeating units called monomers. Their importance for life on earth cannot be overstated, biological polymers are involved in countless chemical reactions in the human body and form the backbone of proteins and DNA. Synthetic polymers are applied almost everywhere in modern society, ranging from simple packaging materials to highly sophisticated materials used in aerospace engineering. This is owed to their vast range of unique physical properties, such as high elasticity, flexibility and durability. When creating novel materials with very precise features, understanding how polymers interact with one another and form structure via phase separation in multicomponent systems is essential.\\
-One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. Copolymers that are concatenations of homopolymers of different types and lengths are called block-copolymers. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases \cite{leibler1980theory}. An important tool in understanding the mechanisms behind this microphase separation, and many other interesting properties, is the use of computer simulations. These include particle-based \ac{MD} and \ac{MC} methods as well as continuum-model-based and hybrid methods \cite{Shuanhu2017}. Particle-based simulations accurately model small-scale phenomena. However, despite rapid advancements in computer technology and high parallelizability, they are too computationally expensive to simulate long time scales since they involve the explicit calculation of the strong, bonded interactions between particles. This also poses limitations on the system size; macro scale phenomena are hard to capture. Continuum models, on the other hand, are less computationally expensive, but at the cost of a lower accuracy on the microscale. On the mesoscale, good agreement between the two types of models was observed, e.g. in the orientation of cylindrical mesophases upon solvent evaporation \cite{Dreyer22}. To evaluate the accuracy of continuum models on small-length scales, it is necessary to compare them to established particle-based models. One approach to this is to consider a simulation box in a particle-based simulation as a small section from a large continuum-model-based simulation. The dynamics are then driven by extracting the time evolution of the density fields at the boundaries from the continuum simulation and applying them in the particle-based simulation, e.g. employing non-periodic boundary conditions. However, dictating the boundary densities in particle-based simulations is not a trivial task. One option is the use of external fields or the umbrella sampling method \cite{glenn74}, although this has the large drawback that the number of particles in the simulation box remains constant, while in the continuum simulation particles can enter and leave the section at any time. An alternative is to employ conversion zones at the boundaries, in which molecules are converted to different types, mimicking particle exchange with the surrounding as shown in \autoref{fig:continuum_section}. If the densities are defined on a discretized grid, this leads to an optimization problem in which the ideal configuration of molecule types needs to be found, such that the mean squared deviation from the target composition is minimized. \\
-In this study, as a first step towards boundary-driven particle simulations, the dynamics of noninteracting homopolymers are investigated. Specifically, a system is pushed away from equilibrium by introducing conversion zones at the boundary regions of the simulation box. This results in a diffusive current and allows the calculation of the collective diffusion coefficient of the system. To this end, the \ac{SOMA} \cite{Schneider_soma} software package based on the \ac{SCMF} algorithm \cite{Daoulas06} is employed.
+One important class of polymers is the so-called homopolymer, which is made of a single type of monomer unit, for example, polyethylene. Copolymers, in contrast, consist of two or more different types of monomer units. Copolymers that are concatenations of homopolymers of different types and lengths are called block-copolymers. One of the most interesting and extensively studied properties of copolymers is their ability to self-assemble into microphases \cite{leibler1980theory}. An important tool in understanding the mechanisms behind this microphase separation, and many other interesting properties, is the use of computer simulations. These include particle-based \ac{MD} and \ac{MC} methods as well as continuum-model-based and hybrid methods \cite{Shuanhu2017}. Particle-based simulations accurately model small-scale phenomena. However, despite rapid advancements in computer technology and high parallelizability, they are too computationally expensive to simulate long-timescale phenomena since they involve the explicit calculation of the strong, bonded interactions between particles. This also poses limitations on the system size; macro-scale phenomena are hard to capture. Continuum models, on the other hand, are less computationally expensive, but at the cost of a lower accuracy on the microscale. On the mesoscale, good agreement between the two types of models was observed, e.g. in the orientation of cylindrical mesophases upon solvent evaporation \cite{Dreyer22}. To evaluate the accuracy of continuum models on small-length scales, it is necessary to compare them to established particle-based models. One approach to this is to consider a simulation box in a particle-based simulation as a small section from a large continuum-model-based simulation. The dynamics are then driven by extracting the time evolution of the density fields at the boundaries from the continuum simulation and applying them in the particle-based simulation, e.g. employing non-periodic boundary conditions. However, dictating the boundary densities in particle-based simulations is not a trivial task. One option is the use of external fields or the umbrella sampling method \cite{glenn74}, although this has the large drawback that the number of particles in the simulation box remains constant, while in the continuum simulation particles can enter and leave the section at any time. An alternative is to employ conversion zones at the boundaries, in which molecules are converted to different types, mimicking particle exchange with the surrounding as shown in \autoref{fig:continuum_section}. If the densities are defined on a discretized grid, this leads to an optimization problem in which the ideal configuration of molecule types needs to be found, such that the mean squared deviation from the target composition is minimized. \\
 \begin{figure}[h]
-  \centering
-  \includegraphics[width=0.5\linewidth]{figures/continuum_section.png}
-  \caption{Sketch of the setting explained in the text. Polymers of different types may be exchanged with the surrounding, but the number of molecules $N_0$ inside the section of the particle simulation remains constant.}
-  \label{fig:continuum_section}
-\end{figure}
+    \centering
+    \includegraphics[width=0.5\linewidth]{figures/continuum_section.png}
+    \caption{Sketch of the setting explained in the text. Polymers of different types may be exchanged with the surroundings, but the number of molecules $N_0$ inside the section of the particle simulation remains constant.}
+    \label{fig:continuum_section}
+  \end{figure}
+This thesis is divided into three parts. All simulations are carried out using the \ac{SOMA} \cite{Schneider_soma} software package based on the \ac{SCMF} algorithm \cite{Daoulas06}. In the first part, as a first step towards boundary-driven particle simulations, the dynamics of noninteracting homopolymers are investigated. Specifically, a system is pushed away from equilibrium by introducing conversion zones at the boundary regions of the simulation box. This results in a diffusive current and allows the calculation of the collective diffusion coefficient of the system. To this end, the .\\
+In the second part, a method to implement time-dependent boundary conditions in \ac{SOMA} is introduced using piecewise external fields. This method is exploited to obtain the bending modulus of diblock-copolymers.\\
+In the final part, two approaches to dictate the composition at the boundaries according to a target field are introduced. The first approach is based on the conversion of macromolecule types and results in a non-convex optimization problem, as mentioned before. Two optimization algorithms are presented: the \ac{SA} algorithm and the \ac{SD} algorithm. In the second approach, the applied \ac{MC} scheme is modified in addition to the macromolecule type conversions to give a hybrid scheme. 
+
 
 
 
@@ -375,7 +379,7 @@ This approximation leads to a simple form of the Onsager coefficient for incompr
 %% Alternative derivation in de Gennes paper
 
 
-Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of polymer chains with densities $\phi_A$ and $\phi_B\,.$ Incompressibility, e.g. $\phi_A+\phi_B=1\,,$ is enforced by introducing an additional repulsive potential $U$ to the chemical potential, so from \autoref{eq:current_local} one obtains:
+Following the discussion in the appendix of \cite{deGennes80}, consider a mixture of polymer chains with densities $\phi_A$ and $\phi_B\,.$ Incompressibility, e.g. $\phi_A+\phi_B=1\,,$ is enforced by introducing an additional, repulsive potential $U$ to the chemical potential, so from \autoref{eq:current_local} one obtains:
 
 
 
@@ -584,16 +588,10 @@ where $d^*$ is the maximum depth of all local minima excluding the global minimu
 
 \chapter{Simulation technique}
 
-\begin{itemize}
-    \item nicht so allgemein
-    \item anknüpfen an das, was ich gemacht habe
-    \item Teilchenkonversionen, Wände
-    \item Parallelisierung der Aufstellung der Matrizen erwähnen
-\end{itemize}
 
-To simulate the collective dynamics, a coarse-grained model of the polymers is employed. Within this model, several monomeric repeat units are grouped into an effective interaction center, called \textit{bead}, which allows for an efficient numerical implementation. Nevertheless, in this study, the terms \enquote{bead} and \enquote{monomer} will be used interchangeably. Each macromolecule is assigned one of $m_t$ possible architectures upon initialization. The architecture describes the bead types and bond topology of the macromolecule. Other than simple homopolymers, more complex bond topolgies like copolymers, star polymers and rings are possible. A great variety of universal properties of polymeric materials on mesoscopic length scales is accurately captured by coarse-grained models \cite{Baschnagel03}.\\
+To simulate the collective dynamics, a coarse-grained model of the polymers is employed. Within this model, several monomeric repeat units are grouped into \textit{beads}, which allows for an efficient numerical implementation. Nevertheless, in this study, the terms \enquote{bead} and \enquote{monomer} will be used interchangeably. Each macromolecule is assigned one of $m_t$ possible architectures upon initialization. The architecture describes the bead types and bond topology of the macromolecule. Other than simple homopolymers, more complex bond topologies like copolymers, star polymers and rings are possible. A great variety of universal properties of polymeric materials on mesoscopic length scales is accurately captured by coarse-grained models \cite{Baschnagel03}.\\
 The software package that is used for the numerical calculations, \ac{SOMA}, uses a combination of the described coarse-grained model and the \ac{SCMF} algorithm \cite{Daoulas06}. Unlike the widely used \ac{SCFT}, the \ac{SCMF} method includes fluctuation effects which are required to accurately describe certain systems and effects, e.g. dilute polymer solutions, the vicinity of phase transitions, or polymeric microemulsions \cite{Bates97, Mueller02, Schmid03}. The interactions are fully described by three coarse-grained parameters: the average mean squared end-to-end distance $R_{e}^2$ of a chain in the absence of non-bonded interactions, the inverse thermal compressibility $\kappa_0 N$ and the incompatibility between different bead types $\chi_0 N$. The term \enquote{soft} in \ac{SOMA} relates to the soft nature of the non-bonded interactions, which arises from the systematic coarse-graining and allows for an overlap of beads \cite{Mueller11soft}. As mentioned before, the enormous benefit of the \ac{SCMF} algorithm is that the chains are decoupled, making it possible to implement it effectively on parallel machines. For this, the \ac{MPI} standard is employed. Each molecule is assigned to a specific \ac{MPI} rank and the densities are computed according to \autoref{eq:normalized_densities}. \ac{SOMA} also supports parallelization on shared-memory systems using the OpenMP standard as well as the use of accelerators like Nivida \acp{GPU} \cite{Schneider_soma} using the OpenACC standard. For the particle propagation, a \ac{SMC} scheme is employed that uses the strong bonded forces to propose a trial displacement resembling Brownian motion and produces Rouse-like dynamics \cite{Pangali78,Rossky78}. Another important feature of \ac{SOMA} is the conversion of macromolecules to different types of the same bond architecture, but with different bead types. This allows for the simulation of chemical reactions, or, as used in this thesis, to generate a flux. \\
-
+The conversion-based-target-composition plugin is implemented to read in target composition fields and optimize the polymer type configurations, as explained in \autoref{chap:polyconversion}. The identification of the target polymers, as well as the matrices $\tilde q$ and $\tilde n\,,$ as explained in Algorithms \ref{alg:get_flip_candidates}-\ref{alg:get_cell_numbers}, can be performed in parallel using OpenACC. The actual optimization process is inherently sequential and parallelization is thus impossible. Based on the initial temperature $T_0\,,$ an optimization algorithm is chosen: if $T_0>0\,,$ \ac{SA} will be performed. Otherwise, the \ac{SD} algorithm is employed. The interaction part of the quasi-instantaneous external fields is modified as explained in \autoref{sec:hybrid}
 
 
 \chapter{Collective diffusion of symmetric homopolymers}
@@ -739,7 +737,7 @@ which puts the two transport mechanisms in relation on the typical length scale 
 
 
 \section{Reference system}
-A system of $n=750$ symmetric diblock-copolymers with and $\chi N=20$ is used. This corresponds to a lamellar phase in \autoref{fig:diblock_phasediagram}. The chain discretization is $N=32$ or $N=64\,,$ respectively. The box dimensions are $L_x\times L_y\times L_z=2.5\times2.82\times1\,R_e^3\,,$ which corresponds to $\sqrt{\bar{N}}=106\,.$ The spatial discretizations are $\Delta x=1/16\,R_e\,,$ $\Delta y=47/800\,R_e$ and $\Delta z=1\,R_e\,.$ To generate the initial lamellar structure, external fields are applied, as shown in \autoref{fig:fext}. The interlayer spacing of $d=1.41\,R_e$ was found to be stable over the duration of the simulations, but it does not correspond to the equilibrium spacing.
+A system of $n=750$ symmetric diblock-copolymers with and $\chi N=20$ is used. This corresponds to a lamellar phase in \autoref{fig:diblock_phasediagram}. The chain discretization is $N=32$ or $N=64\,,$ respectively. The box dimensions are $L_x\times L_y\times L_z=2.5\times2.82\times1\,R_e^3\,,$ which corresponds to $\sqrt{\bar{N}}=106\,.$ The spatial discretizations are $\Delta x=1/16\,R_e\,,$ $\Delta y=47/800\,R_e$ and $\Delta z=1\,R_e\,.$ To generate the initial lamellar structure, external fields are applied, as shown in \autoref{fig:fext}. The interlayer spacing of $\lambda=1.41\,R_e$ was found to be stable throughout the simulations, but it does not correspond to the equilibrium spacing.
 
 Subsequently, the external fields are switched off everywhere except at a distance less than $b=0.5\,R_e$ from the boundaries in the $x$-direction, so the length of the part of the lamellae that is not supported by the external fields is $L=1.5\,R_e$. After a time $\Delta t$, the fields are moved by a distance of $\Delta y$ in the $y$-direction, so the velocity is $v=47R_e/(800\Delta t)\,.$ Snapshots of the density profile are also periodically taken after a time $\Delta t$. The external fields balance the friction forces at the boundaries and therefore act as bearings for the lamellae. The diffusion constant $D$ is obtained from \autoref{eq:einstein_relation}, where $g_3(t)$ is measured in a system without external fields and $\chi N=0\,.$
 
@@ -753,20 +751,17 @@ Subsequently, the external fields are switched off everywhere except at a distan
 
 \section{Bending modulus}
 
-\begin{itemize}
-    \item Mehr Parametervariation ($N=128$)
-\end{itemize}
 
 Neglecting any change in the lamellar spacing, in the \ac{SSL}, the free energy of a bent lamella is \cite{wang94}:
 
 \begin{align}
     F&=\int d\mathbf r\left\{f_0+\frac{1}{2}K \left(\partial_x^2 u\right)^2\right\}\,,\\
-    &\approx dL_z\int dx\left\{f_0+\frac{1}{2}K \left(\partial_x^2 u\right)^2\right\}\nonumber\\
-    &\equiv dL_z\int dxf(u'')\,.
+    &\approx \lambda L_z\int dx\left\{f_0+\frac{1}{2}K \left(\partial_x^2 u\right)^2\right\}\nonumber\\
+    &\equiv \lambda L_z\int dxf(u'')\,.
     \label{eq:F_bend}
 \end{align}
 
-where $f_0$ is the free energy per unit volume of the unbent lamella, $K$ is the bending modulus and $u\equiv u(x)$ is the deformation profile of the A-B-interface. Due to the bending, the lamellae also experience a change in volume which is neglected in the intergration. The friction force density is $q_{fric}=\rho_0\zeta v=N\sqrt{\bar N}\zeta P_eD/R_e^4\,.$ In the steady-state, it is balanced by a force density given by the  functional derivative $\delta F/\delta u\,$:
+where $f_0$ is the free energy per unit volume of the unbent lamella, $K$ is the bending modulus and $u\equiv u(x)$ is the deformation profile of the A-B-interface. Due to the bending, the lamellae also experience a volume change which is neglected in the integration. The friction force density is $q_{fric}=\rho_0\zeta v=N\sqrt{\bar N}\zeta P_eD/R_e^4\,.$ In the steady-state, it is balanced by a force density given by the  functional derivative $\delta F/\delta u\,$:
 
 \begin{align}
     \frac{\delta F}{\delta u}&=\frac{\partial^2}{\partial x^2}\frac{\partial f}{\partial u''}\overset{!}{=}q_{fric} \nonumber \\
@@ -779,18 +774,18 @@ With the boundary conditions $u(0)=u(L)=0$ and $u''(0)=u''(L)=0\,,$ one obtains:
     u(x)=\frac{N\sqrt{\bar N}\zeta P_e D}{24KR_e^4}x(L^3-2Lx^2+x^3)\,,
     \label{eq:deflection}
 \end{align}
-in analogy to a beam bending under a uniform load in the Euler-Bernoulli theory. The resulting lamellar profiles are shown in \autoref{fig:deflection_N32} for $N=32\,.$ Due to the periodic boundary conditions, the zero point of the $y$ axis can be shifted arbitrarily. This is exploited such that a whole $A$-lamella can be displayed in the lower half of the coordinate system, e.g., for $y<d=l_y/2\,.$ \autoref{fig:deflection_N32}a shows the average of both $A$-lamella in the system. Since the boundaries between two adjacent monolayers are not sharp, the \enquote{center of mass curve} is used instead to describe the one dimensional lamella profile. The deformation curve $u(x)$ is obtained as
+in analogy to a beam bending under a uniform load in the Euler-Bernoulli theory. The resulting lamellar profiles are shown in \autoref{fig:deflection_N32} for $N=32\,.$ Due to the periodic boundary conditions, the zero point of the $y$ axis can be shifted arbitrarily. This is exploited such that a whole $A$-lamella can be displayed in the lower half of the coordinate system, e.g., for $y<\lambda =l_y/2\,.$ \autoref{fig:deflection_N32}a shows the average of both $A$-lamella in the system. Since the boundaries between two adjacent monolayers are not sharp, the \enquote{center of mass curve} is used instead to describe the one dimensional lamella profile. The deformation curve $u(x)$ is obtained as
 
 \begin{align}
     u(x)=\left |\frac{1}{\hat\phi_A(x)}\left(\sum_{i=0}^{n_y/2-1}i\Delta y \hat\phi_A(x,i\Delta y)\right)-y_0\right |\,,
     \label{eq:rcm_curve}
 \end{align}
 
-where $\hat\phi_A(x)=\sum_{i=0}^{n_y/2-1}\hat\phi_A(x,i\Delta y)$ is the total $A$-density as a function of $x\,.$ $n_y=l_y/\Delta y$ is the number of grid points in the $y$ direction and $y_0$ is the center of mass of the $A$-block at $x=0\,,$ as indicated in \autoref{fig:deflection_N32}a. \autoref{eq:rcm_curve} assumes that only a single $A$-block is considered, without interference from neighboring $A$-blocks. \autoref{fig:deflection_N32}b shows the fit of \autoref{eq:rcm_curve} to \autoref{eq:deflection}. For $P_e=0.24$, the fit is in excellent agreement with the simulation data. $P_e=0.85\approx P_e^*$ was found to be the critical P\'eclet number beyond which the lamellae break. For these large deformations, the fit displays deviations from the simulation data, especially around the maximum. This error is of systematic nature, since, for large deformations, the vertical extension of a single $A$-block is approximately $d\,,$ and, therefore, $A$-blocks from the neighboring bilayer interfere with the computation of \autoref{eq:rcm_curve}. 
+where $\hat\phi_A(x)=\sum_{i=0}^{n_y/2-1}\hat\phi_A(x,i\Delta y)$ is the total $A$-density as a function of $x\,.$ $n_y=l_y/\Delta y$ is the number of grid points in the $y$ direction and $y_0$ is the center of mass of the $A$-block at $x=0\,,$ as indicated in \autoref{fig:deflection_N32}a. \autoref{eq:rcm_curve} assumes that only a single $A$-block is considered, without interference from neighboring $A$-blocks. \autoref{fig:deflection_N32}b shows the fit of \autoref{eq:rcm_curve} to \autoref{eq:deflection}. For $P_e=0.24$, the fit is in excellent agreement with the simulation data. $P_e=0.85\approx P_e^*$ was found to be the critical P\'eclet number beyond which the lamellae break. For these large deformations, the fit displays deviations from the simulation data, especially around the maximum. This error is systematic, since, for large deformations, the vertical extension of a single $A$-block is approximately $\lambda\,,$ and, therefore, $A$-blocks from the neighboring bilayer interfere with the computation of \autoref{eq:rcm_curve}. 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth]{Thesis/figures/deflection_N32.pdf}
+    \includegraphics[width=\linewidth]{figures/deflection_N32.pdf}
     \caption{(a) Heatmap of the steady-state lamella profile in the reference frame that moves with the external field, averaged over all lamellae. (b) Lamella deformation curve obtained from \autoref{eq:rcm_curve}. The fit corresponds to \autoref{eq:deflection}. The top row corresponds to $P_e=0.24\,.$ The bottom row corresponds to $P_e=0.85\,.$}
     \label{fig:deflection_N32}
 \end{figure}
@@ -819,7 +814,7 @@ To obtain the bending modulus, $u_{max}$ is measured for various values of $P_e\
     \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
-      \includegraphics[width=\textwidth]{Thesis/figures/K-N.pdf}
+      \includegraphics[width=\textwidth]{figures/K-N.pdf}
       \caption{}
       \label{fig:K_N}
   \end{subfigure}
@@ -830,16 +825,16 @@ To obtain the bending modulus, $u_{max}$ is measured for various values of $P_e\
 Alternatively, $K$ may also be obtained from \ac{SCFT}. While a detailed discussion of \ac{SCFT} is omitted in this thesis, it should be mentioned that, unlike in the particle-based \ac{SCMF} simulations, the chains are treated as continuous density fields with $N\rightarrow \infty\,.$ The system is forced away from equilibrium by constraining the $A$-$B$-interface to a sinusoidal deformation $u(x)=a\sin 2\pi x/L\,,$ as shown in the inset of \autoref{fig:bend_scft}. From \autoref{eq:F_bend}, the total free energy may be calculated as:
 
 \begin{align}
-    F&=dL_z\int dx\left\{f_0+\frac{1}{2}Ka^2\left(\frac{2\pi}{L}\right)^4\sin\left(\frac{2\pi}{L}x\right)^2\right\}\nonumber\\
-    &= dLL_zf_0+dL_z\frac{4\pi^4a^2}{L^3}K\,.
+    F&\approx\lambda L_z\int dx\left\{f_0+\frac{1}{2}Ka^2\left(\frac{2\pi}{L}\right)^4\sin\left(\frac{2\pi}{L}x\right)^2\right\}\nonumber\\
+    &= \lambda LL_zf_0+\lambda L_z\frac{4\pi^4a^2}{L^3}K\,.
     \label{eq:f_scft_1}
 \end{align}
 
 On the other hand, the total free energy may be obtained by integrating the free energy density over the lamella volume:
 \begin{align}
     F&=\int d\mathbf r(f_0+f_b)\nonumber\\
-    &= dLL_z(f_0+f_b)\nonumber \\
-    &=dLL_z\frac{\sqrt{\bar N}}{R_e^3}(\tilde f_0+\tilde f_b)\,,
+    &\approx \lambda LL_z(f_0+f_b)\nonumber \\
+    &=\lambda LL_z\frac{\sqrt{\bar N}}{R_e^3}(\tilde f_0+\tilde f_b)\,,
     \label{eq:f_scft_2}
 \end{align}
 
@@ -1107,14 +1102,14 @@ To avoid becoming trapped in local minima, the \ac{SA} algorithm described in \a
 \section{Comparison of algorithms}
 
 
-In order to compare the performance of the two presented algorithms, several randomly generated initial configurations are optimized with lamellar target compositions. A binary blend of homopolymers with $N=32$ and $\sqrt{\bar N}=100$ is used. The box dimensions are $L_x\times L_y\times L_z=5\times1\times5\,R_e^3$ with $\Delta L=1/8\,R_e$ and hard, impenetrable  walls are applied at all boundaries. The target composition is defined directly behind the walls with a width of one grid point. The lamellar target structure is characterized by the periodicity $\lambda$ and the target amplitude $\Delta\tilde\phi$ of the deviation of the homogeneous value.  The optimized structure obtained using the \ac{SD} algorithm is shown in \autoref{fig:conversion_box} for $\lambda/R_e=1.25$ and $\Delta\tilde\phi=0.5\,.$ The loss function is normalized by the number of monomer types $n_t$ and the number of target cells $n_T$ to obtain the mean squared deviation from the target composition. The thermal density variance $\sigma_0^2$ is taken as a reference value. It is calculated as $\sigma_0^2=1/\rho_0\Delta L^3\kappa$ in the mean field approximation \cite{Daoulas06}. Two different cooling schedules are investigated.
+In order to compare the performance of the two presented algorithms, several randomly generated initial configurations are optimized with lamellar target compositions. A binary blend of homopolymers with $N=32$ and $\sqrt{\bar N}=100$ is used. The box dimensions are $L_x\times L_y\times L_z=5\times5\times5\,R_e^3$ with $\Delta L=1/8\,R_e$ and hard, impenetrable walls are applied at all boundaries. The target composition is defined directly behind the walls with a width of one grid point. The lamellar target structure is a piecewise constant function that depends only on $x$ and is characterized by the periodicity $\lambda$ and the target deviation $\Delta\tilde\phi$ from the composition of the homogeneous value $0.5\,.$  The optimized structure obtained using the \ac{SD} algorithm is shown in \autoref{fig:conversion_box} for $\lambda=2\,R_e$ and $\Delta\tilde\phi=0.5\,.$ The loss function is normalized by the number of monomer types $n_t$ and the number of target cells $n_T$ to obtain the mean squared deviation from the target composition. The thermal density variance $\sigma_0^2$ is taken as a reference value. It is calculated as $\sigma_0^2=1/\rho_0\Delta L^3\kappa$ in the mean field approximation \cite{Daoulas06}. Two different cooling schedules are investigated.
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5
-    \linewidth]{figures/conversion_box}
-    \caption{Composition $\tilde\phi_A(\mathbf r)$ after optimization for $\lambda/R_e=1.25$ and $\Delta\tilde\phi=0.5\,,$ obtained using \ac{SD} algorithm. Averaged over 50 optimization runs starting from randomly generated initial configurations. The conversion zone is marked by the thin frame at the top.}
+    \linewidth]{figures/conversion_box.pdf}
+    \caption{Composition $\tilde\phi_A(\mathbf r)$ after optimization for $\lambda=2\,R_e$ and $\Delta\tilde\phi=0.5\,,$ obtained using \ac{SD} algorithm. Averaged over 100 optimization runs starting from randomly generated initial configurations. The conversion zone is marked by the thin frame at the top.}
     \label{fig:conversion_box}
 \end{figure}
 
@@ -1134,21 +1129,21 @@ where $\alpha_{LC}>0\,.$ The total number of temperature cycles is $n_{LC}=\lcei
     \label{eq:exp_cool}
 \end{align}
 
-where $0<\alpha_{EC}<1\,.$ This corresponds to $n_{EC}=\lceil\log_{\alpha_{EC}}(T_f/T_0)\rceil$ temperature cycles. The minimum value of the loss function at a given temperature $T$ for the different cooling schedules is denoted $L_{opt,i}(T)\,,$ with $i=LC,EC\,.$ This is shown in \autoref{fig:opt-t}a for a randomly generated initial configuration. The corresponding acceptance rate is shown in \autoref{fig:opt-t}b. The parameters are $\lambda/R_e=1.25\,,$ $\Delta\tilde\phi=0.5\,,$ $T_0=10\,,$ $T_{f,LC}=0$ and $T_{f,EC}=10^{-4}$ . As a reference, the \ac{SD} result is also shown. With both cooling schedules, the \ac{SD} level is reached only for temperatures $T<0.1<<T_0\,.$ However, the acceptance rate already displays a significant sensitivity to temperature decrease at much larger temperature scales. The maximum temperature is therefore chosen appropriately. The final value $L_{opt,LC}(0)/n_tn_T\sigma_0^2$ decreases with $\alpha_{LC}$ before it becomes constant at a critical value $\alpha^*_{LC}\approx 10^{-5}\,.$ The results for \ac{EC} follow very similar trends. $L_{opt,EC}(0)/n_tn_T\sigma_0^2$ decreases as $\alpha_{EC}$ is increased until a critical value $\alpha^*_{EC}\,.$ The final numerical values of \ac{LC} and \ac{EC} are in exact agreement for $\alpha_{LC}\leq \alpha^*_{LC}$ and $\alpha_{EC}\geq \alpha^*_{EC}$. This is a strong indicator that the \ac{SA} algorithm successfully finds the global minimum of \autoref{eq:lossfunction} for the given initial configuration. The difference in efficiency between the two cooling schedules is substantial: for $\alpha_{LC}=10^{-5}\,,$ the \ac{LC} schedule requires $10^6$ temperature cycles, while the \ac{EC} schedule only requires about $10^{5}$ cycles to give the same value at $\alpha_{EC}=0.9999\,.$ 
+where $0<\alpha_{EC}<1\,.$ This corresponds to $n_{EC}=\lceil\log_{\alpha_{EC}}(T_f/T_0)\rceil$ temperature cycles. The minimum value of the loss function at a given temperature $T$ for the different cooling schedules is denoted $L_{opt,i}(T)\,,$ with $i=LC,EC\,.$ This is shown in \autoref{fig:opt-t}a for a randomly generated initial configuration. The corresponding acceptance rate is shown in \autoref{fig:opt-t}b. The parameters are $\lambda=1.25\,R_e\,,$ $\Delta\tilde\phi=0.5\,,$ $T_0=10\,,$ $T_{f,LC}=0$ and $T_{f,EC}=10^{-4}$ . As a reference, the \ac{SD} result is also shown. With both cooling schedules, the \ac{SD} level is reached only for temperatures $T<0.1<<T_0\,.$ However, the acceptance rate already displays a significant sensitivity to temperature decrease at much larger temperature scales. The maximum temperature is therefore chosen appropriately. The final value $L_{opt,LC}(0)/n_tn_T\sigma_0^2$ decreases with $\alpha_{LC}$ before it becomes constant at a critical value $\alpha^*_{LC}\approx 10^{-5}\,.$ The results for \ac{EC} follow very similar trends. $L_{opt,EC}(0)/n_tn_T\sigma_0^2$ decreases as $\alpha_{EC}$ is increased until a critical value $\alpha^*_{EC}\,.$ The final numerical values of \ac{LC} and \ac{EC} are in exact agreement for $\alpha_{LC}\leq \alpha^*_{LC}$ and $\alpha_{EC}\geq \alpha^*_{EC}$. This is a strong indicator that the \ac{SA} algorithm successfully finds the global minimum of \autoref{eq:lossfunction} for the given initial configuration. The difference in efficiency between the two cooling schedules is substantial: for $\alpha_{LC}=10^{-5}\,,$ the \ac{LC} schedule requires $10^6$ temperature cycles, while the \ac{EC} schedule only requires about $10^{5}$ cycles to give the same value at $\alpha_{EC}=0.9999\,.$ 
 
 
 \begin{figure}[H]
 \centering
 \begin{subfigure}[b]{\textwidth}
-\includegraphics[width=1\linewidth]{Thesis/figures/opt_T_lam1p25_dphi0.5_seed0_lin_cool.pdf}
+\includegraphics[width=1\linewidth]{figures/opt_T_lam1p25_dphi0.5_seed0_lin_cool.pdf}
    \label{fig:opt-t-lin-cool} 
 \end{subfigure}
 
 \begin{subfigure}[b]{\textwidth}
-   \includegraphics[width=1\linewidth]{Thesis/figures/opt_T_lam1p25_dphi0.5_seed0_exp_cool.pdf}
+   \includegraphics[width=1\linewidth]{figures/opt_T_lam1p25_dphi0.5_seed0_exp_cool.pdf}
    \label{fig:opt-t-texp-cool}
 \end{subfigure}
-\caption{(a) Optimum of loss function $L_{opt,i}/n_tn_T\sigma_0^2$ as a function of $T$ for several values of $\alpha_i\,.$ (b) \ac{SA} acceptance rate $r_{acc}$ as a function of $T\,.$ The top shows the results for $i=\ac{LC}$, the bottom for $i=\ac{EC}$. The insets show a section that is zoomed in to small temperatures.}
+\caption{(a) Optimum of loss function $L_{opt,i}/n_tn_T\sigma_0^2$ as a function of $T$ for several values of $\alpha_i\,.$ (b) \ac{SA} acceptance rate $r_{acc}$ as a function of $T\,.$ The top shows the results for $i=\,$\ac{LC}, the bottom for $i=\,$\ac{EC}. The insets show a section that is zoomed in to small temperatures.}
 \label{fig:opt-t}
 \end{figure}
 
@@ -1165,7 +1160,7 @@ The crossover of the \ac{SA} curve below the \ac{SD} level happens at a certain 
 \end{figure}
 
 
-The improvement that \ac{SA} brings compared to \ac{SD} is very small. Although there is no way to prove that \ac{SA} finds the global minimum, it is reasonable to assume that the final value is at least close. The best value obtained with \ac{SA} is only about $0.01\sigma_0^2$ smaller than the \ac{SD} level. This raises the question whether \ac{SA} is even necessary, despite the obvious non-convexity of the problem. For this, one must look at the optimized density profiles. These are shown in \autoref{fig:amplitude_sa_sd_lam0.25} $\hat\phi_A(x)$ for $\lambda=0.25\,R_e$ and in \autoref{fig:amplitude_sa_sd_lam1.25}. The \ac{SA} values are obtained from \ac{EC} with $\alpha_{EC}=0.999\,.$ The target composition and the total density is also shown for comparison. The profiles obtained with the different algorithms look very similar. In fact, no tendency of the \ac{SA} profile matching the target profile better than the \ac{SD} profile can be observed at all. To quantify how different the \ac{SA} configuration is from the \ac{SD} configuration, it is useful to define a distance function between to configurations of target polymer types:
+The improvement that \ac{SA} brings compared to \ac{SD} is very small. Although there is no way to prove that \ac{SA} finds the global minimum, it is reasonable to assume that the final value is at least close. For the investigated cases, the optimum obtained with \ac{SA} is less than $0.01\sigma_0^2$ smaller than the \ac{SD} level. This raises the question of whether \ac{SA} is even necessary, despite the obvious non-convexity of the problem. The optimized composition profiles $\tilde\phi_A(x)$ are shown in \autoref{fig:amplitude_sa_sd_lam1.25} for $\lambda=1.25\,R_e$ and in \autoref{fig:amplitude_sa_sd_lam0.25} for $\lambda=0.25\,R_e$. The \ac{SA} values are obtained from \ac{EC} with $\alpha_{EC}=0.999\,.$ The profiles obtained with the different algorithms look very similar. No tendency of the \ac{SA} profile to match the target profile better than the \ac{SD} profile can be observed at all. To quantify how different the \ac{SA} configuration is from the \ac{SD} configuration, a distance function between two configurations of target polymer types is defined:
 
 \begin{align}
     \mathrm{dist}(\pmb\beta,\pmb\beta^*)=1-\frac{1}{n_p}\sum_{i=1}^{n_p}\delta_{\beta_i,\beta_i^*}.
@@ -1188,7 +1183,7 @@ One finds $\mathrm{dist}(\pmb\beta_{SA},\pmb\beta_{SD}))<0.05\,,$ so less than $
       \caption{}
       \label{fig:amplitude_sa_sd_lam0.25}
   \end{subfigure}
-     \caption{Optimized density profile $\hat\phi_A(x)$ at $y=0\,,$ averaged over $z\,.$  The \ac{SA} curve is obtained using \ac{EC} with $\alpha_{EC}=0.9999\,.$ The target amplitude is $\Delta\tilde\phi=0.5\,.$ (a) $\lambda/R_e=1.25\,.$ (b) $\lambda/R_e=0.25\,.$}
+     \caption{Optimized density profile $\hat\phi_A(x)$ at $y=0\,,$ averaged over $z\,.$  The \ac{SA} curve is obtained using \ac{EC} with $\alpha_{EC}=0.9999\,.$ The target amplitude is $\Delta\tilde\phi=0.5\,.$ (a) $\lambda=1.25\,R_e\,.$ (b) $\lambda=0.25\,R_e\,.$}
      \label{fig:amplitude_sa_sd}
 \end{figure}
 
@@ -1197,11 +1192,19 @@ One finds $\mathrm{dist}(\pmb\beta_{SA},\pmb\beta_{SD}))<0.05\,,$ so less than $
 
 \section{SD simulations}
 
-In the previous section, it was concluded that the \ac{SA} algorithm does not yield significantly better results than the \ac{SD} algorithm. The latter has the additional advantage of adapting better to solutions which are already close to the optimum. While the number of flip trials performed in the \ac{SA} algorithm is fixed for a given number of target polymers and temperatures, the \ac{SD} algorithm is expected to converge faster for configurations which are already close to the optimum than for completely random configurations. Therefore, the latter algorithm is employed in this section to investigate how well it can be used to impose lamellar boundary conditions.
+In the previous section, it was concluded that the \ac{SA} algorithm does not yield significantly better results than the \ac{SD} algorithm. Additionally, while the number of flip trials performed in the \ac{SA} algorithm is fixed for a given number of target polymers and temperatures, the \ac{SD} algorithm converges faster for configurations which were recently optimized than for completely random configurations. To see this, an optimization run is performed on a randomly generated initial configuration and the number of flip proposals $n_{flips,0}$ until convergence is counted. Subsequently, a single \ac{MC} sweep is performed and the resulting configuration is optimized again, which requires $n_{flips,1}$ flip proposals. The relative difference $\Delta_{flips}=(n_{flips,0}-n_{flips,1})/n_{flips,0}$ is shown in \autoref{fig:dflips-lam} as a function of $\lambda\,,$ averaged over 100 different initial configurations.
 
-\subsection{Lamella periodicity}
 
-One limiting factor in achieving the desired target composition is the lamella periodicity $\lambda\,.$ The optimum of the loss function is shown in \autoref{fig:L-lambda} as a function of the lamella wave vector $q=2\pi/\lambda$ for $\Delta\tilde\phi=0.5\,.$ The values of $\lambda$ are chosen such that a whole number of lamella periods fits in the simulation box. For large periodicities, the deviation of the composition from the target profile is small everywhere except in the interfacial region between the $A$-rich and the $B$-rich part. The value of the loss function then depends mainly on the number of interfaces, so one finds $L_{opt}\propto q$ for small wave vectors $qR_e/2\pi<1\,.$ For larger $q\,,$ or smaller $\lambda\,,$ finding the proper type configurations within a lamella becomes more difficult as sharp density changes are required on smaller length scales. This results in a smaller amplitude of the composition, as shown in \autoref{fig:amplitude_lamella_per}. For $\lambda=0.5\,R_e\,,$ merely an amplitude of about $0.17$ is reached. This decrease of the amplitude explains the deviation from the linear behavior in \autoref{fig:L-lambda} for large $q\,.$ 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/dflips-lam.pdf}
+    \caption{}
+    \label{fig:dflips-lam}
+\end{figure}
+
+
+$\Delta_{flips}$ increases from about $6\%$ for $\lambda=0.25\,R_e$ to $26\%$ for $\lambda=5\,R_e\,.$ Due to this gain in efficiency, and the previously mentioned reasons, the \ac{SD} algorithm is chosen for all the following simulations.\\
+One limiting factor in achieving the desired target composition is the lamella periodicity $\lambda\,.$ The optimum of the loss function is shown in \autoref{fig:L-lambda} as a function of the lamella wave vector $q=2\pi/\lambda$ for $\Delta\tilde\phi=0.5\,.$ The values of $\lambda$ are chosen such that an integer number of lamella periods fit in the simulation box. For large periodicities, the deviation of the composition from the target profile is small everywhere except in the interfacial region between the $A$-rich and the $B$-rich part. The value of the loss function then depends mainly on the number of interfaces, so one finds $L_{opt}\propto q$ for small wave vectors $qR_e/2\pi<1\,.$ For larger $q\,,$ or smaller $\lambda\,,$ finding the proper type configurations within a lamella becomes more difficult as sharp density changes are required on smaller length scales. This results in a smaller amplitude of the composition, as shown in \autoref{fig:amplitude_lamella_per} for several values of $\lambda\,.$ For $\lambda=0.5\,R_e\,,$ merely an amplitude of about $0.17$ is reached. This decrease of the amplitude explains the deviation from the linear behavior in \autoref{fig:L-lambda} for large $q\,.$ 
 
 \begin{figure}[h]
   \centering
@@ -1214,7 +1217,7 @@ One limiting factor in achieving the desired target composition is the lamella p
     \hfill
   \begin{subfigure}[b]{0.45\textwidth}
       \centering
-      \includegraphics[width=\textwidth]{Thesis/figures/L_lambda.pdf}
+      \includegraphics[width=\textwidth]{figures/L_lambda.pdf}
       \caption{}
       \label{fig:L-lambda}
   \end{subfigure}
@@ -1222,7 +1225,7 @@ One limiting factor in achieving the desired target composition is the lamella p
      \label{fig:periodicity-lossfunction}
 \end{figure}
 
-The large deviations of the compositions profiles from the target composition, especially for small $\lambda\,,$ is not surprising, since the lamellar assembly of noninteracting homopolymers with sharp boundaries is entropically highly disfavored and the chain configurations are thus poorly suited for such target profiles. For polymers with $\chi N\neq 0\,,$ on the other hand, dictating sharp boundaries on small length scales might be desirable. For this, it is necessary to also allow the particle positions to relax.
+The large deviations of the composition profiles from the target composition, especially for small $\lambda\,,$ is not surprising, since the lamellar assembly of noninteracting homopolymers with sharp boundaries is entropically highly disfavored and the chain configurations are thus poorly suited for such target profiles. For polymers with $\chi N\neq 0\,,$ on the other hand, dictating sharp boundaries on small length scales might be desirable. For this, it is necessary to also allow the particle positions to relax.
 
 \subsection{Impact on bulk}
 
@@ -1248,15 +1251,16 @@ Another issue caused by the finite chain-extension is the extent to which the de
 \end{figure}
 
 \section{Hybrid strategy}
+\label{sec:hybrid}
 
-
-Evidently, the approach to impose a target composition based only on the type-switching of polymers is flawed and the results are not satisfactory. However, it brings the unique advantage of making the system grand canonical, which is required to simulate the setting described in \autoref{fig:continuum_section}. We therefore want to modify this approach to better match the target composition. One way to do this would be the use of external fields, as in the previous chapter. In a more physical approach, the quasi-instantaneous fields \autoref{eq:calc_omegafields} are modified in the following way:
+The approach to impose a target composition based only on the type-switching of polymers is flawed and the results are not satisfactory. However, it brings the unique advantage of making the system grand canonical, which is required to simulate the setting described in \autoref{fig:continuum_section}. We, therefore, want to modify this approach to better match the target composition. One way to do this would be the use of external fields, as in the previous chapter. In a more physical approach, the interaction part of the quasi-instantaneous fields \autoref{eq:calc_omegafields} is modified for the target cells:
 
 \begin{align}
-    \omega_{A}(c)^*=\omega_{A}(c)-\theta(\hat{\phi}_{A,T}(c))\frac{\chi N}{2}\left(\hat\phi_{A,T}(c)-\hat\phi_{B,T}(c)\right)\,,
+    \omega^{inter}_{A,T}(c)=-\frac{\chi N}{2}\left(\tilde\phi_{A,T}(c)-\tilde\phi_{B,T}(c)\right)\,,
+    \label{eq:omega_fields_hybrid}
 \end{align}
 
-where $\hat\phi_{i,T}(c)$ with $i=A,B$ are the target compositions. The new term has the same form as the interaction part of the original fields, except that it is only applied in the target cells and that it involves the target fields instead of the actual density fields.
+and similarly for $\omega^{inter}_{B,T}(c)\,.$ The new term involves the interaction between the target fields instead of the actual fields. The hybrid scheme now consists of an optimization run using the \ac{SD} algorithm, followed by a fixed number $\Delta MCS$ of simulation steps employing the modified fields \autoref{eq:omega_fields_hybrid}. For $\chi N\neq 0\,,$ this allows the chains to relax after the conversions have taken place.
 
 % \subsection{Reference system}
 
@@ -1315,7 +1319,7 @@ The key result is that the collective dynamics of homopolymers in a quasi grand-
 
 \section{External field driven flow}
 
-A simple way to implement time-dependent boundary conditions using external fields is presented in this thesis. This method is leveraged to drag lamellar layers of diblock-copolymers through the simulation box, causing them to deform under the experienced friction force. One key finding is that the degree of deformation is independent of the chain discretization; it only depends on the P\'eclet number $P_e$ which describes the ratio between convective and diffusive motion. At a critical number of $P_e\approx 0.85\,,$ the lamellae break. Furthermore, the description of the system is completely analogous to a solid beam bending under a uniform load in the Euler-Bernoulli theory. This is exploited to obtain the bending modulus $K$ of the lamellae. From the \ac{SOMA} simulations, it is calculated to $K(N=32)k_BT/R_e=20.43$ and $K(N=64)k_BT/R_e=20.10\,.$ The two values are in excellent agreement with each other. From \ac{SCFT}, a value of $K_\text{SCFT}=17.47\,k_BT/R_e$ is obtained. This value is about $14\%$ smaller than the mean of the \enquote{experimental} results. Therefore, the \ac{SOMA} simulations slightly underestimate the deformation.
+A simple way to implement time-dependent boundary conditions using external fields is presented in this thesis. This method is leveraged to drag lamellar layers of diblock-copolymers through the simulation box, causing them to deform under the experienced friction force. A P\'eclet number $P_e$ is defined, which describes the ratio between convective and diffusive motion. At a critical number of $P_e\approx 0.85\,,$ the lamellae break. Furthermore, the description of the system is completely analogous to a solid beam bending under a uniform load in the Euler-Bernoulli theory. This is exploited to obtain the bending modulus $K$ of the lamellae. It is found that $K$ increases as $N$ is increased, which would mean that, for a finer chain discretization, more energy is required per unit length to deform the lamellae. This is highly unexpected and may result from a scaling error of the diffusion constant in the \ac{SCMF} simulations. For $N\rightarrow\infty\,,$ one would expect the value to approach the \ac{SCFT} value. However, $K_\text{SCFT}=0.16\,\sqrt{\bar N}k_BT/R_e$ is significantly smaller than $K_\infty=0.22\,\sqrt{\bar N}k_BT/R_e\,.$
 
 \section{Polymer-type-conversion-based target composition}
 
